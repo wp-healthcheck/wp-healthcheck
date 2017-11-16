@@ -44,6 +44,7 @@ module.exports = function(grunt) {
             'includes/**',
             'views/**',
             'LICENSE',
+            'readme.txt',
             'index.php',
             'wp-healthcheck.php'
           ],
