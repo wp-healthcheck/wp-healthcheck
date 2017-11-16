@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<ruleset name="WP Healthcheck">
+  <description>The coding standard for WP Healthcheck plugin.</description>
+
+  <arg name="extensions" value="php"/>
+  <arg value="s"/>
+
+  <file>.</file>
+
+  <exclude-pattern>/(vendor|languages|assets|tests|node_modules)/*</exclude-pattern>
+  <exclude-pattern>/index\.php</exclude-pattern>
+
+  <!-- Include the WordPress-Core standard. -->
+  <rule ref="WordPress-Core">
+    <exclude name="Generic.WhiteSpace.DisallowSpaceIndent"/>
+    <exclude name="WordPress.WP.CapitalPDangit.Misspelled"/>
+  </rule>
+
+  <!-- Indent using spaces instead of tabs. -->
+  <rule ref="Generic.WhiteSpace.ScopeIndent">
+    <exclude-pattern>/views/*</exclude-pattern>
+    <properties>
+      <property name="exact" value="true"/>
+    </properties>
+  </rule>
+
+  <!-- Include the WordPress-Docs standard. -->
+  <rule ref="WordPress-Docs">
+    <exclude-pattern>/includes/class-wp-healthcheck-cli\.php</exclude-pattern>
+    <exclude name="Squiz.Commenting.FileComment.Missing"/>
+  </rule>
+
+  <!-- Some extra rules from other standards. -->
+  <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
+    <exclude-pattern>/includes/class-wp-healthcheck-cli\.php</exclude-pattern>
+  </rule>
+
+  <!-- Include the PHP compatibility checker for PHP 5.5 or higher. -->
+  <config name="testVersion" value="5.5-"/>
+  <rule ref="PHPCompatibility"/>
+</ruleset>

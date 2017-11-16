@@ -1,0 +1,24 @@
+{
+  "name": "wp-healthcheck",
+  "title": "WP Healthcheck",
+  "version": "1.0.0",
+  "main": "Gruntfile.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wp-healthcheck/wp-healthcheck.git"
+  },
+  "author": "Tiago Hillebrandt <tiago@tiagohillebrandt.com>",
+  "license": "GPL-3.0+",
+  "homepage": "https://wp-healthcheck.com",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-checktextdomain": "^1.0.1",
+    "grunt-contrib-compress": "^1.4.3",
+    "grunt-contrib-cssmin": "^2.2.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-uglify": "^3.1.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-shell": "^2.1.0",
+    "grunt-wp-i18n": "^1.0.1"
+  }
+}
