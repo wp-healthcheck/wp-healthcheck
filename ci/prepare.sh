@@ -21,4 +21,12 @@ if [[ -z $wp_version ]]; then
     wp_version="latest"
 fi
 
-ci/install-wp-tests.sh wphealthcheck root dBtpgSwWHy mysql $wp_version true
+if [[ "$TRAVIS" = true ]]; then
+    db_host="127.0.0.1"
+    db_skip=false
+else
+    db_host="mysql"
+    db_skip=true
+fi
+
+ci/install-wp-tests.sh wphealthcheck root "" $db_host $wp_version $db_skip
