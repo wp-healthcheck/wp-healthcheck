@@ -224,23 +224,23 @@ msgstr ""
 msgid "Help: Transients"
 msgstr ""
 
-#: views/notices/mysql.php:19
-#. translators: %1$s is the MySQL version installed on server, %2$s is the one
-#. WP team recommends
+#: views/notices/database.php:24
+#. translators: translators: %1s is the database in use, %2$s is the Database
+#. version installed on server, %3$s is the one WP team recommends
 msgid ""
-"Your MySQL version (%1$s) is compatible with the current WordPress install. "
+"Your %1s version (%1$s) is compatible with the current WordPress install. "
 "However, the <a "
 "href=\"https://wordpress.org/about/requirements/\">WordPress team "
-"recommends</a> you upgrade your server to MySQL %2$s or greater."
+"recommends</a> you upgrade your server to %1s %2$s or greater."
 msgstr ""
 
-#: views/notices/mysql.php:24
-#. translators: %1$s is the MySQL version installed on server, %2$s is the one
-#. WP team recommends
+#: views/notices/database.php:26
+#. translators: translators: %1s is the database in use, %2$s is the Database
+#. version installed on server, %3$s is the one WP team recommends
 msgid ""
-"The MySQL version you are using (%1$s) is not supported by WordPress "
+"The %1s version you are using (%2$s) is not supported by WordPress "
 "anymore! Please contact your developers and/or hosting company to upgrade "
-"your MySQL to version %2$s or greater."
+"your %1s to version %3$s or greater."
 msgstr ""
 
 #: views/notices/php.php:19
