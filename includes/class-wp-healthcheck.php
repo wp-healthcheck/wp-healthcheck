@@ -429,7 +429,6 @@ class WP_Healthcheck {
 
         if ( preg_match( '/^(mysql|mariadb)$/', $software ) ) {
             $server_data[ $software ] = $server_data['database']['version'];
-            return 'obsolete';
         }
 
         if ( version_compare( $server_data[ $software ], $requirements[ $software ]['recommended'], '>=' ) ) {
