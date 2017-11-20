@@ -4,6 +4,7 @@ if ( ! defined( 'WPHC' ) ) {
 }
 
 $server_data = WP_Healthcheck::get_server_data();
+
 ?>
 
 <div class="wphc_system_info">
@@ -16,8 +17,8 @@ $server_data = WP_Healthcheck::get_server_data();
     <li class="<?php echo WP_Healthcheck::is_software_updated( 'php' ); ?>"><?php echo $server_data['php']; ?></li>
   </ul>
   <ul>
-    <li><?php _e( 'MySQL', 'wp-healthcheck' ); ?></li>
-    <li class="<?php echo WP_Healthcheck::is_software_updated( 'mysql' ); ?>"><?php echo $server_data['mysql']; ?></li>
+    <li><?php _e( $server_data['database']['brand'], 'wp-healthcheck' ); ?></li>
+    <li class="<?php echo WP_Healthcheck::is_software_updated( strtolower( $server_data['database']['brand'] ) ); ?>"><?php echo $server_data['database']['version']; ?></li>
   </ul>
 
   <?php if ( ! empty( $server_data['web'] ) ) : ?>

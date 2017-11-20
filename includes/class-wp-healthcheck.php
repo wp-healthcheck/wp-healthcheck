@@ -238,8 +238,13 @@ class WP_Healthcheck {
 
             $php = preg_match( '/^(\d+\.){2}\d+/', phpversion(), $phpversion );
 
+            $dbbrand = ( preg_match( '/MariaDB/', $wpdb->dbh->server_info ) ) ? "MariaDB" : "MySQL";
+
             $server = array(
-                'mysql' => $wpdb->db_version(),
+                'database' => array (
+                    'brand' => $dbbrand,
+                    'version' => $wpdb->db_version()
+                ),
                 'php'   => $phpversion[0],
                 'wp'    => $wp_version,
             );
@@ -389,7 +394,7 @@ class WP_Healthcheck {
      * @return string|false The current status (updated, outdated, or obsolete) of the software or false on error.
      */
     public static function is_software_updated( $software ) {
-        if ( ! preg_match( '/^(php|mysql|wp)$/', $software ) ) {
+        if ( ! preg_match( '/^(php|mysql|mariadb|wp)$/', $software ) ) {
             return false;
         }
 
@@ -420,6 +425,11 @@ class WP_Healthcheck {
 
             $minimum = preg_replace( '/(\d{1,}\.\d{1,})(\.\d{1,})?/', '$1', end( $requirements['wordpress'] ) );
             $requirements[ $software ]['minimum'] = $minimum;
+        }
+
+        if ( preg_match( '/^(mysql|mariadb)$/', $software ) ) {
+            $server_data[ $software ] = $server_data['database']['version'];
+            return 'obsolete';
         }
 
         if ( version_compare( $server_data[ $software ], $requirements[ $software ]['recommended'], '>=' ) ) {
