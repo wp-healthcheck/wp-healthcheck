@@ -34,7 +34,7 @@ class ServerTest extends WP_UnitTestCase {
         $this->assertInternalType( 'string', json_encode( $requirements ) );
         $this->assertInternalType( 'string', $php );
 
-        $keys = array( 'mysql', 'php', 'wordpress' );
+        $keys = array( 'mariadb', 'mysql', 'php', 'wordpress' );
 
         foreach ( $keys as $key ) {
             $this->assertArrayHasKey( $key, $requirements );
