@@ -3,7 +3,7 @@ class ServerTest extends WP_UnitTestCase {
     public function test_server_data() {
         $server_data = WP_Healthcheck::get_server_data();
 
-        $keys = array( 'mysql', 'php', 'web', 'wp' );
+        $keys = array( 'database', 'php', 'web', 'wp' );
 
         foreach ( $keys as $key ) {
             $this->assertArrayHasKey( $key, $server_data );
