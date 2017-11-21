@@ -143,7 +143,7 @@ class WP_Healthcheck_AJAX {
     public static function hide_admin_notice() {
         check_ajax_referer( 'wphc_hide_admin_notice' );
 
-        if ( isset( $_POST['software'] ) && preg_match( '/(?:php|mysql|wordpress)/', $_POST['software'] ) ) {
+        if ( isset( $_POST['software'] ) && preg_match( '/(?:php|database|wordpress)/', $_POST['software'] ) ) {
             $notices_transient = get_transient( WP_Healthcheck::HIDE_NOTICES_TRANSIENT );
 
             if ( false === $notices_transient ) {

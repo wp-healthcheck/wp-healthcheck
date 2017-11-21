@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Healthcheck 1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-healthcheck\n"
-"POT-Creation-Date: 2017-11-16 00:01-0600\n"
-"PO-Revision-Date: 2017-11-16 00:02-0600\n"
+"POT-Creation-Date: 2017-11-21 03:26-0600\n"
+"PO-Revision-Date: 2017-11-21 03:26-0600\n"
 "Last-Translator: Tiago Hillebrandt <tiago@tiagohillebrandt.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -194,11 +194,15 @@ msgstr "WordPress"
 msgid "PHP"
 msgstr "PHP"
 
-#: views/admin/sysinfo.php:19
+#: views/admin/sysinfo.php:20
+msgid "MariaDB"
+msgstr "MariaDB"
+
+#: views/admin/sysinfo.php:22
 msgid "MySQL"
 msgstr "MySQL"
 
-#: views/admin/sysinfo.php:25
+#: views/admin/sysinfo.php:29
 msgid "Web Server"
 msgstr "Servidor Web"
 
@@ -258,30 +262,32 @@ msgstr "Limpar os transients expirados"
 msgid "Help: Transients"
 msgstr "Ajuda: Transients"
 
-#. translators: %1$s is the MySQL version installed on server, %2$s is the one
+#. translators: %1$s is the current database service (MySQL, MariaDB, etc),
+#. %2$s is the database version installed on server, %3$s is the version that
 #. WP team recommends
-#: views/notices/mysql.php:19
+#: views/notices/database.php:21
 msgid ""
-"Your MySQL version (%1$s) is compatible with the current WordPress install. "
+"Your %1$s version (%2$s) is compatible with the current WordPress install. "
 "However, the <a href=\"https://wordpress.org/about/requirements/\">WordPress "
-"team recommends</a> you upgrade your server to MySQL %2$s or greater."
+"team recommends</a> you upgrade your server to %3$s or greater."
 msgstr ""
-"Sua versão do MySQL (%1$s) é compatível com a versão atual do WordPress. No "
+"Sua versão do %1$s (%2$s) é compatível com a versão atual do WordPress. No "
 "entanto, o <a href=\"https://wordpress.org/about/requirements/\">time do "
-"WordPress recomenda</a> que você atualize o MySQL para versão %2$s ou "
+"WordPress recomenda</a> que você atualize o %1$s para versão %3$s ou "
 "superior."
 
-#. translators: %1$s is the MySQL version installed on server, %2$s is the one
+#. translators: %1$s is the current database service (MySQL, MariaDB, etc),
+#. %2$s is the database version installed on server, %3$s is the version that
 #. WP team recommends
-#: views/notices/mysql.php:24
+#: views/notices/database.php:26
 msgid ""
-"The MySQL version you are using (%1$s) is not supported by WordPress "
-"anymore! Please contact your developers and/or hosting company to upgrade "
-"your MySQL to version %2$s or greater."
+"The %1$s version you are using (%2$s) is not supported by WordPress anymore! "
+"Please contact your developers and/or hosting company to upgrade your %1$s "
+"to version %3$s or greater."
 msgstr ""
-"A versão do MySQL que você está utilizando (%1$s) não é mais suportada pelo "
+"A versão do %1$s que você está utilizando (%2$s) não é mais suportada pelo "
 "WordPress! Por favor entre em contato com seus desenvolvedores e/ou empresa "
-"de hospedagem para atualizar o MySQL para versão %2$s ou superior."
+"de hospedagem para atualizar o %1$s para versão %3$s ou superior."
 
 #. translators: %1$s is the PHP version installed on current server, %2$s is
 #. the one WP team recommends
@@ -344,6 +350,37 @@ msgstr "WP Healthcheck Team"
 #. Author URI of the plugin/theme
 msgid "https://wp-healthcheck.com/contributors"
 msgstr "https://wp-healthcheck.com/contributors"
+
+#~ msgid ""
+#~ "Your %1$s version (%2$s) is compatible with the current WordPress "
+#~ "install. However, the <a href=\"https://wordpress.org/about/requirements/"
+#~ "\">WordPress team recommends</a> you upgrade your server to %2$s or "
+#~ "greater."
+#~ msgstr ""
+#~ "Sua versão do %1$s (%2$s) é compatível com a versão atual do WordPress. "
+#~ "No entanto, o <a href=\"https://wordpress.org/about/requirements/\">time "
+#~ "do WordPress recomenda</a> que você atualize o %1$s para versão %3$s ou "
+#~ "superior."
+
+#~ msgid ""
+#~ "Your MySQL version (%1$s) is compatible with the current WordPress "
+#~ "install. However, the <a href=\"https://wordpress.org/about/requirements/"
+#~ "\">WordPress team recommends</a> you upgrade your server to MySQL %2$s or "
+#~ "greater."
+#~ msgstr ""
+#~ "Sua versão do MySQL (%1$s) é compatível com a versão atual do WordPress. "
+#~ "No entanto, o <a href=\"https://wordpress.org/about/requirements/\">time "
+#~ "do WordPress recomenda</a> que você atualize o MySQL para versão %2$s ou "
+#~ "superior."
+
+#~ msgid ""
+#~ "The MySQL version you are using (%1$s) is not supported by WordPress "
+#~ "anymore! Please contact your developers and/or hosting company to upgrade "
+#~ "your MySQL to version %2$s or greater."
+#~ msgstr ""
+#~ "A versão do MySQL que você está utilizando (%1$s) não é mais suportada "
+#~ "pelo WordPress! Por favor entre em contato com seus desenvolvedores e/ou "
+#~ "empresa de hospedagem para atualizar o MySQL para versão %2$s ou superior."
 
 #~ msgid ""
 #~ "If you have any questions, you can post a new thread in our <a href="
