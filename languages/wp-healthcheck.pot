@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Healthcheck 1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-healthcheck\n"
-"POT-Creation-Date: 2017-11-20 18:28:18+00:00\n"
+"POT-Creation-Date: 2017-11-21 09:25:52+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -168,7 +168,15 @@ msgstr ""
 msgid "PHP"
 msgstr ""
 
-#: views/admin/sysinfo.php:25
+#: views/admin/sysinfo.php:20
+msgid "MariaDB"
+msgstr ""
+
+#: views/admin/sysinfo.php:22
+msgid "MySQL"
+msgstr ""
+
+#: views/admin/sysinfo.php:29
 msgid "Web Server"
 msgstr ""
 
@@ -221,18 +229,20 @@ msgid "Help: Transients"
 msgstr ""
 
 #: views/notices/database.php:21
-#. translators: %1$s is the database in use, %2$s is the Database version
-#. installed on server, %3$s is the one WP team recommends
+#. translators: %1$s is the current database service (MySQL, MariaDB, etc),
+#. %2$s is the database version installed on server, %3$s is the version that
+#. WP team recommends
 msgid ""
 "Your %1$s version (%2$s) is compatible with the current WordPress install. "
 "However, the <a "
 "href=\"https://wordpress.org/about/requirements/\">WordPress team "
-"recommends</a> you upgrade your server to %2$s or greater."
+"recommends</a> you upgrade your server to %3$s or greater."
 msgstr ""
 
 #: views/notices/database.php:26
-#. translators: %1$s is the database in use, %2$s is the Database version
-#. installed on server, %3$s is the one WP team recommends
+#. translators: %1$s is the current database service (MySQL, MariaDB, etc),
+#. %2$s is the database version installed on server, %3$s is the version that
+#. WP team recommends
 msgid ""
 "The %1$s version you are using (%2$s) is not supported by WordPress "
 "anymore! Please contact your developers and/or hosting company to upgrade "

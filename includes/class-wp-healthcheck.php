@@ -238,11 +238,11 @@ class WP_Healthcheck {
 
             $php = preg_match( '/^(\d+\.){2}\d+/', phpversion(), $phpversion );
 
-            $dbbrand = ( preg_match( '/MariaDB/', $wpdb->dbh->server_info ) ) ? 'MariaDB' : 'MySQL';
+            $db_service = ( preg_match( '/MariaDB/', $wpdb->dbh->server_info ) ) ? 'MariaDB' : 'MySQL';
 
             $server = array(
                 'database' => array(
-                    'brand' => $dbbrand,
+                    'service' => $db_service,
                     'version' => $wpdb->db_version(),
                 ),
                 'php'   => $phpversion[0],

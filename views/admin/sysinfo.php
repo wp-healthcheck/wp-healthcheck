@@ -16,8 +16,12 @@ $server_data = WP_Healthcheck::get_server_data();
     <li class="<?php echo WP_Healthcheck::is_software_updated( 'php' ); ?>"><?php echo $server_data['php']; ?></li>
   </ul>
   <ul>
-    <li><?php echo $server_data['database']['brand']; ?></li>
-    <li class="<?php echo WP_Healthcheck::is_software_updated( strtolower( $server_data['database']['brand'] ) ); ?>"><?php echo $server_data['database']['version']; ?></li>
+    <?php if ( 'MariaDB' == $server_data['database']['service'] ) : ?>
+      <li><?php _e( 'MariaDB', 'wp-healthcheck' ); ?></li>
+    <?php else : ?>
+      <li><?php _e( 'MySQL', 'wp-healthcheck' ); ?></li>
+    <?php endif; ?>
+    <li class="<?php echo WP_Healthcheck::is_software_updated( strtolower( $server_data['database']['service'] ) ); ?>"><?php echo $server_data['database']['version']; ?></li>
   </ul>
 
   <?php if ( ! empty( $server_data['web'] ) ) : ?>
