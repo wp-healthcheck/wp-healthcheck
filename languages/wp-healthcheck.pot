@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Healthcheck 1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-healthcheck\n"
-"POT-Creation-Date: 2017-11-26 07:27:23+00:00\n"
+"POT-Creation-Date: 2017-11-23 17:28:12+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -189,8 +189,12 @@ msgstr ""
 msgid "MySQL"
 msgstr ""
 
-#: views/admin/sysinfo.php:29
-msgid "Web Server"
+#: views/admin/sysinfo.php:30
+msgid "Nginx"
+msgstr ""
+
+#: views/admin/sysinfo.php:32
+msgid "Apache"
 msgstr ""
 
 #: views/admin/transients-stats.php:23
@@ -298,6 +302,25 @@ msgid ""
 "The PHP version you are using (%1$s) is not supported by WordPress anymore! "
 "Please contact your developers and/or hosting company to upgrade your PHP "
 "to version %2$s or greater."
+msgstr ""
+
+#: views/notices/web.php:19
+#. translators: %1$s is the current database service (MySQL, MariaDB, etc),
+#. %2$s is the database version installed on server, %3$s is the version that
+#. WP team recommends
+msgid ""
+"Your %1$s version (%2$s) is not recommended with. Please, update your web "
+"server to %3$s or greater."
+msgstr ""
+
+#: views/notices/web.php:24
+#. translators: %1$s is the current database service (MySQL, MariaDB, etc),
+#. %2$s is the database version installed on server, %3$s is the version that
+#. WP team recommends
+msgid ""
+"The %1$s version you are using (%2$s) is not recommended and is deprecated! "
+"Please contact your developers and/or hosting company to upgrade your %1$s "
+"to version %3$s or greater."
 msgstr ""
 
 #: views/notices/wordpress.php:15
