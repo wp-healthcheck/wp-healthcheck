@@ -262,6 +262,31 @@ msgstr "Limpar os transients expirados"
 msgid "Help: Transients"
 msgstr "Ajuda: Transients"
 
+#: views/notices/web.php:19
+#. translators: %1$s is the current database service (MySQL, MariaDB, etc),
+#. %2$s is the database version installed on server, %3$s is the version that
+#. WP team recommends
+msgid ""
+"Your %1$s version (%2$s) is not recommended with. Please, update your web "
+"server to %3$s or greater."
+msgstr ""
+"Sua versão do %1$s (%2$s) não é recomendada. Por favor, entre em contato "
+"com seus desenvolvedores e/ou empresa de hospedagem para servidor web para "
+"%3$s ou superior."
+
+#: views/notices/web.php:24
+#. translators: %1$s is the current database service (MySQL, MariaDB, etc),
+#. %2$s is the database version installed on server, %3$s is the version that
+#. WP team recommends
+msgid ""
+"The %1$s version you are using (%2$s) is not recommended and is deprecated! "
+"Please contact your developers and/or hosting company to upgrade your %1$s "
+"to version %3$s or greater."
+msgstr ""
+"A versão do %1$s que você está utilizando (%2$s) não é recomendada e está descontinuada! "
+"Por favor, entre em contato com seus desenvolvedores e/ou empresa de hospedagem "
+"para atualizar seu %1$s para a versão %3$s ou superior."
+
 #. translators: %1$s is the current database service (MySQL, MariaDB, etc),
 #. %2$s is the database version installed on server, %3$s is the version that
 #. WP team recommends

@@ -129,7 +129,7 @@ class WP_Healthcheck_Admin {
             return;
         }
 
-        $notices = array( 'php', 'database', 'wordpress' );
+        $notices = array( 'php', 'database', 'wordpress', 'web' );
 
         $notices_transient = get_transient( WP_Healthcheck::HIDE_NOTICES_TRANSIENT );
 

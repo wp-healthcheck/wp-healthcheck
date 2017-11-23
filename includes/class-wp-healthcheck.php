@@ -250,7 +250,8 @@ class WP_Healthcheck {
             );
 
             if ( isset( $_SERVER['SERVER_SOFTWARE'] ) ) {
-                $server['web'] = $_SERVER['SERVER_SOFTWARE'];
+                $server['web']['service'] = preg_replace( '/([0-9]|\.|\/)/', '', $_SERVER['SERVER_SOFTWARE'] );
+                $server['web']['version'] = preg_replace( '/(nginx|apache|\/)/', '', $_SERVER['SERVER_SOFTWARE'] );
             }
 
             set_transient( self::SERVER_DATA_TRANSIENT, $server, DAY_IN_SECONDS );
@@ -394,7 +395,7 @@ class WP_Healthcheck {
      * @return string|false The current status (updated, outdated, or obsolete) of the software or false on error.
      */
     public static function is_software_updated( $software ) {
-        if ( ! preg_match( '/^(php|mysql|mariadb|wp)$/', $software ) ) {
+        if ( ! preg_match( '/^(php|mysql|mariadb|wp|nginx|apache)$/', $software ) ) {
             return false;
         }
 
@@ -405,6 +406,9 @@ class WP_Healthcheck {
         }
 
         $server_data = self::get_server_data();
+
+        $recommended = 'recommended';
+        $minimum = 'minimum';
 
         if ( 'wp' == $software ) {
             $current_local = preg_replace( '/(\d{1,}\.\d{1,})(\.\d{1,})?/', '$1', $server_data['wp'] );
@@ -431,9 +435,15 @@ class WP_Healthcheck {
             $server_data[ $software ] = $server_data['database']['version'];
         }
 
-        if ( version_compare( $server_data[ $software ], $requirements[ $software ]['recommended'], '>=' ) ) {
+        if ( preg_match( '/^(nginx|apache)$/', $software ) ) {
+            $server_data[ $software ] = $server_data['web']['version'];
+            $recommended = 'stable';
+            $minimum = 'mainline';
+        }
+
+        if ( version_compare( $server_data[ $software ], $requirements[ $software ][ $recommended ], '>=' ) ) {
             return 'updated';
-        } elseif ( version_compare( $server_data[ $software ], $requirements[ $software ]['minimum'], '>=' ) ) {
+        } elseif ( version_compare( $server_data[ $software ], $requirements[ $software ][ $minimum ], '>=' ) ) {
             return 'outdated';
         } else {
             return 'obsolete';
