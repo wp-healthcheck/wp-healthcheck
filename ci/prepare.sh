@@ -15,20 +15,13 @@ composer install -q
 vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs/,vendor/wimg/php-compatibility/
 
 # Install WordPress test suite
-wp_version="$1"
-
-if [[ -z $wp_version ]]; then
-    wp_version="latest"
+if [[ -z $WP_VERSION ]]; then
+    WP_VERSION="latest"
 fi
 
 if [[ "$TRAVIS" = true ]]; then
-    db_host="127.0.0.1"
-    db_password="\"\""
-    db_skip=false
+    ci/install-wp-tests.sh wphealthcheck root "" "127.0.0.1" $WP_VERSION false
 else
-    db_host="mysql"
-    db_password="dBtpgSwWHy"
-    db_skip=true
+    ci/install-wp-tests.sh wphealthcheck root dBtpgSwWHy mysql $WP_VERSION true
 fi
 
-ci/install-wp-tests.sh wphealthcheck root $db_password $db_host $wp_version $db_skip
