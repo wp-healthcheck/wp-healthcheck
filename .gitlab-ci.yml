@@ -1,0 +1,30 @@
+services:
+  - mysql:latest
+
+variables:
+  MYSQL_DATABASE: wphealthcheck
+  MYSQL_ROOT_PASSWORD: dBtpgSwWHy
+
+stages:
+  - test
+
+test-php-7.1-wp-latest:
+  image: tiagohillebrandt/php-tests:7.1
+  stage: test
+  script:
+  - ./ci/prepare.sh > /dev/null
+  - ./ci/test.sh
+
+test-php-7.1-wp-trunk:
+  image: tiagohillebrandt/php-tests:7.1
+  stage: test
+  script:
+  - ./ci/prepare.sh 'trunk' > /dev/null
+  - ./ci/test.sh
+
+test-php-5.6-wp-latest:
+  image: tiagohillebrandt/php-tests:5.6
+  stage: test
+  script:
+  - ./ci/prepare.sh > /dev/null
+  - ./ci/test.sh

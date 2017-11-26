@@ -48,6 +48,7 @@ class WP_Healthcheck_AJAX {
             'autoload_deactivate',
             'autoload_history',
             'autoload_list',
+            'autoload_reactivate',
             'hide_admin_notice',
             'transients_cleanup',
         );
@@ -131,6 +132,31 @@ class WP_Healthcheck_AJAX {
         check_ajax_referer( 'wphc_autoload_list' );
 
         include WPHC_PLUGIN_DIR . '/views/admin/autoload-list.php';
+
+        wp_die();
+    }
+
+    /**
+     * Hook: reactivate an autoload option.
+     *
+     * @since 1.1
+     */
+    public static function autoload_reactivate() {
+        check_ajax_referer( 'wphc_autoload_reactivate' );
+
+        $options = array();
+
+        foreach ( $_POST as $name => $value ) {
+            if ( preg_match( '/^wphc-hopt-/', $name ) ) {
+                $option_name = preg_replace( '/^wphc-hopt-/', '', urldecode( $name ) );
+
+                $options[ $option_name ] = WP_Healthcheck::reactivate_autoload_option( $option_name );
+            }
+        }
+
+        $reactivate = true;
+
+        include WPHC_PLUGIN_DIR . '/views/admin/autoload-list-status.php';
 
         wp_die();
     }

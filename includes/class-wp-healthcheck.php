@@ -95,7 +95,7 @@ class WP_Healthcheck {
 
         if ( $only_expired ) {
             return $wpdb->query( $wpdb->prepare( "DELETE a, b FROM $wpdb->options a INNER JOIN $wpdb->options b ON b.option_name = REPLACE(a.option_name, '_timeout', '') WHERE
-            a.option_name REGEXP '^(_site)?_transient_timeout' AND a.option_value < %s;", current_time( 'timestamp' ) ) );
+            a.option_name REGEXP '^(_site)?_transient_timeout' AND a.option_value < %s;", time() ) );
         }
 
         return $wpdb->query( "DELETE FROM $wpdb->options WHERE option_name REGEXP '^_(site_)?transient';" );
@@ -112,39 +112,20 @@ class WP_Healthcheck {
      * @return int|false Number of affected rows or false on error.
      */
     public static function deactivate_autoload_option( $option_name, $logging = true ) {
-        global $wpdb;
+        return self::_update_autoload_option( $option_name, 'no', $logging );
+    }
 
-        if ( get_option( $option_name ) ) {
-            // update option's autoload value to 'no'.
-            $result = $wpdb->query( $wpdb->prepare( "UPDATE $wpdb->options SET autoload = 'no' WHERE option_name LIKE %s;", $option_name ) );
-
-            if ( 0 == $result || ! self::is_autoload_disabled( $option_name ) ) {
-                return false;
-            }
-
-            if ( ! $logging ) {
-                return $result;
-            }
-
-            // adds option name and timestamp to history, if requested.
-            if ( ! get_option( self::DISABLE_AUTOLOAD_OPTION ) ) {
-                add_option( self::DISABLE_AUTOLOAD_OPTION, '', '', 'no' );
-            }
-
-            $history = get_option( self::DISABLE_AUTOLOAD_OPTION );
-
-            if ( ! is_array( $history ) ) {
-                $history = array();
-            }
-
-            $history[ $option_name ] = current_time( 'timestamp' );
-
-            update_option( self::DISABLE_AUTOLOAD_OPTION, $history );
-
-            return $result;
-        }
-
-        return false;
+    /**
+     * Reactivates an autoload option that was disabled previously.
+     *
+     * @since 1.1
+     *
+     * @param string $option_name The name of the option to disable.
+     *
+     * @return int|false Number of affected rows or false on error.
+     */
+    public static function reactivate_autoload_option( $option_name ) {
+        return self::_update_autoload_option( $option_name, 'yes' );
     }
 
     /**
@@ -272,7 +253,7 @@ class WP_Healthcheck {
         if ( false === $requirements ) {
             $options = array(
                 'timeout'    => 20,
-                'user-agent' => 'WP Healthcheck ' . WPHC_VERSION,
+                'user-agent' => 'WP Healthcheck/' . WPHC_VERSION,
             );
 
             $res = wp_remote_get( 'https://api.wp-healthcheck.com/v1/requirements', $options );
@@ -512,5 +493,83 @@ class WP_Healthcheck {
                 delete_transient( $transient );
             }
         }
+    }
+
+    /**
+     * Updates the autoload value for the given option.
+     *
+     * @since 1.1
+     *
+     * @param string $option_name The name of the option to disable.
+     * @param string $autoload The new value for the autoload field. Only 'yes' or 'no'.
+     * @param string $logging Save deactivation to history.
+     *
+     * @return int|false Number of affected rows or false on error.
+     */
+    private static function _update_autoload_option( $option_name, $autoload = 'no', $logging = true ) {
+        global $wpdb;
+
+        if ( get_option( $option_name ) ) {
+            $should_autoload = ( 'yes' == $autoload ) ? true : false;
+
+            // update option's autoload value to $autoload.
+            $result = $wpdb->query( $wpdb->prepare( "UPDATE $wpdb->options SET autoload = %s WHERE option_name LIKE %s;", $autoload, $option_name ) );
+
+            if ( 0 == $result ) {
+                return false;
+            }
+
+            if ( $should_autoload && self::is_autoload_disabled( $option_name ) ) {
+                return false;
+            }
+
+            if ( ! $should_autoload && ! self::is_autoload_disabled( $option_name ) ) {
+                return false;
+            }
+
+            if ( ! $logging ) {
+                return $result;
+            }
+
+            $updated = false;
+
+            if ( $should_autoload ) {
+                // removes option name and timestamp from history.
+                $history = get_option( self::DISABLE_AUTOLOAD_OPTION );
+
+                if ( $history && is_array( $history ) ) {
+                    foreach ( $history as $name => $timestamp ) {
+                        if ( get_option( $name ) && $name == $option_name ) {
+                            unset( $history[ $name ] );
+
+                            $updated = true;
+
+                            break;
+                        }
+                    }
+                }
+            } else {
+                // adds option name and timestamp to history.
+                if ( ! get_option( self::DISABLE_AUTOLOAD_OPTION ) ) {
+                    add_option( self::DISABLE_AUTOLOAD_OPTION, '', '', 'no' );
+                }
+
+                $history = get_option( self::DISABLE_AUTOLOAD_OPTION );
+
+                if ( ! is_array( $history ) ) {
+                    $history = array();
+                }
+
+                $history[ $option_name ] = time();
+            }
+
+            if ( ! $should_autoload || $updated ) {
+                update_option( self::DISABLE_AUTOLOAD_OPTION, $history );
+            }
+
+            return $result;
+        }
+
+        return false;
     }
 }
