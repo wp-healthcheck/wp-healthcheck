@@ -7,9 +7,7 @@ services:
 matrix:
   include:
     - php: 5.6
-      env: wp_version=latest
     - php: 7.1
-      env: wp_version=latest
     - php: 7.1
       env: wp_version=trunk
 

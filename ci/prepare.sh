@@ -23,7 +23,7 @@ fi
 
 if [[ "$TRAVIS" = true ]]; then
     db_host="127.0.0.1"
-    db_password=""
+    db_password="''"
     db_skip=false
 else
     db_host="mysql"
