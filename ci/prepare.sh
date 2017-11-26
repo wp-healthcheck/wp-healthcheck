@@ -23,10 +23,12 @@ fi
 
 if [[ "$TRAVIS" = true ]]; then
     db_host="127.0.0.1"
+    db_password=""
     db_skip=false
 else
     db_host="mysql"
+    db_password="dBtpgSwWHy"
     db_skip=true
 fi
 
-ci/install-wp-tests.sh wphealthcheck root "" $db_host $wp_version $db_skip
+ci/install-wp-tests.sh wphealthcheck root $db_password $db_host $wp_version $db_skip

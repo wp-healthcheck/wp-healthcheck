@@ -75,9 +75,12 @@ jQuery(document).ready(function($) {
       params[field.name] = field.value;
     });
 
-    wphc_do_ajax('wphc_autoload_deactivate', params, 'wphc-autoload-list');
+    var action = ($('#wphc-history').length) ? 'wphc_autoload_reactivate' : 'wphc_autoload_deactivate';
+
+    wphc_do_ajax(action, params, 'wphc-autoload-list');
 
     $('#wphc-btn-autoload-list').prop('disabled', false);
+    $('#wphc-btn-autoload-history').prop('disabled', false);
 
     return false;
   });
