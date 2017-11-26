@@ -8,7 +8,10 @@ plugin_dir=$(pwd)
 cd /tmp/wordpress
 cp /tmp/wordpress-tests-lib/wp-tests-config.php ./wp-config.php
 
-echo "if ( !defined('ABSPATH') ) { define('ABSPATH', dirname(__FILE__) . '/'); }" >> wp-config.php
+if egrep -qv "ABSPATH" wp-config.php; then
+    echo "if ( !defined('ABSPATH') ) { define('ABSPATH', dirname(__FILE__) . '/'); }" >> wp-config.php
+fi
+
 echo "require_once(ABSPATH . 'wp-settings.php');" >> wp-config.php
 
 # downloads WP-CLI
