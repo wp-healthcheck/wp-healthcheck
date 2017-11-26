@@ -20,6 +20,8 @@ if [[ -z $WP_VERSION ]]; then
 fi
 
 if [[ "$TRAVIS" = true ]]; then
+    phpenv config-rm xdebug.ini
+
     ci/install-wp-tests.sh wphealthcheck root "" "127.0.0.1" $WP_VERSION false
 else
     ci/install-wp-tests.sh wphealthcheck root dBtpgSwWHy mysql $WP_VERSION true
