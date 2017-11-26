@@ -18,7 +18,6 @@
 
   <!-- Indent using spaces instead of tabs. -->
   <rule ref="Generic.WhiteSpace.ScopeIndent">
-    <exclude-pattern>/views/*</exclude-pattern>
     <properties>
       <property name="exact" value="true"/>
     </properties>
