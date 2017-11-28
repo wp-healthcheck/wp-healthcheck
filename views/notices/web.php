@@ -6,6 +6,10 @@ if ( ! defined( 'WPHC' ) ) {
 $requirements = WP_Healthcheck::get_server_requirements();
 $server_data = WP_Healthcheck::get_server_data();
 
+if ( ! isset( $server_data['web'] ) ) {
+    return false;
+}
+
 $status = WP_Healthcheck::is_software_updated( $server_data['web']['service'] );
 
 if ( 'updated' == $status || false === $status ) {
