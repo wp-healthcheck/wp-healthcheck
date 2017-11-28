@@ -391,10 +391,12 @@ class WP_Healthcheck {
         $recommended = 'recommended';
         $minimum = 'minimum';
 
-        if ( 'wp' == $software ) {
+        if ( preg_match( '/wp/', $software ) ) {
             $current_local = preg_replace( '/(\d{1,}\.\d{1,})(\.\d{1,})?/', '$1', $server_data['wp'] );
 
-            foreach ( $requirements['wordpress'] as $version ) {
+            $service = ( 'wp' == $software ) ? 'wordpress' : $software;
+
+            foreach ( $requirements[ $service ] as $version ) {
                 if ( preg_match( '/^' . $current_local . '(\.\d{1,})?/', $version ) ) {
                     $current_live = $version;
 
@@ -403,12 +405,12 @@ class WP_Healthcheck {
             }
 
             if ( ! isset( $current_live ) ) {
-                $current_live = $requirements['wordpress'][0];
+                $current_live = $requirements[ $service ][0];
             }
 
             $requirements[ $software ]['recommended'] = $current_live;
 
-            $minimum = preg_replace( '/(\d{1,}\.\d{1,})(\.\d{1,})?/', '$1', end( $requirements['wordpress'] ) );
+            $minimum = preg_replace( '/(\d{1,}\.\d{1,})(\.\d{1,})?/', '$1', end( $requirements[ $service ] ) );
             $requirements[ $software ]['minimum'] = $minimum;
         }
 
@@ -418,8 +420,8 @@ class WP_Healthcheck {
 
         if ( preg_match( '/^(nginx|apache)$/', $software ) ) {
             $server_data[ $software ] = $server_data['web']['version'];
-            $recommended = 'stable';
-            $minimum = 'mainline';
+            $requirements[ $software ][ $minimum ] = $requirements[ $software ]['versions'][ sizeof( $requirements[ $software ]['versions'] ) - 1 ];
+            $requirements[ $software ][ $recommended ] = $requirements[ $software ]['recommended'];
         }
 
         if ( version_compare( $server_data[ $software ], $requirements[ $software ][ $recommended ], '>=' ) ) {
