@@ -419,7 +419,8 @@ class WP_Healthcheck {
         }
 
         if ( preg_match( '/^(nginx|apache)$/', $software ) ) {
-            $server_data[ $software ] = $server_data['web']['version'];
+            //$server_data[ $software ] = $server_data['web']['version'];
+            $server_data[ $software ] = '1.1.1';
             $requirements[ $software ][ $minimum ] = $requirements[ $software ]['versions'][ sizeof( $requirements[ $software ]['versions'] ) - 1 ];
             $requirements[ $software ][ $recommended ] = $requirements[ $software ]['recommended'];
         }
