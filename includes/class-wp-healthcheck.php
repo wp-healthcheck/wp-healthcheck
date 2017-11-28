@@ -235,7 +235,7 @@ class WP_Healthcheck {
                 preg_match( '/(apache|nginx)/i', $_SERVER['SERVER_SOFTWARE'], $matches );
                 $server['web']['service'] = strtolower( $matches[0] );
 
-                preg_match( '/([0-9]\.){2}[0-9]/', $_SERVER['SERVER_SOFTWARE'], $matches );
+                preg_match( '/([0-9]{1,}\.){2}([0-9]{1,})?/', $_SERVER['SERVER_SOFTWARE'], $matches );
                 $server['web']['version'] = trim( $matches[0] );
             }
 
