@@ -244,8 +244,7 @@ class WP_Healthcheck {
                         $server['web']['version'] = trim( $matches[0] );
                     }
                 } else {
-                    $server['web']['service'] = 'Web';
-                    $server['web']['version'] = $_SERVER['SERVER_SOFTWARE'];
+                    $server['web'] = array( 'service' => 'Web', 'version' => $_SERVER['SERVER_SOFTWARE'] );
                 }
             }
 
