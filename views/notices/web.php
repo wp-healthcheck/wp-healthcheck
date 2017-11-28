@@ -6,7 +6,7 @@ if ( ! defined( 'WPHC' ) ) {
 $requirements = WP_Healthcheck::get_server_requirements();
 $server_data = WP_Healthcheck::get_server_data();
 
-if ( ! isset( $server_data['web'] ) ) {
+if ( empty( $server_data['web'] && ! preg_match( '/nginx|apache/i', $server_data['web']['service'] ) ) ) {
     return false;
 }
 

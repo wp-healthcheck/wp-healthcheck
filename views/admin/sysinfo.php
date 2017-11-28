@@ -24,7 +24,7 @@ $server_data = WP_Healthcheck::get_server_data();
     <li class="<?php echo WP_Healthcheck::is_software_updated( strtolower( $server_data['database']['service'] ) ); ?>"><?php echo $server_data['database']['version']; ?></li>
   </ul>
 
-	<?php if ( isset( $server_data['web'] ) ) : ?>
+	<?php if ( ! empty( $server_data['web'] ) ) : ?>
       <ul>
         <?php if ( 'nginx' == $server_data['web']['service'] ) : ?>
           <li><?php _e( 'Nginx', 'wp-healthcheck' ); ?></li>
