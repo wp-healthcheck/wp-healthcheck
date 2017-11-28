@@ -28,8 +28,10 @@ $server_data = WP_Healthcheck::get_server_data();
       <ul>
         <?php if ( 'nginx' == $server_data['web']['service'] ) : ?>
           <li><?php _e( 'Nginx', 'wp-healthcheck' ); ?></li>
-        <?php else : ?>
+        <?php elseif ( 'apache' == $server_data['web']['service'] ) : ?>
           <li><?php _e( 'Apache', 'wp-healthcheck' ); ?></li>
+        <?php else : ?>
+          <li><?php _e( 'Web', 'wp-healthcheck' ); ?></li>
         <?php endif; ?>
         <li class="<?php echo WP_Healthcheck::is_software_updated( $server_data['web']['service'] ); ?>"><?php echo $server_data['web']['version']; ?></li>
       </ul>
