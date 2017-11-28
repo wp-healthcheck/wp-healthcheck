@@ -231,8 +231,12 @@ class WP_Healthcheck {
             );
 
             if ( isset( $_SERVER['SERVER_SOFTWARE'] ) ) {
-                $server['web']['service'] = preg_replace( '/([0-9]|\.|\/)/', '', $_SERVER['SERVER_SOFTWARE'] );
-                $server['web']['version'] = preg_replace( '/(nginx|apache|\/)/', '', $_SERVER['SERVER_SOFTWARE'] );
+                $matches = array();
+                preg_match( '/(apache|nginx)/i', $_SERVER['SERVER_SOFTWARE'], $matches );
+                $server['web']['service'] = strtolower( $matches[0] );
+
+                preg_match( '/([0-9]\.){2}[0-9]/', $_SERVER['SERVER_SOFTWARE'], $matches );
+                $server['web']['version'] = trim( $matches[0] );
             }
 
             set_transient( self::SERVER_DATA_TRANSIENT, $server, DAY_IN_SECONDS );
