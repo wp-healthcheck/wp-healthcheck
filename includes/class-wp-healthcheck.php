@@ -407,12 +407,10 @@ class WP_Healthcheck {
         $recommended = 'recommended';
         $minimum = 'minimum';
 
-        if ( preg_match( '/wp/', $software ) ) {
+        if ( 'wp' == $software ) {
             $current_local = preg_replace( '/(\d{1,}\.\d{1,})(\.\d{1,})?/', '$1', $server_data['wp'] );
 
-            $service = ( 'wp' == $software ) ? 'wordpress' : $software;
-
-            foreach ( $requirements[ $service ] as $version ) {
+            foreach ( $requirements['wordpress'] as $version ) {
                 if ( preg_match( '/^' . $current_local . '(\.\d{1,})?/', $version ) ) {
                     $current_live = $version;
 
@@ -421,13 +419,13 @@ class WP_Healthcheck {
             }
 
             if ( ! isset( $current_live ) ) {
-                $current_live = $requirements[ $service ][0];
+                $current_live = $requirements['wordpress'][0];
             }
 
             $requirements[ $software ]['recommended'] = $current_live;
 
-            $minimum = preg_replace( '/(\d{1,}\.\d{1,})(\.\d{1,})?/', '$1', end( $requirements[ $service ] ) );
-            $requirements[ $software ]['minimum'] = $minimum;
+            $minimum_version = preg_replace( '/(\d{1,}\.\d{1,})(\.\d{1,})?/', '$1', end( $requirements['wordpress'] ) );
+            $requirements[ $software ]['minimum'] = $minimum_version;
         }
 
         if ( preg_match( '/^(mysql|mariadb)$/', $software ) ) {
