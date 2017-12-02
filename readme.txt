@@ -73,7 +73,7 @@ If you are a developer and want to contribute writing new features, enhancements
 
 == Changelog ==
 
-= [1.1] 2017-11-29 =
+= [1.1] 2017-12-02 =
 * Feature: Ability to reactivate autoload options disabled through the plugin.
 * Feature: WP-CLI extension.
 * Feature: Check the web server (NGINX/Apache) versions (thanks to [@marksabbath](https://github.com/marksabbath/)).
