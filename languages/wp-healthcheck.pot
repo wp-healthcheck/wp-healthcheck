@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Healthcheck 1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-healthcheck\n"
-"POT-Creation-Date: 2017-11-26 07:27:23+00:00\n"
+"POT-Creation-Date: 2017-12-02 19:04:59+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -189,7 +189,15 @@ msgstr ""
 msgid "MySQL"
 msgstr ""
 
-#: views/admin/sysinfo.php:29
+#: views/admin/sysinfo.php:31
+msgid "NGINX"
+msgstr ""
+
+#: views/admin/sysinfo.php:33
+msgid "Apache"
+msgstr ""
+
+#: views/admin/sysinfo.php:35
 msgid "Web Server"
 msgstr ""
 
@@ -298,6 +306,26 @@ msgid ""
 "The PHP version you are using (%1$s) is not supported by WordPress anymore! "
 "Please contact your developers and/or hosting company to upgrade your PHP "
 "to version %2$s or greater."
+msgstr ""
+
+#: views/notices/web.php:25
+#. translators: %1$s is the current web server (NGINX, Apache, etc), %2$s is
+#. the version of the web server installed on server, %3$s is the version that
+#. we recommend to use
+msgid ""
+"Your %1$s version (%2$s) is not officially supported anymore! In order to "
+"get better performance and improvements, we recommend you upgrade your "
+"server to %1$s %3$s or greater."
+msgstr ""
+
+#: views/notices/web.php:30
+#. translators: %1$s is the current web server (NGINX, Apache, etc), %2$s is
+#. the version of the web server installed on server, %3$s is the version that
+#. we recommend to use
+msgid ""
+"Your %1$s version (%2$s) is obsolete and is not officially supported "
+"anymore! Please contact your developers and/or hosting company to upgrade "
+"your %1$s to version %3$s or greater as soon as possible."
 msgstr ""
 
 #: views/notices/wordpress.php:15

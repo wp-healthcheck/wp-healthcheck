@@ -228,10 +228,26 @@ class WP_Healthcheck {
                 ),
                 'php'   => $phpversion[0],
                 'wp'    => $wp_version,
+                'web'   => '',
             );
 
             if ( isset( $_SERVER['SERVER_SOFTWARE'] ) ) {
-                $server['web'] = $_SERVER['SERVER_SOFTWARE'];
+                $matches = array();
+
+                if ( preg_match( '/(apache|nginx)/i', $_SERVER['SERVER_SOFTWARE'], $matches ) ) {
+                    $server['web']['service'] = strtolower( $matches[0] );
+
+                    if ( preg_match( '/([0-9]{1,}\.){2}([0-9]{1,})?/', $_SERVER['SERVER_SOFTWARE'], $matches ) ) {
+                        $server['web']['version'] = trim( $matches[0] );
+                    } else {
+                        $server['web']['version'] = '';
+                    }
+                } else {
+                    $server['web'] = array(
+                        'service' => 'Web',
+                        'version' => $_SERVER['SERVER_SOFTWARE'],
+                    );
+                }
             }
 
             set_transient( self::SERVER_DATA_TRANSIENT, $server, DAY_IN_SECONDS );
@@ -375,7 +391,7 @@ class WP_Healthcheck {
      * @return string|false The current status (updated, outdated, or obsolete) of the software or false on error.
      */
     public static function is_software_updated( $software ) {
-        if ( ! preg_match( '/^(php|mysql|mariadb|wp)$/', $software ) ) {
+        if ( ! preg_match( '/^(php|mysql|mariadb|wp|nginx|apache)$/', $software ) ) {
             return false;
         }
 
@@ -404,12 +420,17 @@ class WP_Healthcheck {
 
             $requirements[ $software ]['recommended'] = $current_live;
 
-            $minimum = preg_replace( '/(\d{1,}\.\d{1,})(\.\d{1,})?/', '$1', end( $requirements['wordpress'] ) );
-            $requirements[ $software ]['minimum'] = $minimum;
+            $minimum_version = preg_replace( '/(\d{1,}\.\d{1,})(\.\d{1,})?/', '$1', end( $requirements['wordpress'] ) );
+            $requirements[ $software ]['minimum'] = $minimum_version;
         }
 
         if ( preg_match( '/^(mysql|mariadb)$/', $software ) ) {
             $server_data[ $software ] = $server_data['database']['version'];
+        }
+
+        if ( preg_match( '/^(nginx|apache)$/', $software ) ) {
+            $server_data[ $software ] = $server_data['web']['version'];
+            $requirements[ $software ]['minimum'] = end( $requirements[ $software ]['versions'] );
         }
 
         if ( version_compare( $server_data[ $software ], $requirements[ $software ]['recommended'], '>=' ) ) {
