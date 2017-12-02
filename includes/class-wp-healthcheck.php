@@ -235,13 +235,12 @@ class WP_Healthcheck {
                 $matches = array();
 
                 if ( preg_match( '/(apache|nginx)/i', $_SERVER['SERVER_SOFTWARE'], $matches ) ) {
-                    if ( isset( $matches[0] ) ) {
-                        $server['web']['service'] = strtolower( $matches[0] );
-                    }
+                    $server['web']['service'] = strtolower( $matches[0] );
 
-                    preg_match( '/([0-9]{1,}\.){2}([0-9]{1,})?/', $_SERVER['SERVER_SOFTWARE'], $matches );
-                    if ( isset( $matches[0] ) ) {
+                    if ( preg_match( '/([0-9]{1,}\.){2}([0-9]{1,})?/', $_SERVER['SERVER_SOFTWARE'], $matches ) ) {
                         $server['web']['version'] = trim( $matches[0] );
+                    } else {
+                        $server['web']['version'] = '';
                     }
                 } else {
                     $server['web'] = array(
@@ -404,9 +403,6 @@ class WP_Healthcheck {
 
         $server_data = self::get_server_data();
 
-        $recommended = 'recommended';
-        $minimum = 'minimum';
-
         if ( 'wp' == $software ) {
             $current_local = preg_replace( '/(\d{1,}\.\d{1,})(\.\d{1,})?/', '$1', $server_data['wp'] );
 
@@ -434,13 +430,12 @@ class WP_Healthcheck {
 
         if ( preg_match( '/^(nginx|apache)$/', $software ) ) {
             $server_data[ $software ] = $server_data['web']['version'];
-            $requirements[ $software ][ $minimum ] = $requirements[ $software ]['versions'][ sizeof( $requirements[ $software ]['versions'] ) - 1 ];
-            $requirements[ $software ][ $recommended ] = $requirements[ $software ]['recommended'];
+            $requirements[ $software ]['minimum'] = end( $requirements[ $software ]['versions'] );
         }
 
-        if ( version_compare( $server_data[ $software ], $requirements[ $software ][ $recommended ], '>=' ) ) {
+        if ( version_compare( $server_data[ $software ], $requirements[ $software ]['recommended'], '>=' ) ) {
             return 'updated';
-        } elseif ( version_compare( $server_data[ $software ], $requirements[ $software ][ $minimum ], '>=' ) ) {
+        } elseif ( version_compare( $server_data[ $software ], $requirements[ $software ]['minimum'], '>=' ) ) {
             return 'outdated';
         } else {
             return 'obsolete';

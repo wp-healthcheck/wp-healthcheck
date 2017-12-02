@@ -100,7 +100,6 @@ module.exports = function(grunt) {
           },
           processPot: function(pot) {
             var excluded_meta = ['Plugin Name of the plugin/theme', 'Plugin URI of the plugin/theme', 'Author of the plugin/theme', 'Author URI of the plugin/theme'];
-
             var translation;
 
             for (translation in pot.translations['']) {
@@ -115,7 +114,8 @@ module.exports = function(grunt) {
 
             return pot;
           },
-          type: 'wp-plugin'
+          type: 'wp-plugin',
+          updatePoFiles: true
         }
       }
     },

@@ -4,15 +4,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Healthcheck 1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-healthcheck\n"
-"POT-Creation-Date: 2017-11-26 01:27-0600\n"
-"PO-Revision-Date: 2017-11-26 01:27-0600\n"
+"POT-Creation-Date: 2017-12-02 17:24:28+00:00\n"
+"PO-Revision-Date: 2017-12-02 13:13-0600\n"
 "Last-Translator: Tiago Hillebrandt <tiago@tiagohillebrandt.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.4\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: includes/class-wp-healthcheck-admin.php:102
@@ -215,7 +215,15 @@ msgstr "MariaDB"
 msgid "MySQL"
 msgstr "MySQL"
 
-#: views/admin/sysinfo.php:29
+#: views/admin/sysinfo.php:31
+msgid "NGINX"
+msgstr "NGINX"
+
+#: views/admin/sysinfo.php:33
+msgid "Apache"
+msgstr "Apache"
+
+#: views/admin/sysinfo.php:35
 msgid "Web Server"
 msgstr "Servidor Web"
 
@@ -353,30 +361,31 @@ msgstr ""
 "WordPress! Por favor entre em contato com seus desenvolvedores e/ou empresa "
 "de hospedagem para atualizar o PHP para versão %2$s ou superior."
 
-#: views/notices/web.php:19
-#. translators: %1$s is the current database service (MySQL, MariaDB, etc),
-#. %2$s is the database version installed on server, %3$s is the version that
-#. WP team recommends
+#. translators: %1$s is the current web server (NGINX, Apache, etc), %2$s is
+#. the version of the web server installed on server, %3$s is the version that
+#. we recommend to use
+#: views/notices/web.php:25
 msgid ""
-"Your %1$s version (%2$s) is not recommended with. Please, update your web "
-"server to %3$s or greater."
+"Your %1$s version (%2$s) is not officially supported anymore! In order to "
+"get better performance and improvements, we recommend you upgrade your "
+"server to %1$s %3$s or greater."
 msgstr ""
-"Sua versão do %1$s (%2$s) não é recomendada. Por favor, entre em contato "
-"com seus desenvolvedores e/ou empresa de hospedagem para servidor web para "
-"%3$s ou superior."
+"Sua versão do %1$s (%2$s) não é mais suportada oficialmente! Para obter "
+"melhor desempenho e outras melhorias, nós recomendamos que você atualize seu "
+"servidor para o %1$s %3$s ou superior."
 
-#: views/notices/web.php:24
-#. translators: %1$s is the current database service (MySQL, MariaDB, etc),
-#. %2$s is the database version installed on server, %3$s is the version that
-#. WP team recommends
+#. translators: %1$s is the current web server (NGINX, Apache, etc), %2$s is
+#. the version of the web server installed on server, %3$s is the version that
+#. we recommend to use
+#: views/notices/web.php:30
 msgid ""
-"The %1$s version you are using (%2$s) is not recommended and is deprecated! "
-"Please contact your developers and/or hosting company to upgrade your %1$s "
-"to version %3$s or greater."
+"Your %1$s version (%2$s) is obsolete and is not officially supported "
+"anymore! Please contact your developers and/or hosting company to upgrade "
+"your %1$s to version %3$s or greater as soon as possible."
 msgstr ""
-"A versão do %1$s que você está utilizando (%2$s) não é recomendada e está descontinuada! "
-"Por favor, entre em contato com seus desenvolvedores e/ou empresa de hospedagem "
-"para atualizar seu %1$s para a versão %3$s ou superior."
+"Sua versão do %1$s (%2$s) está obsoleta e não é mais suportada oficialmente! "
+"Por favor entre em contato com seus desenvolvedores e/ou empresa de "
+"hospedagem para atualizar o %1$s para versão %3$s ou superior o quanto antes."
 
 #: views/notices/wordpress.php:15
 msgid "A newer version of WordPress is available."
