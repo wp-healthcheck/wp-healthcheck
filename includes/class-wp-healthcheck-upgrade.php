@@ -22,13 +22,9 @@ class WP_Healthcheck_Upgrade {
     public static function maybe_upgrade_db() {
         $version = get_option( self::PLUGIN_VERSION_OPTION );
 
-        if ( $version ) {
-            if ( WPHC_VERSION != $version ) {
-                WP_Healthcheck::_cleanup_options( true );
+        if ( WPHC_VERSION != $version ) {
+            WP_Healthcheck::_cleanup_options( true );
 
-                update_option( self::PLUGIN_VERSION_OPTION, WPHC_VERSION );
-            }
-        } else {
             update_option( self::PLUGIN_VERSION_OPTION, WPHC_VERSION );
         }
     }
