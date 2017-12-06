@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Healthcheck 1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-healthcheck\n"
-"POT-Creation-Date: 2017-12-02 17:24:28+00:00\n"
+"POT-Creation-Date: 2017-12-06 08:49:30+00:00\n"
 "PO-Revision-Date: 2017-12-02 13:13-0600\n"
 "Last-Translator: Tiago Hillebrandt <tiago@tiagohillebrandt.com>\n"
 "Language-Team: \n"
@@ -199,31 +199,23 @@ msgstr "Contribuidores"
 msgid "Report a Bug"
 msgstr "Reportar um Bug"
 
-#: views/admin/sysinfo.php:11
+#: views/admin/sysinfo.php:17
 msgid "WordPress"
 msgstr "WordPress"
 
-#: views/admin/sysinfo.php:15
+#: views/admin/sysinfo.php:21
 msgid "PHP"
 msgstr "PHP"
 
-#: views/admin/sysinfo.php:20
+#: views/admin/sysinfo.php:26
 msgid "MariaDB"
 msgstr "MariaDB"
 
-#: views/admin/sysinfo.php:22
+#: views/admin/sysinfo.php:28
 msgid "MySQL"
 msgstr "MySQL"
 
-#: views/admin/sysinfo.php:31
-msgid "NGINX"
-msgstr "NGINX"
-
-#: views/admin/sysinfo.php:33
-msgid "Apache"
-msgstr "Apache"
-
-#: views/admin/sysinfo.php:35
+#: views/admin/sysinfo.php:36
 msgid "Web Server"
 msgstr "Servidor Web"
 
@@ -426,3 +418,9 @@ msgstr "reativadas"
 msgctxt "plural: options were disabled"
 msgid "deactivated"
 msgstr "desativadas"
+
+#~ msgid "NGINX"
+#~ msgstr "NGINX"
+
+#~ msgid "Apache"
+#~ msgstr "Apache"

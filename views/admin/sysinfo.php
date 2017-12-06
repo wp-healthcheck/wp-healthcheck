@@ -4,6 +4,12 @@ if ( ! defined( 'WPHC' ) ) {
 }
 
 $server_data = WP_Healthcheck::get_server_data();
+
+if ( preg_match( '/(?:nginx|apache)/', $server_data['web']['service'] ) ) {
+    $web_server = $server_data['web']['service'] . '/' . $server_data['web']['version'];
+} else {
+    $web_server = $server_data['web']['version'];
+}
 ?>
 
 <div class="wphc_system_info">
@@ -27,15 +33,9 @@ $server_data = WP_Healthcheck::get_server_data();
 
     <?php if ( ! empty( $server_data['web'] ) ) : ?>
         <ul>
-            <?php if ( 'nginx' == $server_data['web']['service'] ) : ?>
-                <li><?php _e( 'NGINX', 'wp-healthcheck' ); ?></li>
-            <?php elseif ( 'apache' == $server_data['web']['service'] ) : ?>
-                <li><?php _e( 'Apache', 'wp-healthcheck' ); ?></li>
-            <?php else : ?>
-                <li><?php _e( 'Web Server', 'wp-healthcheck' ); ?></li>
-            <?php endif; ?>
+            <li><?php _e( 'Web Server', 'wp-healthcheck' ); ?></li>
 
-            <li class="<?php echo WP_Healthcheck::is_software_updated( $server_data['web']['service'] ); ?>"><?php echo $server_data['web']['version']; ?></li>
+            <li class="<?php echo WP_Healthcheck::is_software_updated( $server_data['web']['service'] ); ?>"><?php echo $web_server; ?></li>
         </ul>
     <?php endif; ?>
 </div>

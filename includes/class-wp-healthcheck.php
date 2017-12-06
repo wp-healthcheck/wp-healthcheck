@@ -74,6 +74,8 @@ class WP_Healthcheck {
         self::$initiated = true;
 
         add_action( 'upgrader_process_complete', array( 'WP_Healthcheck', 'plugin_deactivation' ) );
+
+        WP_Healthcheck_Upgrade::maybe_upgrade_db();
     }
 
     /**
@@ -494,6 +496,7 @@ class WP_Healthcheck {
             $options = array(
                 self::DISABLE_AUTOLOAD_OPTION,
                 self::DISABLE_NOTICES_OPTION,
+                WP_Healthcheck_Upgrade::PLUGIN_VERSION_OPTION,
             );
 
             foreach ( $options as $option ) {
