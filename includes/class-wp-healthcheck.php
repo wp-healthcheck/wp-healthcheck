@@ -61,6 +61,8 @@ class WP_Healthcheck {
      */
     public static function init() {
         if ( ! self::$initiated ) {
+            WP_Healthcheck_Upgrade::maybe_upgrade_db();
+
             self::init_hooks();
         }
     }
@@ -74,8 +76,6 @@ class WP_Healthcheck {
         self::$initiated = true;
 
         add_action( 'upgrader_process_complete', array( 'WP_Healthcheck', 'plugin_deactivation' ) );
-
-        WP_Healthcheck_Upgrade::maybe_upgrade_db();
     }
 
     /**
