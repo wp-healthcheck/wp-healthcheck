@@ -155,6 +155,14 @@ class WP_Healthcheck_CLI extends WP_CLI_Command {
                 }
             }
 
+            if ( 'web' == $name && isset( $info['web'] ) && is_array( $info['web'] ) ) {
+                if ( preg_match( '/(?:apache|nginx)/', $info['web']['service'] ) ) {
+                    $version = $info['web']['service'] . '/' . $info['web']['version'];
+                } else {
+                    $version = $info['web']['version'];
+                }
+            }
+
             $item = array(
                 'name'    => $name,
                 'version' => $version,
