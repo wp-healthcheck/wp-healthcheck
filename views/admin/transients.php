@@ -21,9 +21,12 @@ if ( ! defined( 'WPHC' ) ) {
         <button type="button" class="button" id="wphc-btn-transients-all">
             <?php _e( 'Clear All Transients', 'wp-healthcheck' ); ?>
         </button>
-        <button type="button" class="button" id="wphc-btn-transients-expired">
-            <?php _e( 'Clear Expired Transients', 'wp-healthcheck' ); ?>
-        </button>
+
+        <?php if ( ! function_exists( 'delete_expired_transients' ) ) : ?>
+            <button type="button" class="button" id="wphc-btn-transients-expired">
+                <?php _e( 'Clear Expired Transients', 'wp-healthcheck' ); ?>
+            </button>
+        <?php endif; ?>
 
         <button class="wphc_help_btn button dashicons dashicons-editor-help" id="wphc-btn-transients-help"><span class="screen-reader-text"><?php _e( 'Help: Transients', 'wp-healthcheck' ); ?></span></button>
     <?php endif; ?>
