@@ -61,6 +61,8 @@ class WP_Healthcheck {
      */
     public static function init() {
         if ( ! self::$initiated ) {
+            WP_Healthcheck_Upgrade::maybe_upgrade_db();
+
             self::init_hooks();
         }
     }
@@ -494,6 +496,7 @@ class WP_Healthcheck {
             $options = array(
                 self::DISABLE_AUTOLOAD_OPTION,
                 self::DISABLE_NOTICES_OPTION,
+                WP_Healthcheck_Upgrade::PLUGIN_VERSION_OPTION,
             );
 
             foreach ( $options as $option ) {

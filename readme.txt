@@ -73,12 +73,13 @@ If you are a developer and want to contribute writing new features, enhancements
 
 == Changelog ==
 
-= [1.1] 2017-11-29 =
+= [1.1] 2017-12-08 =
 * Feature: Ability to reactivate autoload options disabled through the plugin.
 * Feature: WP-CLI extension.
 * Feature: Check the web server (NGINX/Apache) versions (thanks to [@marksabbath](https://github.com/marksabbath/)).
 * Feature: Check the MariaDB version (thanks to [@marksabbath](https://github.com/marksabbath/)).
 * Feature: Check for WordPress trunk updates.
+* Feature: Hide 'Clear Expired Transients' button for WordPress 4.9+ users.
 
 = [1.0] 2017-11-17 =
 * Initial release.

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Healthcheck 1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-healthcheck\n"
-"POT-Creation-Date: 2017-12-02 19:04:59+00:00\n"
+"POT-Creation-Date: 2017-12-06 08:49:30+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -173,31 +173,23 @@ msgstr ""
 msgid "Report a Bug"
 msgstr ""
 
-#: views/admin/sysinfo.php:11
+#: views/admin/sysinfo.php:17
 msgid "WordPress"
 msgstr ""
 
-#: views/admin/sysinfo.php:15
+#: views/admin/sysinfo.php:21
 msgid "PHP"
 msgstr ""
 
-#: views/admin/sysinfo.php:20
+#: views/admin/sysinfo.php:26
 msgid "MariaDB"
 msgstr ""
 
-#: views/admin/sysinfo.php:22
+#: views/admin/sysinfo.php:28
 msgid "MySQL"
 msgstr ""
 
-#: views/admin/sysinfo.php:31
-msgid "NGINX"
-msgstr ""
-
-#: views/admin/sysinfo.php:33
-msgid "Apache"
-msgstr ""
-
-#: views/admin/sysinfo.php:35
+#: views/admin/sysinfo.php:36
 msgid "Web Server"
 msgstr ""
 
