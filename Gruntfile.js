@@ -98,7 +98,24 @@ module.exports = function(grunt) {
           potHeaders: {
             'report-msgid-bugs-to': 'https://wordpress.org/support/plugin/wp-healthcheck'
           },
-          type: 'wp-plugin'
+          processPot: function(pot) {
+            var excluded_meta = ['Plugin Name of the plugin/theme', 'Plugin URI of the plugin/theme', 'Author of the plugin/theme', 'Author URI of the plugin/theme'];
+            var translation;
+
+            for (translation in pot.translations['']) {
+              var comment = pot.translations[''][translation].comments;
+
+              if ('extracted' in comment && comment.extracted !== 'undefined') {
+                if (excluded_meta.indexOf(comment.extracted) >= 0) {
+                  delete pot.translations[''][translation];
+                }
+              }
+            }
+
+            return pot;
+          },
+          type: 'wp-plugin',
+          updatePoFiles: true
         }
       }
     },

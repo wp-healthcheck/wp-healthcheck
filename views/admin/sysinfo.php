@@ -4,26 +4,38 @@ if ( ! defined( 'WPHC' ) ) {
 }
 
 $server_data = WP_Healthcheck::get_server_data();
+
+if ( preg_match( '/(?:nginx|apache)/', $server_data['web']['service'] ) ) {
+    $web_server = $server_data['web']['service'] . '/' . $server_data['web']['version'];
+} else {
+    $web_server = $server_data['web']['version'];
+}
 ?>
 
 <div class="wphc_system_info">
-  <ul>
-    <li><?php _e( 'WordPress', 'wp-healthcheck' ); ?></li>
-    <li class="<?php echo WP_Healthcheck::is_software_updated( 'wp' ); ?>"><?php echo $server_data['wp']; ?></li>
-  </ul>
-  <ul>
-    <li><?php _e( 'PHP', 'wp-healthcheck' ); ?></li>
-    <li class="<?php echo WP_Healthcheck::is_software_updated( 'php' ); ?>"><?php echo $server_data['php']; ?></li>
-  </ul>
-  <ul>
-    <li><?php _e( 'MySQL', 'wp-healthcheck' ); ?></li>
-    <li class="<?php echo WP_Healthcheck::is_software_updated( 'mysql' ); ?>"><?php echo $server_data['mysql']; ?></li>
-  </ul>
-
-  <?php if ( ! empty( $server_data['web'] ) ) : ?>
     <ul>
-      <li><?php _e( 'Web Server', 'wp-healthcheck' ); ?></li>
-      <li><?php echo $server_data['web']; ?></li>
+        <li><?php _e( 'WordPress', 'wp-healthcheck' ); ?></li>
+        <li class="<?php echo WP_Healthcheck::is_software_updated( 'wp' ); ?>"><?php echo $server_data['wp']; ?></li>
     </ul>
-  <?php endif; ?>
+    <ul>
+        <li><?php _e( 'PHP', 'wp-healthcheck' ); ?></li>
+        <li class="<?php echo WP_Healthcheck::is_software_updated( 'php' ); ?>"><?php echo $server_data['php']; ?></li>
+    </ul>
+    <ul>
+        <?php if ( 'MariaDB' == $server_data['database']['service'] ) : ?>
+            <li><?php _e( 'MariaDB', 'wp-healthcheck' ); ?></li>
+        <?php else : ?>
+            <li><?php _e( 'MySQL', 'wp-healthcheck' ); ?></li>
+        <?php endif; ?>
+
+        <li class="<?php echo WP_Healthcheck::is_software_updated( strtolower( $server_data['database']['service'] ) ); ?>"><?php echo $server_data['database']['version']; ?></li>
+    </ul>
+
+    <?php if ( ! empty( $server_data['web'] ) ) : ?>
+        <ul>
+            <li><?php _e( 'Web Server', 'wp-healthcheck' ); ?></li>
+
+            <li class="<?php echo WP_Healthcheck::is_software_updated( $server_data['web']['service'] ); ?>"><?php echo $web_server; ?></li>
+        </ul>
+    <?php endif; ?>
 </div>

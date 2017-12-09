@@ -9,5 +9,5 @@ if ( ! defined( 'WPHC' ) ) {
 <p><?php esc_html_e( 'All the autoload options, as well as transients, are loaded automatically when WordPress loads itself. Thus, the number and size of these options can directly affect your site performance.', 'wp-healthcheck' ); ?></p>
 
 <div id="wphc-autoload-stats">
-  <?php include 'autoload-stats.php'; ?>
+    <?php include 'autoload-stats.php'; ?>
 </div>

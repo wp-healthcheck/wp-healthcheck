@@ -4,15 +4,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Healthcheck 1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-healthcheck\n"
-"POT-Creation-Date: 2017-11-16 00:01-0600\n"
-"PO-Revision-Date: 2017-11-16 00:02-0600\n"
+"POT-Creation-Date: 2017-12-06 08:49:30+00:00\n"
+"PO-Revision-Date: 2017-12-02 13:13-0600\n"
 "Last-Translator: Tiago Hillebrandt <tiago@tiagohillebrandt.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.4\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: includes/class-wp-healthcheck-admin.php:102
@@ -31,45 +31,58 @@ msgstr "Suporte &amp; Serviços"
 msgid "Welcome and thank you for choosing the WP Healthcheck plugin."
 msgstr "Bem-vindo e obrigado por usar o plugin WP Healthcheck."
 
-#: views/admin/autoload-history.php:11 views/admin/autoload-list.php:13
+#: views/admin/autoload-history.php:17 views/admin/autoload-list.php:13
 msgid "Name"
 msgstr "Nome"
 
-#: views/admin/autoload-history.php:12
+#: views/admin/autoload-history.php:18
 msgid "Deactivation Time"
 msgstr "Hora de desativação"
 
-#: views/admin/autoload-history.php:26 views/admin/autoload-list.php:45
+#: views/admin/autoload-history.php:36
+msgid "Reactivate Selected Options"
+msgstr "Reativar opções selecionadas"
+
+#: views/admin/autoload-history.php:38 views/admin/autoload-list.php:42
 msgid "Close"
 msgstr "Fechar"
 
-#. translators: %1$s is the option name
-#: views/admin/autoload-list-status.php:23
-msgid "Yay, the <strong>%1$s</strong> option was deactivated successfully."
-msgstr "Yay, a opção <strong>%1$s</strong> foi desativada com sucesso."
+#: views/admin/autoload-list-status.php:18
+msgid "reactivate"
+msgstr "reativar"
 
+#: views/admin/autoload-list-status.php:18
+msgid "deactivate"
+msgstr "desativar"
+
+#. translators: %1$s is the option name, %2$s is the status ('deactivated' or
+#. 'reactivated')
 #: views/admin/autoload-list-status.php:28
-msgid "Yay, the below options were deactivated successfully:"
-msgstr "Yay, as seguintes opções foram desativadas com sucesso:"
+msgid "Yay, the <strong>%1$s</strong> option was %2$s successfully."
+msgstr "Yay, a opção <strong>%1$s</strong> foi %2$s com sucesso."
 
-#. translators: %1$s is the option name
-#: views/admin/autoload-list-status.php:41
+#. translators: %1$s is the status ('deactivated' or 'reactivated')
+#: views/admin/autoload-list-status.php:35
+msgid "Yay, the below options were %1$s successfully:"
+msgstr "Yay, as seguintes opções foram %1$s com sucesso:"
+
+#. translators: %1$s is the status ('deactivate' or 'reactivate'), %2$s is the
+#. option name
+#: views/admin/autoload-list-status.php:51
 msgid ""
-"Oops, for some reason we couldn't deactivate the <strong>%1$s</strong> "
-"option."
+"Oops, for some reason we couldn't %1$s the <strong>%2$s</strong> option."
 msgstr ""
-"Oops, por algum motivo não conseguimos desativar a opção <strong>%1$s</"
-"strong>."
+"Oops, por algum motivo não conseguimos %1$s a opção <strong>%2$s</strong>."
 
 #: views/admin/autoload-list.php:14
 msgid "Size"
 msgstr "Tamanho"
 
-#: views/admin/autoload-list.php:28
+#: views/admin/autoload-list.php:27
 msgid "You can't deactivate a WordPress core option."
 msgstr "Você não pode desativar uma opção do core do WordPress."
 
-#: views/admin/autoload-list.php:43
+#: views/admin/autoload-list.php:40
 msgid "Deactivate Selected Options"
 msgstr "Desativar opções selecionadas"
 
@@ -186,19 +199,23 @@ msgstr "Contribuidores"
 msgid "Report a Bug"
 msgstr "Reportar um Bug"
 
-#: views/admin/sysinfo.php:11
+#: views/admin/sysinfo.php:17
 msgid "WordPress"
 msgstr "WordPress"
 
-#: views/admin/sysinfo.php:15
+#: views/admin/sysinfo.php:21
 msgid "PHP"
 msgstr "PHP"
 
-#: views/admin/sysinfo.php:19
+#: views/admin/sysinfo.php:26
+msgid "MariaDB"
+msgstr "MariaDB"
+
+#: views/admin/sysinfo.php:28
 msgid "MySQL"
 msgstr "MySQL"
 
-#: views/admin/sysinfo.php:25
+#: views/admin/sysinfo.php:36
 msgid "Web Server"
 msgstr "Servidor Web"
 
@@ -258,6 +275,33 @@ msgstr "Limpar os transients expirados"
 msgid "Help: Transients"
 msgstr "Ajuda: Transients"
 
+#. translators: %1$s is the current database service (MySQL, MariaDB, etc),
+#. %2$s is the database version installed on server, %3$s is the version that
+#. WP team recommends
+#: views/notices/database.php:21
+msgid ""
+"Your %1$s version (%2$s) is compatible with the current WordPress install. "
+"However, the <a href=\"https://wordpress.org/about/requirements/\">WordPress "
+"team recommends</a> you upgrade your server to %3$s or greater."
+msgstr ""
+"Sua versão do %1$s (%2$s) é compatível com a versão atual do WordPress. No "
+"entanto, o <a href=\"https://wordpress.org/about/requirements/\">time do "
+"WordPress recomenda</a> que você atualize o %1$s para versão %3$s ou "
+"superior."
+
+#. translators: %1$s is the current database service (MySQL, MariaDB, etc),
+#. %2$s is the database version installed on server, %3$s is the version that
+#. WP team recommends
+#: views/notices/database.php:26
+msgid ""
+"The %1$s version you are using (%2$s) is not supported by WordPress anymore! "
+"Please contact your developers and/or hosting company to upgrade your %1$s "
+"to version %3$s or greater."
+msgstr ""
+"A versão do %1$s que você está utilizando (%2$s) não é mais suportada pelo "
+"WordPress! Por favor entre em contato com seus desenvolvedores e/ou empresa "
+"de hospedagem para atualizar o %1$s para versão %3$s ou superior."
+
 #. translators: %1$s is the MySQL version installed on server, %2$s is the one
 #. WP team recommends
 #: views/notices/mysql.php:19
@@ -309,6 +353,32 @@ msgstr ""
 "WordPress! Por favor entre em contato com seus desenvolvedores e/ou empresa "
 "de hospedagem para atualizar o PHP para versão %2$s ou superior."
 
+#. translators: %1$s is the current web server (NGINX, Apache, etc), %2$s is
+#. the version of the web server installed on server, %3$s is the version that
+#. we recommend to use
+#: views/notices/web.php:25
+msgid ""
+"Your %1$s version (%2$s) is not officially supported anymore! In order to "
+"get better performance and improvements, we recommend you upgrade your "
+"server to %1$s %3$s or greater."
+msgstr ""
+"Sua versão do %1$s (%2$s) não é mais suportada oficialmente! Para obter "
+"melhor desempenho e outras melhorias, nós recomendamos que você atualize seu "
+"servidor para o %1$s %3$s ou superior."
+
+#. translators: %1$s is the current web server (NGINX, Apache, etc), %2$s is
+#. the version of the web server installed on server, %3$s is the version that
+#. we recommend to use
+#: views/notices/web.php:30
+msgid ""
+"Your %1$s version (%2$s) is obsolete and is not officially supported "
+"anymore! Please contact your developers and/or hosting company to upgrade "
+"your %1$s to version %3$s or greater as soon as possible."
+msgstr ""
+"Sua versão do %1$s (%2$s) está obsoleta e não é mais suportada oficialmente! "
+"Por favor entre em contato com seus desenvolvedores e/ou empresa de "
+"hospedagem para atualizar o %1$s para versão %3$s ou superior o quanto antes."
+
 #: views/notices/wordpress.php:15
 msgid "A newer version of WordPress is available."
 msgstr "Uma nova versão do WordPress está disponível."
@@ -325,33 +395,32 @@ msgstr "Atualize o WordPress agora"
 msgid "Please update it now"
 msgstr "Atualize agora"
 
-#. Plugin Name of the plugin/theme
-msgid "WP Healthcheck"
-msgstr "WP Healthcheck"
-
-#. Plugin URI of the plugin/theme
-msgid "https://wp-healthcheck.com"
-msgstr "https://wp-healthcheck.com"
-
 #. Description of the plugin/theme
 msgid "Checks the health of your WordPress install."
 msgstr "Verifica o estado da sua instalação WordPress."
 
-#. Author of the plugin/theme
-msgid "WP Healthcheck Team"
-msgstr "WP Healthcheck Team"
+#: views/admin/autoload-list-status.php:20
+msgctxt "singular: option was reactivated"
+msgid "reactivated"
+msgstr "reativada"
 
-#. Author URI of the plugin/theme
-msgid "https://wp-healthcheck.com/contributors"
-msgstr "https://wp-healthcheck.com/contributors"
+#: views/admin/autoload-list-status.php:20
+msgctxt "singular: option was disabled"
+msgid "deactivated"
+msgstr "desativada"
 
-#~ msgid ""
-#~ "If you have any questions, you can post a new thread in our <a href="
-#~ "\"https://wordpress.org/support/plugin/wp-healthcheck\">Community Forum</"
-#~ "a>, available on WordPress.org. We review it weekly and our team will be "
-#~ "happy to assist you there."
-#~ msgstr ""
-#~ "Se você tiver quaisquer dúvidas, você pode postá-las no nosso <a href="
-#~ "\"https://wordpress.org/support/plugin/wp-healthcheck\">fórum da "
-#~ "comunidade</a>, disponível no WordPress.org. Nós revisamos ele "
-#~ "semanalmente e nosso time ficará feliz em lhe ajudar."
+#: views/admin/autoload-list-status.php:21
+msgctxt "plural: options were reactivated"
+msgid "reactivated"
+msgstr "reativadas"
+
+#: views/admin/autoload-list-status.php:21
+msgctxt "plural: options were disabled"
+msgid "deactivated"
+msgstr "desativadas"
+
+#~ msgid "NGINX"
+#~ msgstr "NGINX"
+
+#~ msgid "Apache"
+#~ msgstr "Apache"

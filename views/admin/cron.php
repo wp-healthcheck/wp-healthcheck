@@ -11,9 +11,9 @@ if ( ! defined( 'WPHC' ) ) {
 <p>To avoid this situation, we highly recommend you to follow the instructions below to disable the native WordPress Cron and enable a Crontab job in their place.</p>
 
 <?php if ( ! WP_Healthcheck::is_wpcron_disabled() ) : ?>
-  <p>Add the following line to your wp-config.php:</p>
+    <p>Add the following line to your wp-config.php:</p>
 
-  <pre>define( 'DISABLE_WP_CRON', true );</pre>
+    <pre>define( 'DISABLE_WP_CRON', true );</pre>
 <?php endif; ?>
 
 <p>Add the following line to your crontab (usually available at /etc/crontab):</p>

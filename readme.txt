@@ -1,10 +1,10 @@
 === WP Healthcheck ===
-Contributors: tiagohillebrandt
+Contributors: tiagohillebrandt, marksabbath
 Tags: performance, transients, autoload, cron, healthcheck, load time
 Requires at least: 3.9
 Tested up to: 4.9
 Requires PHP: 5.5
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv3+
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -14,11 +14,19 @@ WP Healthcheck is a plugin to check the health of your WordPress install.
 
 [WP Healthcheck](https://wp-healthcheck.com) is a plugin to check the health of your WordPress install.
 
-It collects some useful information regarding your site health, like the number of active transients and autoload options, and then bring them up to you via Dashboard.
+It detects some useful information regarding your site health, like the number of active transients and autoload options, and then bring them up to you via Dashboard.
 
-And after that, it can help you to improve your site performance by cleaning up the transients and deactivating autoload options.
+After that, it can help you to improve your site performance by cleaning up the transients and deactivating autoload options.
 
-Also, the WP Healthcheck verifies for the version of the softwares installed in your server. To execute this verification, the plugin retrieve data from our [external API](https://api.wp-healthcheck.com/v1/requirements) and then compare the versions available in our API versus the ones installed in your server.
+Also, WP Healthcheck verifies for the version of the softwares installed in your server. To perform this verification, the plugin retrieves data from our external API and then compare the versions available in our API versus the ones installed in your server.
+
+= WP-CLI Extension =
+
+This plugin also includes a WP-CLI extension. If you want to see all the commands available in the plugin, go ahead and run `wp healthcheck` in your site.
+
+* <code>wp healthcheck autoload [--deactivate=<option-name>] [--history]</code>
+* <code>wp healthcheck transient [--delete-expired] [--delete-all]</code>
+* <code>wp healthcheck server</code>
 
 == Frequently Asked Questions ==
 
@@ -46,11 +54,10 @@ Alternatively, you can find the POT file available at `/languages/wp-healthcheck
 
 We already have some features planned for coming versions:
 
-* WP-CLI extension.
 * Ability to check the health of your WP Cron.
-* Ability to enable back an autoload option that was disabled through the plugin.
 * Check for secure headers (HTTPS).
-* MariaDB version checker support.
+* Better support to external object caching.
+* Security check.
 
 If you have any other features that you would like to see available in WP Healthcheck, please send them over to `tiago AT tiagohillebrandt DOT com`.
 
@@ -62,8 +69,17 @@ If you are a developer and want to contribute writing new features, enhancements
 
 1. WP Healthcheck admin.
 2. Admin notices.
+3. WP-CLI extension.
 
 == Changelog ==
+
+= [1.1] 2017-12-08 =
+* Feature: Ability to reactivate autoload options disabled through the plugin.
+* Feature: WP-CLI extension.
+* Feature: Check the web server (NGINX/Apache) versions (thanks to [@marksabbath](https://github.com/marksabbath/)).
+* Feature: Check the MariaDB version (thanks to [@marksabbath](https://github.com/marksabbath/)).
+* Feature: Check for WordPress trunk updates.
+* Feature: Hide 'Clear Expired Transients' button for WordPress 4.9+ users.
 
 = [1.0] 2017-11-17 =
 * Initial release.

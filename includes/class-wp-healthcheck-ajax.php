@@ -48,6 +48,7 @@ class WP_Healthcheck_AJAX {
             'autoload_deactivate',
             'autoload_history',
             'autoload_list',
+            'autoload_reactivate',
             'hide_admin_notice',
             'transients_cleanup',
         );
@@ -136,6 +137,31 @@ class WP_Healthcheck_AJAX {
     }
 
     /**
+     * Hook: reactivate an autoload option.
+     *
+     * @since 1.1
+     */
+    public static function autoload_reactivate() {
+        check_ajax_referer( 'wphc_autoload_reactivate' );
+
+        $options = array();
+
+        foreach ( $_POST as $name => $value ) {
+            if ( preg_match( '/^wphc-hopt-/', $name ) ) {
+                $option_name = preg_replace( '/^wphc-hopt-/', '', urldecode( $name ) );
+
+                $options[ $option_name ] = WP_Healthcheck::reactivate_autoload_option( $option_name );
+            }
+        }
+
+        $reactivate = true;
+
+        include WPHC_PLUGIN_DIR . '/views/admin/autoload-list-status.php';
+
+        wp_die();
+    }
+
+    /**
      * Hook: hide an admin notice.
      *
      * @since 1.0
@@ -143,7 +169,7 @@ class WP_Healthcheck_AJAX {
     public static function hide_admin_notice() {
         check_ajax_referer( 'wphc_hide_admin_notice' );
 
-        if ( isset( $_POST['software'] ) && preg_match( '/(?:php|mysql|wordpress)/', $_POST['software'] ) ) {
+        if ( isset( $_POST['software'] ) && preg_match( '/(?:php|database|wordpress|web)/', $_POST['software'] ) ) {
             $notices_transient = get_transient( WP_Healthcheck::HIDE_NOTICES_TRANSIENT );
 
             if ( false === $notices_transient ) {
