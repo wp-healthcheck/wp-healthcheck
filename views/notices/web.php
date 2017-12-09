@@ -6,11 +6,11 @@ if ( ! defined( 'WPHC' ) ) {
 $requirements = WP_Healthcheck::get_server_requirements();
 $server_data = WP_Healthcheck::get_server_data();
 
-$service = $server_data['web']['service'];
-
-if ( empty( $server_data['web'] ) || ! preg_match( '/(nginx|apache)/i', $service ) ) {
+if ( empty( $server_data['web'] ) || ! preg_match( '/(nginx|apache)/i', $server_data['web']['service'] ) ) {
     return false;
 }
+
+$service = $server_data['web']['service'];
 
 $status = WP_Healthcheck::is_software_updated( $service );
 
