@@ -4,15 +4,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Healthcheck 1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-healthcheck\n"
-"POT-Creation-Date: 2017-12-06 08:49:30+00:00\n"
-"PO-Revision-Date: 2017-12-02 13:13-0600\n"
+"POT-Creation-Date: 2018-01-20 19:06:51+00:00\n"
+"PO-Revision-Date: 2018-01-20 13:50-0600\n"
 "Last-Translator: Tiago Hillebrandt <tiago@tiagohillebrandt.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: includes/class-wp-healthcheck-admin.php:102
@@ -267,11 +267,11 @@ msgstr "Limpar object cache"
 msgid "Clear All Transients"
 msgstr "Limpar todos os transients"
 
-#: views/admin/transients.php:25
+#: views/admin/transients.php:27
 msgid "Clear Expired Transients"
 msgstr "Limpar os transients expirados"
 
-#: views/admin/transients.php:28
+#: views/admin/transients.php:31
 msgid "Help: Transients"
 msgstr "Ajuda: Transients"
 
@@ -353,6 +353,31 @@ msgstr ""
 "WordPress! Por favor entre em contato com seus desenvolvedores e/ou empresa "
 "de hospedagem para atualizar o PHP para versão %2$s ou superior."
 
+#: views/notices/ssl.php:17
+msgid "day"
+msgid_plural "days"
+msgstr[0] "dia"
+msgstr[1] "dias"
+
+#. translators: %1$s is the certificate issuer, %2$d is the number of days,
+#. %3$s is 'day' or 'days' string
+#: views/notices/ssl.php:23
+msgid ""
+"Your SSL certificate%1$s will expire in %2$d %3$s. Please don't forget to "
+"renew it!"
+msgstr ""
+"Seu certificado SSL%1$s vai expirar em %2$d %3$s. Não esqueça de renová-lo!"
+
+#. translators: %1$s is the certificate issuer, %2$d is the number of days,
+#. %3$s is 'day' or 'days' string
+#: views/notices/ssl.php:28
+msgid ""
+"Your SSL certificate%1$s has expired %2$d %3$s ago. Please renew it as soon "
+"as possible!"
+msgstr ""
+"Seu certificado SSL%1$s expirou %2$d %3$s atrás. Por favor renove ele o mais "
+"breve possível!"
+
 #. translators: %1$s is the current web server (NGINX, Apache, etc), %2$s is
 #. the version of the web server installed on server, %3$s is the version that
 #. we recommend to use
@@ -418,9 +443,3 @@ msgstr "reativadas"
 msgctxt "plural: options were disabled"
 msgid "deactivated"
 msgstr "desativadas"
-
-#~ msgid "NGINX"
-#~ msgstr "NGINX"
-
-#~ msgid "Apache"
-#~ msgstr "Apache"

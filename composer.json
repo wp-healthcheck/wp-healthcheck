@@ -3,7 +3,8 @@
         "squizlabs/php_codesniffer": "^3.0",
         "wp-coding-standards/wpcs": "^0.13.1",
         "phpunit/phpunit": "^6.3",
-        "wimg/php-compatibility": "^8.0"
+        "wimg/php-compatibility": "^8.0",
+        "jakub-onderka/php-parallel-lint": "^0.9.2"
     },
     "autoload-dev": {
         "files": [
