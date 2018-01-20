@@ -57,7 +57,7 @@ jQuery(document).ready(function($) {
   })
   .on('click', '.wphc-notice .notice-dismiss', function() {
     var classes = $(this).closest('.wphc-notice').attr('class');
-    var software = classes.match(/wphc-notice-(?:php|database|wordpress|web)\s/)[0].replace('wphc-notice-', '');
+    var software = classes.match(/wphc-notice-(?:php|database|wordpress|web|ssl)\s/)[0].replace('wphc-notice-', '');
 
     wphc_do_ajax('wphc_hide_admin_notice', {'software': software}, false);
   });

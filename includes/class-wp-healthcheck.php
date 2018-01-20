@@ -47,6 +47,14 @@ class WP_Healthcheck {
     const SERVER_DATA_TRANSIENT = 'wphc_server_data';
 
     /**
+     * Transient to store the SSL data.
+     *
+     * @since 1.2
+     * @var string
+     */
+    const SSL_DATA_TRANSIENT = 'wphc_ssl_data';
+
+    /**
      * Whether to initiate the WordPress hooks.
      *
      * @since 1.0
@@ -76,6 +84,7 @@ class WP_Healthcheck {
         self::$initiated = true;
 
         add_action( 'upgrader_process_complete', array( 'WP_Healthcheck', 'plugin_deactivation' ) );
+        add_action( 'shutdown', array( 'WP_Healthcheck', 'get_ssl_data' ) );
     }
 
     /**
@@ -222,15 +231,20 @@ class WP_Healthcheck {
             $php = preg_match( '/^(\d+\.){2}\d+/', phpversion(), $phpversion );
 
             $db_service = ( preg_match( '/MariaDB/', $wpdb->dbh->server_info ) ) ? 'MariaDB' : 'MySQL';
+            $db_version = $wpdb->db_version();
+
+            if ( 'MariaDB' == $db_service ) {
+                $db_version = preg_replace( '/[^0-9.].*/', '', $wpdb->get_var( 'SELECT @@version;' ) );
+            }
 
             $server = array(
                 'database' => array(
                     'service' => $db_service,
-                    'version' => $wpdb->db_version(),
+                    'version' => $db_version,
                 ),
-                'php'   => $phpversion[0],
-                'wp'    => $wp_version,
-                'web'   => '',
+                'php'      => $phpversion[0],
+                'wp'       => $wp_version,
+                'web'      => '',
             );
 
             if ( isset( $_SERVER['SERVER_SOFTWARE'] ) ) {
@@ -303,6 +317,64 @@ class WP_Healthcheck {
         $user = ( is_null( $owner ) || ! isset( $owner['name'] ) ) ? 'root' : $owner['name'];
 
         return $user;
+    }
+
+    /**
+     * Retrieves some information from SSL certificate associated with site
+     * url.
+     *
+     * @since 1.2
+     *
+     * @return array|false SSL data or false on error.
+     */
+    public static function get_ssl_data() {
+        if ( ! is_ssl() ) {
+            return false;
+        }
+
+        $ssl_data = get_transient( self::SSL_DATA_TRANSIENT );
+
+        if ( false === $ssl_data ) {
+            $context = stream_context_create( array(
+                'ssl' => array(
+                    'capture_peer_cert' => true,
+                    'verify_peer'       => false,
+                ),
+            ) );
+
+            $siteurl = parse_url( get_option( 'siteurl' ) );
+
+            if ( empty( $siteurl['host'] ) ) {
+                return false;
+            }
+
+            $socket = stream_socket_client( 'ssl://' . $siteurl['host'] . ':443', $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $context );
+
+            if ( ! $socket ) {
+                set_transient( self::SSL_DATA_TRANSIENT, array(), DAY_IN_SECONDS );
+
+                return false;
+            }
+
+            $params = stream_context_get_params( $socket );
+
+            if ( ! empty( $params['options']['ssl']['peer_certificate'] ) ) {
+                $certificate = openssl_x509_parse( $params['options']['ssl']['peer_certificate'] );
+
+                $ssl_data = array(
+                    'common_name' => $certificate['subject']['CN'],
+                    'issuer'      => $certificate['issuer']['CN'],
+                    'validity'    => array(
+                        'from' => date( 'Y-m-d H:i:s', $certificate['validFrom_time_t'] ),
+                        'to'   => date( 'Y-m-d H:i:s', $certificate['validTo_time_t'] ),
+                    ),
+                );
+
+                set_transient( self::SSL_DATA_TRANSIENT, $ssl_data, DAY_IN_SECONDS );
+            }
+        }
+
+        return $ssl_data;
     }
 
     /**
@@ -445,6 +517,28 @@ class WP_Healthcheck {
     }
 
     /**
+     * Determines if a SSL certificate will expire soon.
+     *
+     * @since 1.2
+     *
+     * @return int|false Number of days until certificate expiration or false on error.
+     */
+    public static function is_ssl_expiring() {
+        $ssl_data = get_transient( self::SSL_DATA_TRANSIENT );
+
+        if ( false !== $ssl_data && ! empty( $ssl_data['validity']['to'] ) ) {
+            $current = time();
+            $expiration = strtotime( $ssl_data['validity']['to'] );
+
+            $diff = intval( floor( $expiration - $current ) / DAY_IN_SECONDS );
+
+            return ( ( $diff <= 15 ) ? $diff : false );
+        }
+
+        return false;
+    }
+
+    /**
      * Determines if WordPress cron constant is enabled or not.
      *
      * @since 1.0
@@ -510,6 +604,7 @@ class WP_Healthcheck {
             self::HIDE_NOTICES_TRANSIENT,
             self::MIN_REQUIREMENTS_TRANSIENT,
             self::SERVER_DATA_TRANSIENT,
+            self::SSL_DATA_TRANSIENT,
         );
 
         foreach ( $transients as $transient ) {
