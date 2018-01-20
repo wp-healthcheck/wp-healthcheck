@@ -3,7 +3,7 @@
  * Plugin Name: WP Healthcheck
  * Plugin URI:  https://wp-healthcheck.com
  * Description: Checks the health of your WordPress install.
- * Version:     1.1
+ * Version:     1.2
  * Author:      Tiago Hillebrandt
  * Author URI:  https://wp-healthcheck.com/contributors
  * License:     GPL-3.0+
