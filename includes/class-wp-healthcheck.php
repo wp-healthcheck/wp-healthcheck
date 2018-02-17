@@ -247,7 +247,7 @@ class WP_Healthcheck {
                 'web'      => '',
             );
 
-            if ( isset( $_SERVER['SERVER_SOFTWARE'] ) ) {
+            if ( ! empty( $_SERVER['SERVER_SOFTWARE'] ) ) {
                 $matches = array();
 
                 if ( preg_match( '/(apache|nginx)/i', $_SERVER['SERVER_SOFTWARE'], $matches ) ) {

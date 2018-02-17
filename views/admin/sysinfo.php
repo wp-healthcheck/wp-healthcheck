@@ -5,10 +5,12 @@ if ( ! defined( 'WPHC' ) ) {
 
 $server_data = WP_Healthcheck::get_server_data();
 
-if ( preg_match( '/(?:nginx|apache)/', $server_data['web']['service'] ) ) {
-    $web_server = $server_data['web']['service'] . '/' . $server_data['web']['version'];
-} else {
-    $web_server = $server_data['web']['version'];
+if ( ! empty( $server_data['web']['version'] ) && ! empty( $server_data['web']['service'] ) ) {
+    if ( preg_match( '/(?:nginx|apache)/', $server_data['web']['service'] ) ) {
+        $web_server = $server_data['web']['service'] . '/' . $server_data['web']['version'];
+    } else {
+        $web_server = $server_data['web']['version'];
+    }
 }
 ?>
 
@@ -31,7 +33,7 @@ if ( preg_match( '/(?:nginx|apache)/', $server_data['web']['service'] ) ) {
         <li class="<?php echo WP_Healthcheck::is_software_updated( strtolower( $server_data['database']['service'] ) ); ?>"><?php echo $server_data['database']['version']; ?></li>
     </ul>
 
-    <?php if ( ! empty( $server_data['web'] ) ) : ?>
+    <?php if ( ! empty( $web_server ) ) : ?>
         <ul>
             <li><?php _e( 'Web Server', 'wp-healthcheck' ); ?></li>
 
