@@ -1,10 +1,10 @@
 === WP Healthcheck ===
 Contributors: tiagohillebrandt, marksabbath
-Tags: performance, transients, autoload, cron, healthcheck, load time
+Tags: performance, transients, autoload, cron, healthcheck, load time, ssl, https, check
 Requires at least: 3.9
-Tested up to: 4.9.2
+Tested up to: 4.9.4
 Requires PHP: 5.5
-Stable tag: 1.2
+Stable tag: 1.2.1
 License: GPLv3+
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -74,6 +74,9 @@ If you are a developer and want to contribute writing new features, enhancements
 3. WP-CLI extension.
 
 == Changelog ==
+
+= [1.2.1] 2018-02-17 =
+* Hotfix: Fixes warnings when server software is not found ([#15](https://github.com/wp-healthcheck/wp-healthcheck/issues/15)).
 
 = [1.2] 2018-01-20 =
 * Feature: Display an admin notice when your SSL certificate is about to expire or already expired.
