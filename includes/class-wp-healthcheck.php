@@ -23,6 +23,14 @@ class WP_Healthcheck {
     const DISABLE_NOTICES_OPTION = 'wphc_disable_admin_notices';
 
     /**
+     * Option to store the auto update status.
+     *
+     * @since 1.0
+     * @var string
+     */
+    const CORE_AUTO_UPDATE_OPTION = 'wphc_auto_update_status';
+
+    /**
      * Transient to store if an admin notice should be displayed or not.
      *
      * @since 1.0
@@ -63,6 +71,8 @@ class WP_Healthcheck {
         if ( ! self::$initiated ) {
             self::init_hooks();
         }
+
+        add_action( 'wphc_core_update_check', array( 'WP_Healthcheck', 'check_core_updates' ) );
     }
 
     /**
@@ -330,6 +340,42 @@ class WP_Healthcheck {
     }
 
     /**
+     * Returns the wp-healthcheck auto update option value.
+     *
+     * @since 1.0
+     *
+     * @return string|bool It can assume 'disabled', 'minor', 'major', 'dev' or false.
+     */
+    public static function get_core_auto_update_option() {
+        if ( self::is_wp_auto_update_disabled() ) {
+            return false;
+        }
+
+        $core_auto_update = get_option( self::CORE_AUTO_UPDATE_OPTION );
+
+        return  ( $core_auto_update ) ? $core_auto_update : 'minor';
+    }
+
+    /**
+     * Sets the wp-healthcheck auto update option value
+     * which could be 'disabled', 'minor', 'major' or 'dev'.
+     *
+     * @since 1.0
+     *
+     */
+    public static function set_core_auto_update_option( $option_value ) {
+        $core_auto_update_option = get_option( self::CORE_AUTO_UPDATE_OPTION );
+
+        if ( self::is_wp_auto_update_disabled() ) {
+            if ( $core_auto_update_option ) {
+                delete_option( self::CORE_AUTO_UPDATE_OPTION );
+            }
+        }
+
+        update_option( self::CORE_AUTO_UPDATE_OPTION, $option_value );
+    }
+
+    /**
      * Determine if an option is set to autoload or not.
      *
      * @since 1.0
@@ -433,6 +479,35 @@ class WP_Healthcheck {
     }
 
     /**
+     * Determines if WordPress auto update constants are enabled or not.
+     *
+     * @since 1.0
+     *
+     * @return boolean True if WordPress auto update constants are available.
+     */
+    public static function is_wp_auto_update_disabled() {
+        return ( defined( 'AUTOMATIC_UPDATER_DISABLED' ) && defined( 'WP_AUTO_UPDATE_CORE' ) );
+    }
+
+    /**
+     * Check and apply WordPress core updates option.
+     *
+     * @since 1.0
+     */
+    public static function check_core_updates() {
+        $core_auto_update_option = self::get_core_auto_update_option();
+
+        if ( $core_auto_update_option && preg_match( '/ˆ(minor|major|dev|disabled)$/' ) ) {
+            if ( 'disabled' == $core_auto_update_option ) {
+                add_filter( 'automatic_updater_disabled', '__return_true' );
+            } else {
+                add_filter( 'allow_' . $core_auto_update_option . '_auto_core_updates', '__return_true' );
+            }
+        }
+
+    }
+
+    /**
      * Add options when plugin is activated.
      *
      * @since 1.0
@@ -473,6 +548,7 @@ class WP_Healthcheck {
             $options = array(
                 self::DISABLE_AUTOLOAD_OPTION,
                 self::DISABLE_NOTICES_OPTION,
+                self::CORE_AUTO_UPDATE_OPTION,
             );
 
             foreach ( $options as $option ) {
