@@ -72,7 +72,7 @@ class WP_Healthcheck {
             self::init_hooks();
         }
 
-        add_action( 'wphc_core_update_check', array( 'WP_Healthcheck', 'check_core_updates' ) );
+        add_action( 'wp_loaded', array( 'WP_Healthcheck', 'check_core_updates' ) );
     }
 
     /**
@@ -497,7 +497,8 @@ class WP_Healthcheck {
     public static function check_core_updates() {
         $core_auto_update_option = self::get_core_auto_update_option();
 
-        if ( $core_auto_update_option && preg_match( '/ˆ(minor|major|dev|disabled)$/' ) ) {
+        if ( $core_auto_update_option && preg_match( '/^(minor|major|dev|disabled)$/', $core_auto_update_option ) ) {
+
             if ( 'disabled' == $core_auto_update_option ) {
                 add_filter( 'automatic_updater_disabled', '__return_true' );
             } else {
