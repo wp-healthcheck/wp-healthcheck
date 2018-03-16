@@ -360,8 +360,9 @@ class WP_Healthcheck {
      * Sets the wp-healthcheck auto update option value
      * which could be 'disabled', 'minor', 'major' or 'dev'.
      *
-     * @since 1.0
+     * @param string $option_value Auto update value.
      *
+     * @since 1.0
      */
     public static function set_core_auto_update_option( $option_value ) {
         $core_auto_update_option = get_option( self::CORE_AUTO_UPDATE_OPTION );
