@@ -12,8 +12,7 @@ echo "if ( !defined('ABSPATH') ) define('ABSPATH', dirname(__FILE__) . '/');" >>
 echo "require_once(ABSPATH . 'wp-settings.php');" >> wp-config.php
 
 # downloads WP-CLI
-version=`curl -s https://api.github.com/repos/wp-cli/wp-cli/tags | egrep -o "v[0-9].[0-9]{1,}.[0-9]" | sort | uniq -d | tail -n1 | sed 's/^v//g'`
-curl -sSL https://github.com/wp-cli/wp-cli/releases/download/v$version/wp-cli-$version.phar -o wp
+curl -sSL https://raw.github.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o wp
 chmod +x wp
 
 [[ $(id -u) = 0 ]] && cmd="./wp --allow-root" || cmd="./wp"

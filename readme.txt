@@ -1,10 +1,10 @@
 === WP Healthcheck ===
 Contributors: tiagohillebrandt, marksabbath
-Tags: performance, transients, autoload, cron, healthcheck, load time
+Tags: performance, transients, autoload, cron, healthcheck, load time, ssl, https, check
 Requires at least: 3.9
-Tested up to: 4.9
+Tested up to: 4.9.4
 Requires PHP: 5.5
-Stable tag: 1.1
+Stable tag: 1.2.1
 License: GPLv3+
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -19,6 +19,8 @@ It detects some useful information regarding your site health, like the number o
 After that, it can help you to improve your site performance by cleaning up the transients and deactivating autoload options.
 
 Also, WP Healthcheck verifies for the version of the softwares installed in your server. To perform this verification, the plugin retrieves data from our external API and then compare the versions available in our API versus the ones installed in your server.
+
+Finally, it checks your SSL certificate expiration date, and send notifications in your Dashboard when it is about to expire or already expired.
 
 = WP-CLI Extension =
 
@@ -73,12 +75,21 @@ If you are a developer and want to contribute writing new features, enhancements
 
 == Changelog ==
 
-= [1.1] 2017-11-29 =
+= [1.2.1] 2018-02-17 =
+* Hotfix: Fixes warnings when server software is not found ([#15](https://github.com/wp-healthcheck/wp-healthcheck/issues/15)).
+
+= [1.2] 2018-01-20 =
+* Feature: Display an admin notice when your SSL certificate is about to expire or already expired.
+* Hotfix: In some cases, MariaDB version from db_version() was incorrect.
+* Hotfix: Hide the web server admin notice when the version was not retrieved properly.
+
+= [1.1] 2017-12-08 =
 * Feature: Ability to reactivate autoload options disabled through the plugin.
 * Feature: WP-CLI extension.
 * Feature: Check the web server (NGINX/Apache) versions (thanks to [@marksabbath](https://github.com/marksabbath/)).
 * Feature: Check the MariaDB version (thanks to [@marksabbath](https://github.com/marksabbath/)).
 * Feature: Check for WordPress trunk updates.
+* Feature: Hide 'Clear Expired Transients' button for WordPress 4.9+ users.
 
 = [1.0] 2017-11-17 =
 * Initial release.
