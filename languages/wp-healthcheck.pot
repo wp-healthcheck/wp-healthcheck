@@ -1,14 +1,14 @@
-# Copyright (C) 2017 Tiago Hillebrandt
+# Copyright (C) 2018 Tiago Hillebrandt
 # This file is distributed under the GPL-3.0+.
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Healthcheck 1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-healthcheck\n"
-"POT-Creation-Date: 2017-11-26 07:27:23+00:00\n"
+"POT-Creation-Date: 2018-01-20 19:06:51+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: grunt-wp-i18n1.0.1\n"
@@ -173,23 +173,23 @@ msgstr ""
 msgid "Report a Bug"
 msgstr ""
 
-#: views/admin/sysinfo.php:11
+#: views/admin/sysinfo.php:17
 msgid "WordPress"
 msgstr ""
 
-#: views/admin/sysinfo.php:15
+#: views/admin/sysinfo.php:21
 msgid "PHP"
 msgstr ""
 
-#: views/admin/sysinfo.php:20
+#: views/admin/sysinfo.php:26
 msgid "MariaDB"
 msgstr ""
 
-#: views/admin/sysinfo.php:22
+#: views/admin/sysinfo.php:28
 msgid "MySQL"
 msgstr ""
 
-#: views/admin/sysinfo.php:29
+#: views/admin/sysinfo.php:36
 msgid "Web Server"
 msgstr ""
 
@@ -233,11 +233,11 @@ msgstr ""
 msgid "Clear All Transients"
 msgstr ""
 
-#: views/admin/transients.php:25
+#: views/admin/transients.php:27
 msgid "Clear Expired Transients"
 msgstr ""
 
-#: views/admin/transients.php:28
+#: views/admin/transients.php:31
 msgid "Help: Transients"
 msgstr ""
 
@@ -298,6 +298,48 @@ msgid ""
 "The PHP version you are using (%1$s) is not supported by WordPress anymore! "
 "Please contact your developers and/or hosting company to upgrade your PHP "
 "to version %2$s or greater."
+msgstr ""
+
+#: views/notices/ssl.php:17
+msgid "day"
+msgid_plural "days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: views/notices/ssl.php:23
+#. translators: %1$s is the certificate issuer, %2$d is the number of days,
+#. %3$s is 'day' or 'days' string
+msgid ""
+"Your SSL certificate%1$s will expire in %2$d %3$s. Please don't forget to "
+"renew it!"
+msgstr ""
+
+#: views/notices/ssl.php:28
+#. translators: %1$s is the certificate issuer, %2$d is the number of days,
+#. %3$s is 'day' or 'days' string
+msgid ""
+"Your SSL certificate%1$s has expired %2$d %3$s ago. Please renew it as soon "
+"as possible!"
+msgstr ""
+
+#: views/notices/web.php:25
+#. translators: %1$s is the current web server (NGINX, Apache, etc), %2$s is
+#. the version of the web server installed on server, %3$s is the version that
+#. we recommend to use
+msgid ""
+"Your %1$s version (%2$s) is not officially supported anymore! In order to "
+"get better performance and improvements, we recommend you upgrade your "
+"server to %1$s %3$s or greater."
+msgstr ""
+
+#: views/notices/web.php:30
+#. translators: %1$s is the current web server (NGINX, Apache, etc), %2$s is
+#. the version of the web server installed on server, %3$s is the version that
+#. we recommend to use
+msgid ""
+"Your %1$s version (%2$s) is obsolete and is not officially supported "
+"anymore! Please contact your developers and/or hosting company to upgrade "
+"your %1$s to version %3$s or greater as soon as possible."
 msgstr ""
 
 #: views/notices/wordpress.php:15
