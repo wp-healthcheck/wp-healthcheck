@@ -25,7 +25,7 @@ class WP_Healthcheck {
     /**
      * Option to store the auto update status.
      *
-     * @since 1.0
+     * @since 1.3.0
      * @var string
      */
     const CORE_AUTO_UPDATE_OPTION = 'wphc_auto_update_status';
@@ -342,7 +342,7 @@ class WP_Healthcheck {
     /**
      * Returns the wp-healthcheck auto update option value.
      *
-     * @since 1.0
+     * @since 1.3.0
      *
      * @return string|bool It can assume 'disabled', 'minor', 'major', 'dev' or false.
      */
@@ -362,7 +362,7 @@ class WP_Healthcheck {
      *
      * @param string $option_value Auto update value.
      *
-     * @since 1.0
+     * @since 1.3.0
      */
     public static function set_core_auto_update_option( $option_value ) {
         $core_auto_update_option = get_option( self::CORE_AUTO_UPDATE_OPTION );
@@ -493,20 +493,18 @@ class WP_Healthcheck {
     /**
      * Check and apply WordPress core updates option.
      *
-     * @since 1.0
+     * @since 1.3.0
      */
     public static function check_core_updates() {
         $core_auto_update_option = self::get_core_auto_update_option();
 
         if ( $core_auto_update_option && preg_match( '/^(minor|major|dev|disabled)$/', $core_auto_update_option ) ) {
-
             if ( 'disabled' == $core_auto_update_option ) {
                 add_filter( 'automatic_updater_disabled', '__return_true' );
             } else {
                 add_filter( 'allow_' . $core_auto_update_option . '_auto_core_updates', '__return_true' );
             }
         }
-
     }
 
     /**
