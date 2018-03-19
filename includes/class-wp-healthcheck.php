@@ -599,7 +599,7 @@ class WP_Healthcheck {
     /**
      * Determines if WordPress auto update constants are enabled or not.
      *
-     * @since 1.0
+     * @since 1.3.0
      *
      * @return boolean True if WordPress auto update constants are available.
      */
