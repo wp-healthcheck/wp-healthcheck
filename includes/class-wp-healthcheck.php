@@ -623,7 +623,7 @@ class WP_Healthcheck {
             }
         }
     }
-    
+
     /**
      * Add options when plugin is activated.
      *
