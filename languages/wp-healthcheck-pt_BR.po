@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Healthcheck 1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-healthcheck\n"
-"POT-Creation-Date: 2018-03-19 03:15:41+00:00\n"
+"POT-Creation-Date: 2018-03-19 05:58:37+00:00\n"
 "PO-Revision-Date: 2018-01-20 13:50-0600\n"
 "Last-Translator: Tiago Hillebrandt <tiago@tiagohillebrandt.com>\n"
 "Language-Team: \n"
@@ -369,6 +369,25 @@ msgstr ""
 "A versão do PHP que você está utilizando (%1$s) não é mais suportada pelo "
 "WordPress! Por favor entre em contato com seus desenvolvedores e/ou empresa "
 "de hospedagem para atualizar o PHP para versão %2$s ou superior."
+
+#. translators: %s name of the outdated plugins
+#: views/notices/plugins.php:18
+msgid "We've found some plugins that haven't been updated in over 2 years: %s."
+msgstr ""
+
+#: views/notices/plugins.php:22
+msgid "Please review them in your"
+msgstr ""
+
+#: views/notices/plugins.php:24
+msgid "plugins page"
+msgstr ""
+
+#: views/notices/plugins.php:26
+msgid ""
+"They may no longer be maintained or supported and may have security and/or "
+"compatibility issues when used with more recent versions of WordPress."
+msgstr ""
 
 #: views/notices/ssl.php:17
 msgid "day"
