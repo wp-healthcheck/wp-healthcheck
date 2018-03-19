@@ -55,6 +55,14 @@ class WP_Healthcheck {
     const SSL_DATA_TRANSIENT = 'wphc_ssl_data';
 
     /**
+     * Transient to store if SSL is available or not.
+     *
+     * @since 1.3.0
+     * @var boolean
+     */
+    const SSL_AVAILABLE_TRANSIENT = 'wphc_ssl_available';
+
+    /**
      * Whether to initiate the WordPress hooks.
      *
      * @since 1.0
@@ -348,7 +356,7 @@ class WP_Healthcheck {
                 return false;
             }
 
-            $socket = stream_socket_client( 'ssl://' . $siteurl['host'] . ':443', $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $context );
+            $socket = @stream_socket_client( 'ssl://' . $siteurl['host'] . ':443', $errno, $errstr, 20, STREAM_CLIENT_CONNECT, $context ); // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 
             if ( ! $socket ) {
                 set_transient( self::SSL_DATA_TRANSIENT, array(), DAY_IN_SECONDS );
@@ -517,6 +525,37 @@ class WP_Healthcheck {
     }
 
     /**
+     * Determine if a SSL certificate is available or not.
+     *
+     * @since 1.3.0
+     *
+     * @return boolean True if SSL is available.
+     */
+    public static function is_ssl_available() {
+        if ( is_ssl() ) {
+            return true;
+        }
+
+        $is_available = get_transient( self::SSL_AVAILABLE_TRANSIENT );
+
+        if ( false === $is_available ) {
+            $siteurl = parse_url( get_option( 'siteurl' ) );
+
+            if ( empty( $siteurl['host'] ) ) {
+                return false;
+            }
+
+            $socket = @fsockopen( 'ssl://' . $siteurl['host'], 443, $errno, $errstr, 20 ); // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+
+            $is_available = ( false != $socket );
+
+            set_transient( self::SSL_AVAILABLE_TRANSIENT, $is_available, DAY_IN_SECONDS );
+        }
+
+        return $is_available;
+    }
+
+    /**
      * Determines if a SSL certificate will expire soon.
      *
      * @since 1.2
@@ -605,6 +644,7 @@ class WP_Healthcheck {
             self::MIN_REQUIREMENTS_TRANSIENT,
             self::SERVER_DATA_TRANSIENT,
             self::SSL_DATA_TRANSIENT,
+            self::SSL_AVAILABLE_TRANSIENT,
         );
 
         foreach ( $transients as $transient ) {
