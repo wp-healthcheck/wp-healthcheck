@@ -29,6 +29,14 @@ class WP_Healthcheck {
      * @var string
      */
     const CORE_AUTO_UPDATE_OPTION = 'wphc_auto_update_status';
+  
+    /**
+     * Option to disable outdated plugins check.
+     *
+     * @since 1.3.0
+     * @var string
+     */
+    const DISABLE_OUTDATED_PLUGINS_OPTION = 'wphc_disable_outdated_plugins_check';
 
     /**
      * Transient to store if an admin notice should be displayed or not.
@@ -47,6 +55,14 @@ class WP_Healthcheck {
     const MIN_REQUIREMENTS_TRANSIENT = 'wphc_min_requirements';
 
     /**
+     * Transient to store the outdated plugins.
+     *
+     * @since 1.3.0
+     * @var string
+     */
+    const OUTDATED_PLUGINS_TRANSIENT = 'wphc_plugins_outdated';
+
+    /**
      * Transient to store the server data.
      *
      * @since 1.0
@@ -61,6 +77,14 @@ class WP_Healthcheck {
      * @var string
      */
     const SSL_DATA_TRANSIENT = 'wphc_ssl_data';
+
+    /**
+     * Transient to store if SSL is available or not.
+     *
+     * @since 1.3.0
+     * @var string
+     */
+    const SSL_AVAILABLE_TRANSIENT = 'wphc_ssl_available';
 
     /**
      * Whether to initiate the WordPress hooks.
@@ -224,6 +248,59 @@ class WP_Healthcheck {
     }
 
     /**
+     * Retrieves a list of plugins with no updates released on the
+     * last 2 years.
+     *
+     * @since 1.3.0
+     *
+     * @return array|false Slug and number of days since last update
+     * of the plugins or false if none.
+     */
+    public static function get_outdated_plugins() {
+        if ( get_option( self::DISABLE_OUTDATED_PLUGINS_OPTION ) ) {
+            return false;
+        }
+
+        $outdated_plugins = get_transient( self::OUTDATED_PLUGINS_TRANSIENT );
+
+        if ( false === $outdated_plugins ) {
+            if ( ! function_exists( 'get_plugins' ) ) {
+                require_once ABSPATH . 'wp-admin/includes/plugin.php';
+            }
+
+            if ( ! function_exists( 'plugins_api' ) ) {
+                require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+            }
+
+            $outdated_plugins = array();
+
+            foreach ( get_plugins() as $file => $plugin ) {
+                $slug = explode( '/', $file );
+                $slug = preg_replace( '/\.php/', '', $slug[0] );
+
+                $wp_api = plugins_api( 'plugin_information', array(
+                    'slug' => $slug,
+                ) );
+
+                if ( empty( $wp_api->errors ) && ! empty( $wp_api->last_updated ) ) {
+                    $today = new DateTime();
+                    $last_update = new DateTime( $wp_api->last_updated );
+
+                    $days = $today->diff( $last_update )->format( '%a' );
+
+                    if ( $days > 730 ) {
+                        $outdated_plugins[ $slug ] = $days;
+                    }
+                }
+            }
+
+            set_transient( self::OUTDATED_PLUGINS_TRANSIENT, $outdated_plugins, WEEK_IN_SECONDS );
+        }
+
+        return $outdated_plugins;
+    }
+
+    /**
      * Retrieves the server data.
      *
      * @since 1.0
@@ -358,7 +435,7 @@ class WP_Healthcheck {
                 return false;
             }
 
-            $socket = stream_socket_client( 'ssl://' . $siteurl['host'] . ':443', $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $context );
+            $socket = @stream_socket_client( 'ssl://' . $siteurl['host'] . ':443', $errno, $errstr, 20, STREAM_CLIENT_CONNECT, $context ); // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 
             if ( ! $socket ) {
                 set_transient( self::SSL_DATA_TRANSIENT, array(), DAY_IN_SECONDS );
@@ -564,6 +641,37 @@ class WP_Healthcheck {
     }
 
     /**
+     * Determine if a SSL certificate is available or not.
+     *
+     * @since 1.3.0
+     *
+     * @return boolean True if SSL is available.
+     */
+    public static function is_ssl_available() {
+        if ( is_ssl() ) {
+            return true;
+        }
+
+        $is_available = get_transient( self::SSL_AVAILABLE_TRANSIENT );
+
+        if ( false === $is_available ) {
+            $siteurl = parse_url( get_option( 'siteurl' ) );
+
+            if ( empty( $siteurl['host'] ) ) {
+                return false;
+            }
+
+            $socket = @fsockopen( 'ssl://' . $siteurl['host'], 443, $errno, $errstr, 20 ); // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+
+            $is_available = ( false != $socket );
+
+            set_transient( self::SSL_AVAILABLE_TRANSIENT, $is_available, DAY_IN_SECONDS );
+        }
+
+        return $is_available;
+    }
+
+    /**
      * Determines if a SSL certificate will expire soon.
      *
      * @since 1.2
@@ -633,6 +741,9 @@ class WP_Healthcheck {
         if ( ! get_option( self::DISABLE_AUTOLOAD_OPTION ) ) {
             add_option( self::DISABLE_AUTOLOAD_OPTION, '', '', 'no' );
         }
+
+        WP_Healthcheck::get_outdated_plugins();
+        WP_Healthcheck::is_ssl_available();
     }
 
     /**
@@ -666,6 +777,7 @@ class WP_Healthcheck {
                 self::DISABLE_AUTOLOAD_OPTION,
                 self::DISABLE_NOTICES_OPTION,
                 self::CORE_AUTO_UPDATE_OPTION,
+                self::DISABLE_OUTDATED_PLUGINS_OPTION,
                 WP_Healthcheck_Upgrade::PLUGIN_VERSION_OPTION,
             );
 
@@ -679,7 +791,9 @@ class WP_Healthcheck {
         $transients = array(
             self::HIDE_NOTICES_TRANSIENT,
             self::MIN_REQUIREMENTS_TRANSIENT,
+            self::OUTDATED_PLUGINS_TRANSIENT,
             self::SERVER_DATA_TRANSIENT,
+            self::SSL_AVAILABLE_TRANSIENT,
             self::SSL_DATA_TRANSIENT,
         );
 
