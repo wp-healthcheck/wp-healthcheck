@@ -29,7 +29,7 @@ class WP_Healthcheck {
      * @var string
      */
     const CORE_AUTO_UPDATE_OPTION = 'wphc_auto_update_status';
-  
+
     /**
      * Option to disable outdated plugins check.
      *
