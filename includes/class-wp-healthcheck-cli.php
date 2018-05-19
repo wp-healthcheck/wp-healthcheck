@@ -182,6 +182,49 @@ class WP_Healthcheck_CLI extends WP_CLI_Command {
     }
 
     /**
+     * If SSL is available, then list the certificate information.
+     *
+     * ## EXAMPLES
+     *
+     *     $ wp healthcheck ssl
+     *     +-------------+----------------------------+
+     *     | field       | value                      |
+     *     +-------------+----------------------------+
+     *     | common_name | tiagohillebrandt.eti.br    |
+     *     | issued_by   | Let's Encrypt Authority X3 |
+     *     | issued_on   | 2018-03-25 06:00:16        |
+     *     | expires_on  | 2018-06-23 06:00:16        |
+     *     +-------------+----------------------------+
+     *
+     * @subcommand ssl
+     */
+    public function ssl( $args, $assoc_args ) {
+        $ssl_data = WP_Healthcheck::get_ssl_data();
+
+        if ( false === $ssl_data || empty( $ssl_data ) ) {
+            WP_CLI::error( 'We couldn\'t find any SSL data associated with your site. Is SSL enabled?' );
+        }
+
+        $ssl_data = array(
+            'common_name' => $ssl_data['common_name'],
+            'issued_by'   => $ssl_data['issuer'],
+            'issued_on'   => $ssl_data['validity']['from'],
+            'expires_on'  => $ssl_data['validity']['to'],
+        );
+
+        $data = array();
+
+        foreach ( $ssl_data as $key => $value ) {
+            $data[] = array(
+                'field' => $key,
+                'value' => $value,
+            );
+        }
+
+        WP_CLI\Utils\format_items( 'table', $data, array( 'field', 'value' ) );
+    }
+
+    /**
      * List the top WordPress transients.
      *
      * WordPress transients are used to temporarily cache specific data. For

@@ -405,7 +405,7 @@ class WP_Healthcheck {
      * @return array|false SSL data or false on error.
      */
     public static function get_ssl_data() {
-        if ( ! is_ssl() ) {
+        if ( ! is_ssl() && ( ! defined( 'WP_CLI' ) || ! WP_CLI ) ) {
             return false;
         }
 
