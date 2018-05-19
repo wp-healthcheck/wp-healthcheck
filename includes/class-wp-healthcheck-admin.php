@@ -101,6 +101,7 @@ class WP_Healthcheck_Admin {
         $metaboxes = array(
             'wphc-transients' => __( 'Transients', 'wp-healthcheck' ),
             'wphc-autoload'   => __( 'Autoload Options', 'wp-healthcheck' ),
+            'wphc-wp-updates' => __( 'WordPress Automatic Background Updates', 'wp-healthcheck' ),
             'wphc-support'    => __( 'Support &amp; Services', 'wp-healthcheck' ),
         );
 

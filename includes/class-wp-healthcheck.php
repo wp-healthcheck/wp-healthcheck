@@ -105,8 +105,6 @@ class WP_Healthcheck {
 
             self::init_hooks();
         }
-
-        add_action( 'wp_loaded', array( 'WP_Healthcheck', 'check_core_updates' ) );
     }
 
     /**
@@ -117,6 +115,7 @@ class WP_Healthcheck {
     public static function init_hooks() {
         self::$initiated = true;
 
+        add_action( 'wp_loaded', array( 'WP_Healthcheck', 'check_core_updates' ) );
         add_action( 'upgrader_process_complete', array( 'WP_Healthcheck', 'plugin_deactivation' ) );
         add_action( 'shutdown', array( 'WP_Healthcheck', 'get_ssl_data' ) );
     }
@@ -724,7 +723,7 @@ class WP_Healthcheck {
         $core_auto_update_option = self::get_core_auto_update_option();
 
         if ( $core_auto_update_option && preg_match( '/^(minor|major|dev|disabled)$/', $core_auto_update_option ) ) {
-            if ( 'disabled' == $core_auto_update_option ) {
+            if ( 'disabled' === $core_auto_update_option ) {
                 add_filter( 'automatic_updater_disabled', '__return_true' );
             } else {
                 add_filter( 'allow_' . $core_auto_update_option . '_auto_core_updates', '__return_true' );
