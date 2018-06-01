@@ -15,7 +15,7 @@ if ( ! $plugins || sizeof( $plugins ) == 0 ) {
     <strong>WP Healthcheck:</strong>
     <?php
     /* translators: %s name of the outdated plugins */
-    echo sprintf( __( 'We\'ve found some plugins that haven\'t been updated in over 2 years: %s.', 'wp-healthcheck' ), implode( ', ', array_keys( $plugins ) ) );
+    echo sprintf( __( 'We have found plugins that haven\'t been updated in over 2 years: %s.', 'wp-healthcheck' ), implode( ', ', array_keys( $plugins ) ) );
     ?>
 
     <br/><br/>
@@ -23,6 +23,6 @@ if ( ! $plugins || sizeof( $plugins ) == 0 ) {
 
     <a href="<?php echo admin_url( 'plugins.php' ); ?>"><?php _e( 'plugins page', 'wp-healthcheck' ); ?></a>.
 
-    <?php _e( 'They may no longer be maintained or supported and may have security and/or compatibility issues when used with more recent versions of WordPress.', 'wp-healthcheck' ); ?>
+    <?php _e( 'These plugins may no longer be maintained or supported and may have security and/or compatibility issues when used with the most recent versions of WordPress.', 'wp-healthcheck' ); ?>
   </p>
 </div>

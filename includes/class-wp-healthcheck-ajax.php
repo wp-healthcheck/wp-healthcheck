@@ -51,6 +51,7 @@ class WP_Healthcheck_AJAX {
             'autoload_reactivate',
             'hide_admin_notice',
             'transients_cleanup',
+            'wp_auto_update',
         );
     }
 
@@ -197,6 +198,21 @@ class WP_Healthcheck_AJAX {
         $object_cache = isset( $_POST['object_cache'] );
 
         include WPHC_PLUGIN_DIR . '/views/admin/transients-stats.php';
+
+        wp_die();
+    }
+
+    /**
+     * Hook: set WordPress auto update option.
+     *
+     * @since 1.3.0
+     */
+    public static function wp_auto_update() {
+        check_ajax_referer( 'wphc_wp_auto_update' );
+
+        if ( preg_match( '/^(?:minor|major|disabled|dev)$/', $_POST['wp_auto_update'] ) ) {
+            WP_Healthcheck::set_core_auto_update_option( $_POST['wp_auto_update'] );
+        }
 
         wp_die();
     }

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Healthcheck 1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-healthcheck\n"
-"POT-Creation-Date: 2018-03-19 05:58:37+00:00\n"
+"POT-Creation-Date: 2018-06-01 08:23:02+00:00\n"
 "PO-Revision-Date: 2018-01-20 13:50-0600\n"
 "Last-Translator: Tiago Hillebrandt <tiago@tiagohillebrandt.com>\n"
 "Language-Team: \n"
@@ -24,6 +24,10 @@ msgid "Autoload Options"
 msgstr "Autoload Options"
 
 #: includes/class-wp-healthcheck-admin.php:104
+msgid "WordPress Automatic Background Updates"
+msgstr ""
+
+#: includes/class-wp-healthcheck-admin.php:105
 msgid "Support &amp; Services"
 msgstr "Suporte &amp; Serviços"
 
@@ -275,6 +279,56 @@ msgstr "Limpar os transients expirados"
 msgid "Help: Transients"
 msgstr "Ajuda: Transients"
 
+#: views/admin/wp-updates.php:7
+msgid ""
+"The default WordPress behavior is to always update automatically to the "
+"latest minor release available. For example, WordPress 4.9.5 will "
+"automatically be updated to 4.9.6 upon release."
+msgstr ""
+
+#: views/admin/wp-updates.php:9
+msgid ""
+"<strong>Minor</strong> updates are released more often than major ones. "
+"These releases usually includes security updates, fixes, and enhancements. "
+"<strong>Major</strong> updates are released 3-4 times a year, and they "
+"always include new features, major enhancements, and bug fixes to WordPress."
+msgstr ""
+
+#: views/admin/wp-updates.php:14
+msgid "Install minor updates automatically."
+msgstr ""
+
+#: views/admin/wp-updates.php:15
+msgid "Install major and minor updates automatically."
+msgstr ""
+
+#: views/admin/wp-updates.php:16
+msgid "Disable automatic updates on my site (not recommended)."
+msgstr ""
+
+#: views/admin/wp-updates.php:20
+msgid "WordPress Update Policy:"
+msgstr ""
+
+#: views/admin/wp-updates.php:28
+msgid "Apply Update Policy"
+msgstr ""
+
+#: views/admin/wp-updates.php:30
+msgid "Done! The new WordPress Update Policy has been applied successfully."
+msgstr ""
+
+#: views/admin/wp-updates.php:31
+msgid "Something went wrong. Please try again!"
+msgstr ""
+
+#: views/admin/wp-updates.php:33
+msgid ""
+"Currently your WordPress Automatic Background Updates are being managed in "
+"your wp-config.php file. Please remove the WP_AUTO_UPDATE_CORE or "
+"AUTOMATIC_UPDATER_DISABLED constants to use this feature."
+msgstr ""
+
 #. translators: %1$s is the current database service (MySQL, MariaDB, etc),
 #. %2$s is the database version installed on server, %3$s is the version that
 #. WP team recommends
@@ -305,9 +359,9 @@ msgstr ""
 #: views/notices/https.php:14
 #, fuzzy
 msgid ""
-"Your site is not using HTTPS. This is insecure and drops your SEO Rankings. "
-"Please contact your developers and/or hosting company to enable HTTPS for "
-"you as soon as possible!"
+"Your site is not currently using HTTPS. This is insecure and can negatively "
+"impact your search engine rankings. Please contact your developer(s) and/or "
+"hosting company to enable HTTPS for you as soon as possible!"
 msgstr ""
 "Sua versão do %1$s (%2$s) está obsoleta e não é mais suportada oficialmente! "
 "Por favor entre em contato com seus desenvolvedores e/ou empresa de "
@@ -372,7 +426,7 @@ msgstr ""
 
 #. translators: %s name of the outdated plugins
 #: views/notices/plugins.php:18
-msgid "We've found some plugins that haven't been updated in over 2 years: %s."
+msgid "We have found plugins that haven't been updated in over 2 years: %s."
 msgstr ""
 
 #: views/notices/plugins.php:22
@@ -385,8 +439,9 @@ msgstr ""
 
 #: views/notices/plugins.php:26
 msgid ""
-"They may no longer be maintained or supported and may have security and/or "
-"compatibility issues when used with more recent versions of WordPress."
+"These plugins may no longer be maintained or supported and may have security "
+"and/or compatibility issues when used with the most recent versions of "
+"WordPress."
 msgstr ""
 
 #: views/notices/ssl.php:17
