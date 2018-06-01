@@ -202,7 +202,7 @@ class WP_Healthcheck_CLI extends WP_CLI_Command {
         $ssl_data = WP_Healthcheck::get_ssl_data();
 
         if ( false === $ssl_data || empty( $ssl_data ) ) {
-            WP_CLI::error( 'We couldn\'t find any SSL data associated with your site. Is SSL enabled?' );
+            WP_CLI::error( 'We couldn\'t find any SSL certificates associated with your site. Is HTTPS enabled?' );
         }
 
         $ssl_data = array(

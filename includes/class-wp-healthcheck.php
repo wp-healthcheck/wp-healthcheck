@@ -105,8 +105,6 @@ class WP_Healthcheck {
 
             self::init_hooks();
         }
-
-        add_action( 'wp_loaded', array( 'WP_Healthcheck', 'check_core_updates' ) );
     }
 
     /**
@@ -117,8 +115,26 @@ class WP_Healthcheck {
     public static function init_hooks() {
         self::$initiated = true;
 
+        add_action( 'wp_loaded', array( 'WP_Healthcheck', 'check_core_updates' ) );
         add_action( 'upgrader_process_complete', array( 'WP_Healthcheck', 'plugin_deactivation' ) );
         add_action( 'shutdown', array( 'WP_Healthcheck', 'get_ssl_data' ) );
+    }
+
+    /**
+     * Check and apply WordPress core updates option.
+     *
+     * @since 1.3.0
+     */
+    public static function check_core_updates() {
+        $core_auto_update_option = self::get_core_auto_update_option();
+
+        if ( $core_auto_update_option && preg_match( '/^(minor|major|dev|disabled)$/', $core_auto_update_option ) ) {
+            if ( 'disabled' === $core_auto_update_option ) {
+                add_filter( 'automatic_updater_disabled', '__return_true' );
+            } else {
+                add_filter( 'allow_' . $core_auto_update_option . '_auto_core_updates', '__return_true' );
+            }
+        }
     }
 
     /**
@@ -520,27 +536,7 @@ class WP_Healthcheck {
 
         $core_auto_update = get_option( self::CORE_AUTO_UPDATE_OPTION );
 
-        return  ( $core_auto_update ) ? $core_auto_update : 'minor';
-    }
-
-    /**
-     * Sets the wp-healthcheck auto update option value
-     * which could be 'disabled', 'minor', 'major' or 'dev'.
-     *
-     * @param string $option_value Auto update value.
-     *
-     * @since 1.3.0
-     */
-    public static function set_core_auto_update_option( $option_value ) {
-        $core_auto_update_option = get_option( self::CORE_AUTO_UPDATE_OPTION );
-
-        if ( self::is_wp_auto_update_available() ) {
-            if ( $core_auto_update_option ) {
-                delete_option( self::CORE_AUTO_UPDATE_OPTION );
-            }
-        }
-
-        update_option( self::CORE_AUTO_UPDATE_OPTION, $option_value );
+        return ( $core_auto_update ) ? $core_auto_update : 'minor';
     }
 
     /**
@@ -716,23 +712,6 @@ class WP_Healthcheck {
     }
 
     /**
-     * Check and apply WordPress core updates option.
-     *
-     * @since 1.3.0
-     */
-    public static function check_core_updates() {
-        $core_auto_update_option = self::get_core_auto_update_option();
-
-        if ( $core_auto_update_option && preg_match( '/^(minor|major|dev|disabled)$/', $core_auto_update_option ) ) {
-            if ( 'disabled' == $core_auto_update_option ) {
-                add_filter( 'automatic_updater_disabled', '__return_true' );
-            } else {
-                add_filter( 'allow_' . $core_auto_update_option . '_auto_core_updates', '__return_true' );
-            }
-        }
-    }
-
-    /**
      * Add options when plugin is activated.
      *
      * @since 1.0
@@ -762,6 +741,26 @@ class WP_Healthcheck {
      */
     public static function plugin_uninstall() {
         self::_cleanup_options();
+    }
+
+    /**
+     * Sets the wp-healthcheck auto update option value
+     * which could be 'disabled', 'minor', 'major' or 'dev'.
+     *
+     * @param string $option_value Auto update value.
+     *
+     * @since 1.3.0
+     */
+    public static function set_core_auto_update_option( $option_value ) {
+        $core_auto_update_option = get_option( self::CORE_AUTO_UPDATE_OPTION );
+
+        if ( self::is_wp_auto_update_available() ) {
+            if ( $core_auto_update_option ) {
+                delete_option( self::CORE_AUTO_UPDATE_OPTION );
+            }
+        }
+
+        update_option( self::CORE_AUTO_UPDATE_OPTION, $option_value );
     }
 
     /**
