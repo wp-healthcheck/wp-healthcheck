@@ -57,9 +57,12 @@ jQuery(document).ready(function($) {
   })
   .on('click', '.wphc-notice .notice-dismiss', function() {
     var classes = $(this).closest('.wphc-notice').attr('class');
-    var software = classes.match(/wphc-notice-(?:php|database|wordpress|web|ssl)\s/)[0].replace('wphc-notice-', '');
+    var software = classes.match(/wphc-notice-(?:php|database|wordpress|web|ssl|https|plugins)\s/)[0].replace('wphc-notice-', '');
 
     wphc_do_ajax('wphc_hide_admin_notice', {'software': software}, false);
+  })
+  .on('click', '#wphc-btn-wp-auto-update', function() {
+    wphc_do_ajax('wphc_wp_auto_update', {'wp_auto_update': $('input[name="wphc-opt-wp-updates"]:checked').val()}, false);
   });
 
   /**
@@ -136,11 +139,19 @@ function wphc_do_ajax(action, params, target) {
     }
   })
   .done(function(response) {
+    if ('wphc_wp_auto_update' === action) {
+      jQuery('.wphc_wp_auto_update_success').show();
+    }
+
     if (target) {
       target.html(response);
     }
   })
   .fail(function() {
+    if ('wphc_wp_auto_update' === action) {
+      jQuery('.wphc_wp_auto_update_fail').show();
+    }
+
     window.alert('fail');
   });
 }

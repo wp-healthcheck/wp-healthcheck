@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Healthcheck 1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-healthcheck\n"
-"POT-Creation-Date: 2018-01-20 19:06:51+00:00\n"
+"POT-Creation-Date: 2018-06-01 08:23:02+00:00\n"
 "PO-Revision-Date: 2018-01-20 13:50-0600\n"
 "Last-Translator: Tiago Hillebrandt <tiago@tiagohillebrandt.com>\n"
 "Language-Team: \n"
@@ -24,6 +24,10 @@ msgid "Autoload Options"
 msgstr "Autoload Options"
 
 #: includes/class-wp-healthcheck-admin.php:104
+msgid "WordPress Automatic Background Updates"
+msgstr ""
+
+#: includes/class-wp-healthcheck-admin.php:105
 msgid "Support &amp; Services"
 msgstr "Suporte &amp; Serviços"
 
@@ -199,23 +203,23 @@ msgstr "Contribuidores"
 msgid "Report a Bug"
 msgstr "Reportar um Bug"
 
-#: views/admin/sysinfo.php:17
+#: views/admin/sysinfo.php:19
 msgid "WordPress"
 msgstr "WordPress"
 
-#: views/admin/sysinfo.php:21
+#: views/admin/sysinfo.php:23
 msgid "PHP"
 msgstr "PHP"
 
-#: views/admin/sysinfo.php:26
+#: views/admin/sysinfo.php:28
 msgid "MariaDB"
 msgstr "MariaDB"
 
-#: views/admin/sysinfo.php:28
+#: views/admin/sysinfo.php:30
 msgid "MySQL"
 msgstr "MySQL"
 
-#: views/admin/sysinfo.php:36
+#: views/admin/sysinfo.php:38
 msgid "Web Server"
 msgstr "Servidor Web"
 
@@ -275,6 +279,56 @@ msgstr "Limpar os transients expirados"
 msgid "Help: Transients"
 msgstr "Ajuda: Transients"
 
+#: views/admin/wp-updates.php:7
+msgid ""
+"The default WordPress behavior is to always update automatically to the "
+"latest minor release available. For example, WordPress 4.9.5 will "
+"automatically be updated to 4.9.6 upon release."
+msgstr ""
+
+#: views/admin/wp-updates.php:9
+msgid ""
+"<strong>Minor</strong> updates are released more often than major ones. "
+"These releases usually includes security updates, fixes, and enhancements. "
+"<strong>Major</strong> updates are released 3-4 times a year, and they "
+"always include new features, major enhancements, and bug fixes to WordPress."
+msgstr ""
+
+#: views/admin/wp-updates.php:14
+msgid "Install minor updates automatically."
+msgstr ""
+
+#: views/admin/wp-updates.php:15
+msgid "Install major and minor updates automatically."
+msgstr ""
+
+#: views/admin/wp-updates.php:16
+msgid "Disable automatic updates on my site (not recommended)."
+msgstr ""
+
+#: views/admin/wp-updates.php:20
+msgid "WordPress Update Policy:"
+msgstr ""
+
+#: views/admin/wp-updates.php:28
+msgid "Apply Update Policy"
+msgstr ""
+
+#: views/admin/wp-updates.php:30
+msgid "Done! The new WordPress Update Policy has been applied successfully."
+msgstr ""
+
+#: views/admin/wp-updates.php:31
+msgid "Something went wrong. Please try again!"
+msgstr ""
+
+#: views/admin/wp-updates.php:33
+msgid ""
+"Currently your WordPress Automatic Background Updates are being managed in "
+"your wp-config.php file. Please remove the WP_AUTO_UPDATE_CORE or "
+"AUTOMATIC_UPDATER_DISABLED constants to use this feature."
+msgstr ""
+
 #. translators: %1$s is the current database service (MySQL, MariaDB, etc),
 #. %2$s is the database version installed on server, %3$s is the version that
 #. WP team recommends
@@ -301,6 +355,23 @@ msgstr ""
 "A versão do %1$s que você está utilizando (%2$s) não é mais suportada pelo "
 "WordPress! Por favor entre em contato com seus desenvolvedores e/ou empresa "
 "de hospedagem para atualizar o %1$s para versão %3$s ou superior."
+
+#: views/notices/https.php:14
+#, fuzzy
+msgid ""
+"Your site is not currently using HTTPS. This is insecure and can negatively "
+"impact your search engine rankings. Please contact your developer(s) and/or "
+"hosting company to enable HTTPS for you as soon as possible!"
+msgstr ""
+"Sua versão do %1$s (%2$s) está obsoleta e não é mais suportada oficialmente! "
+"Por favor entre em contato com seus desenvolvedores e/ou empresa de "
+"hospedagem para atualizar o %1$s para versão %3$s ou superior o quanto antes."
+
+#: views/notices/https.php:16
+msgid ""
+"<a href=\"https://letsencrypt.org/\">Let's Encrypt</a> offers free SSL "
+"certificates!"
+msgstr ""
 
 #. translators: %1$s is the MySQL version installed on server, %2$s is the one
 #. WP team recommends
@@ -352,6 +423,26 @@ msgstr ""
 "A versão do PHP que você está utilizando (%1$s) não é mais suportada pelo "
 "WordPress! Por favor entre em contato com seus desenvolvedores e/ou empresa "
 "de hospedagem para atualizar o PHP para versão %2$s ou superior."
+
+#. translators: %s name of the outdated plugins
+#: views/notices/plugins.php:18
+msgid "We have found plugins that haven't been updated in over 2 years: %s."
+msgstr ""
+
+#: views/notices/plugins.php:22
+msgid "Please review them in your"
+msgstr ""
+
+#: views/notices/plugins.php:24
+msgid "plugins page"
+msgstr ""
+
+#: views/notices/plugins.php:26
+msgid ""
+"These plugins may no longer be maintained or supported and may have security "
+"and/or compatibility issues when used with the most recent versions of "
+"WordPress."
+msgstr ""
 
 #: views/notices/ssl.php:17
 msgid "day"

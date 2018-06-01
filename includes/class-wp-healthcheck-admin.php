@@ -101,6 +101,7 @@ class WP_Healthcheck_Admin {
         $metaboxes = array(
             'wphc-transients' => __( 'Transients', 'wp-healthcheck' ),
             'wphc-autoload'   => __( 'Autoload Options', 'wp-healthcheck' ),
+            'wphc-wp-updates' => __( 'WordPress Automatic Background Updates', 'wp-healthcheck' ),
             'wphc-support'    => __( 'Support &amp; Services', 'wp-healthcheck' ),
         );
 
@@ -129,7 +130,7 @@ class WP_Healthcheck_Admin {
             return;
         }
 
-        $notices = array( 'php', 'database', 'wordpress', 'web', 'ssl' );
+        $notices = array( 'php', 'database', 'wordpress', 'web', 'ssl', 'https', 'plugins' );
 
         $notices_transient = get_transient( WP_Healthcheck::HIDE_NOTICES_TRANSIENT );
 

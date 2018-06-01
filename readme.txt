@@ -2,9 +2,9 @@
 Contributors: tiagohillebrandt, marksabbath
 Tags: performance, transients, autoload, cron, healthcheck, load time, ssl, https, check
 Requires at least: 3.9
-Tested up to: 4.9.4
+Tested up to: 4.9.6
 Requires PHP: 5.5
-Stable tag: 1.2.1
+Stable tag: 1.3.0
 License: GPLv3+
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -14,17 +14,17 @@ WP Healthcheck is a plugin to check the health of your WordPress install.
 
 [WP Healthcheck](https://wp-healthcheck.com) is a plugin to check the health of your WordPress install.
 
-It detects some useful information regarding your site health, like the number of active transients and autoload options, and then bring them up to you via Dashboard.
+It detects some useful information regarding your site health, like the number of active transients and autoload options, and then displays them conveniently via the WordPress Dashboard.
 
-After that, it can help you to improve your site performance by cleaning up the transients and deactivating autoload options.
+This plugin can help you improve your site performance by cleaning up the transients and deactivating autoload options.
 
-Also, WP Healthcheck verifies for the version of the softwares installed in your server. To perform this verification, the plugin retrieves data from our external API and then compare the versions available in our API versus the ones installed in your server.
+WP Healthcheck also verifies the software versions in use by your server. We maintain information about software minimum requirements up to date in our systems. This allows the plugin to retrieve this information from our external API and compare versus the ones installed in your server.
 
-Finally, it checks your SSL certificate expiration date, and send notifications in your Dashboard when it is about to expire or already expired.
+SSL certificate expiration dates are also checked and notifications for expired or near expiration SSL certificates are provided conveniently via the WordPress Dashboard.
 
 = WP-CLI Extension =
 
-This plugin also includes a WP-CLI extension. If you want to see all the commands available in the plugin, go ahead and run `wp healthcheck` in your site.
+WP Healthcheck also includes a WP-CLI extension. If you want to see all the CLI commands available in the plugin, go ahead and run `wp healthcheck` in your site.
 
 * <code>wp healthcheck autoload [--deactivate=<option-name>] [--history]</code>
 * <code>wp healthcheck transient [--delete-expired] [--delete-all]</code>
@@ -74,6 +74,12 @@ If you are a developer and want to contribute writing new features, enhancements
 3. WP-CLI extension.
 
 == Changelog ==
+
+= [1.3.0] 2018-06-01 =
+* Feature: Recommend to install Let's Encrypt certificate if HTTPS is not enabled ([#24](https://github.com/wp-healthcheck/wp-healthcheck/issues/24)).
+* Feature: Ability to define the WordPress auto update policy (thanks to [@marksabbath](https://github.com/marksabbath/) for back end implementation [[#19](https://github.com/wp-healthcheck/wp-healthcheck/issues/19)]).
+* Feature: Check for obsolete plugins using the WordPress Plugins API ([#21](https://github.com/wp-healthcheck/wp-healthcheck/issues/21)).
+* Feature: WP-CLI support to verify SSL certificate details (issuer, expiration, etc) ([#18](https://github.com/wp-healthcheck/wp-healthcheck/issues/18)).
 
 = [1.2.1] 2018-02-17 =
 * Hotfix: Fixes warnings when server software is not found ([#15](https://github.com/wp-healthcheck/wp-healthcheck/issues/15)).

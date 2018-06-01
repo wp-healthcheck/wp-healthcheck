@@ -111,6 +111,31 @@
   padding-right: 15px;
 }
 
+.wphc_wp_auto_update {
+  margin-bottom: 16px;
+}
+
+.wphc_wp_auto_update span {
+  display: block;
+  padding: 3px 0;
+}
+
+.wphc_wp_auto_update_error {
+  color: #c91616;
+}
+
+.wphc_wp_auto_update_fail {
+  color: #c91616;
+  display: none;
+  margin-bottom: 0;
+}
+
+.wphc_wp_auto_update_success {
+  color: #3c881a;
+  display: none;
+  margin-bottom: 0;
+}
+
 .wphc_loading {
   color: #666;
 }
