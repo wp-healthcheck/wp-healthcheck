@@ -513,7 +513,7 @@ class WP_Healthcheck {
      * @return string|bool It can assume 'disabled', 'minor', 'major', 'dev' or false.
      */
     public static function get_core_auto_update_option() {
-        if ( self::is_wp_auto_update_disabled() ) {
+        if ( self::is_wp_auto_update_available() ) {
             return false;
         }
 
@@ -533,7 +533,7 @@ class WP_Healthcheck {
     public static function set_core_auto_update_option( $option_value ) {
         $core_auto_update_option = get_option( self::CORE_AUTO_UPDATE_OPTION );
 
-        if ( self::is_wp_auto_update_disabled() ) {
+        if ( self::is_wp_auto_update_available() ) {
             if ( $core_auto_update_option ) {
                 delete_option( self::CORE_AUTO_UPDATE_OPTION );
             }
@@ -710,8 +710,8 @@ class WP_Healthcheck {
      *
      * @return boolean True if WordPress auto update constants are available.
      */
-    public static function is_wp_auto_update_disabled() {
-        return ( defined( 'AUTOMATIC_UPDATER_DISABLED' ) && defined( 'WP_AUTO_UPDATE_CORE' ) );
+    public static function is_wp_auto_update_available() {
+        return ( defined( 'AUTOMATIC_UPDATER_DISABLED' ) || defined( 'WP_AUTO_UPDATE_CORE' ) );
     }
 
     /**
