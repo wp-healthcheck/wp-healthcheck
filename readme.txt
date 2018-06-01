@@ -77,7 +77,8 @@ If you are a developer and want to contribute writing new features, enhancements
 
 = [1.3.0] 2018-06-01 =
 * Feature: Recommend to install Let's Encrypt certificate if HTTPS is not enabled ([#24](https://github.com/wp-healthcheck/wp-healthcheck/issues/24)).
-* Feature: Check for obsolete plugins using the WordPress Plugins API (thanks to [@marksabbath](https://github.com/marksabbath/) for back end implementation [[#21](https://github.com/wp-healthcheck/wp-healthcheck/issues/21)]).
+* Feature: Ability to define the WordPress auto update policy (thanks to [@marksabbath](https://github.com/marksabbath/) for back end implementation [[#19](https://github.com/wp-healthcheck/wp-healthcheck/issues/19)]).
+* Feature: Check for obsolete plugins using the WordPress Plugins API ([#21](https://github.com/wp-healthcheck/wp-healthcheck/issues/21)).
 * Feature: WP-CLI support to verify SSL certificate details (issuer, expiration, etc) ([#18](https://github.com/wp-healthcheck/wp-healthcheck/issues/18)).
 
 = [1.2.1] 2018-02-17 =
