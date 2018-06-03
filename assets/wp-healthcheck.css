@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+.wphc_welcome {
+    margin-top: 5px;
+}
+
 .wphc_system_info {
   margin-bottom: 0.2em;
 }
@@ -133,6 +137,10 @@
 .wphc_wp_auto_update_success {
   color: #3c881a;
   display: none;
+  margin-bottom: 0;
+}
+
+.wphc_wp_auto_update_button {
   margin-bottom: 0;
 }
 
