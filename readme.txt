@@ -4,7 +4,7 @@ Tags: performance, transients, autoload, cron, healthcheck, load time, ssl, http
 Requires at least: 3.9
 Tested up to: 4.9.6
 Requires PHP: 5.5
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv3+
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -29,6 +29,7 @@ WP Healthcheck also includes a WP-CLI extension. If you want to see all the CLI 
 * <code>wp healthcheck autoload [--deactivate=<option-name>] [--history]</code>
 * <code>wp healthcheck transient [--delete-expired] [--delete-all]</code>
 * <code>wp healthcheck server</code>
+* <code>wp healthcheck ssl</code>
 
 == Frequently Asked Questions ==
 
@@ -74,6 +75,10 @@ If you are a developer and want to contribute writing new features, enhancements
 3. WP-CLI extension.
 
 == Changelog ==
+
+= [1.3.1] 2018-06-03 =
+* Hotfix: Fixes an issue when trying to retrieve web server details on recent PHP versions ([#35](https://github.com/wp-healthcheck/wp-healthcheck/issues/35)).
+* Hotfix: Fixes couple of UI issues ([#32](https://github.com/wp-healthcheck/wp-healthcheck/issues/32)).
 
 = [1.3.0] 2018-06-01 =
 * Feature: Recommend to install Let's Encrypt certificate if HTTPS is not enabled ([#24](https://github.com/wp-healthcheck/wp-healthcheck/issues/24)).
