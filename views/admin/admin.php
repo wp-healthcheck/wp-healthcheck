@@ -5,9 +5,9 @@ if ( ! defined( 'WPHC' ) ) {
 ?>
 
 <div class="wrap">
-    <h2>WP Healthcheck</h2>
+    <h1>WP Healthcheck</h1>
 
-    <p><?php esc_html_e( 'Welcome and thank you for choosing the WP Healthcheck plugin.', 'wp-healthcheck' ); ?></p>
+    <p class="wphc_welcome"><?php esc_html_e( 'Welcome and thank you for choosing the WP Healthcheck plugin.', 'wp-healthcheck' ); ?></p>
 
     <?php require_once 'sysinfo.php'; ?>
 

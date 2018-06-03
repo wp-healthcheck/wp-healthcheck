@@ -25,7 +25,7 @@ if ( ! defined( 'WPHC' ) ) {
         <?php endforeach; ?>
     </p>
 
-    <p><button type="button" class="button" id="wphc-btn-wp-auto-update"><?php esc_html_e( 'Apply Update Policy', 'wp-healthcheck' ); ?></button></p>
+    <p class="wphc_wp_auto_update_button"><button type="button" class="button" id="wphc-btn-wp-auto-update"><?php esc_html_e( 'Apply Update Policy', 'wp-healthcheck' ); ?></button></p>
 
     <p class="wphc_wp_auto_update_success"><?php esc_html_e( 'Done! The new WordPress Update Policy has been applied successfully.', 'wp-healthcheck' ); ?></p>
     <p class="wphc_wp_auto_update_fail"><?php esc_html_e( 'Something went wrong. Please try again!', 'wp-healthcheck' ); ?></p>
