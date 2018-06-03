@@ -4,7 +4,7 @@ if ( ! defined( 'WPHC' ) ) {
 }
 ?>
 
-<p><?php esc_html_e( 'The default WordPress behavior is to always update automatically to the latest minor release available. For example, WordPress 4.9.5 will automatically be updated to 4.9.6 upon release.', 'wp-healthcheck' ); ?></p>
+<p><?php esc_html_e( 'The default WordPress behavior is to always update automatically to the latest minor release available. For example, WordPress 4.9.6 will automatically be updated to 4.9.7 upon release.', 'wp-healthcheck' ); ?></p>
 
 <p><?php _e( '<strong>Minor</strong> updates are released more often than major ones. These releases usually includes security updates, fixes, and enhancements. <strong>Major</strong> updates are released 3-4 times a year, and they always include new features, major enhancements, and bug fixes to WordPress.', 'wp-healthcheck' ); ?></p>
 
