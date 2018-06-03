@@ -347,7 +347,7 @@ class WP_Healthcheck {
                 ),
                 'php'      => $phpversion[0],
                 'wp'       => $wp_version,
-                'web'      => '',
+                'web'      => array(),
             );
 
             if ( ! empty( $_SERVER['SERVER_SOFTWARE'] ) ) {
