@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'WPHC', true );
-define( 'WPHC_VERSION', '1.3.0' );
+define( 'WPHC_VERSION', '1.3.1' );
 define( 'WPHC_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'WPHC_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 
