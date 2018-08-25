@@ -16,13 +16,6 @@
     <exclude name="WordPress.WP.CapitalPDangit.Misspelled"/>
   </rule>
 
-  <!-- Indent using spaces instead of tabs. -->
-  <rule ref="Generic.WhiteSpace.ScopeIndent">
-    <properties>
-      <property name="exact" value="true"/>
-    </properties>
-  </rule>
-
   <!-- Include the WordPress-Docs standard. -->
   <rule ref="WordPress-Docs">
     <exclude-pattern>/includes/class-wp-healthcheck-cli\.php</exclude-pattern>
