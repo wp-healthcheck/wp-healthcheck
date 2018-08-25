@@ -16,7 +16,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+	exit;
 }
 
 define( 'WPHC', true );
@@ -36,11 +36,11 @@ register_uninstall_hook( __FILE__, array( 'WP_Healthcheck', 'plugin_uninstall' )
 add_action( 'init', array( 'WP_Healthcheck', 'init' ) );
 
 if ( is_admin() ) {
-    require_once WPHC_INC_DIR . '/class-wp-healthcheck-admin.php';
+	require_once WPHC_INC_DIR . '/class-wp-healthcheck-admin.php';
 
-    add_action( 'init', array( 'WP_Healthcheck_Admin', 'init' ) );
+	add_action( 'init', array( 'WP_Healthcheck_Admin', 'init' ) );
 }
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
-    require_once WPHC_INC_DIR . '/class-wp-healthcheck-cli.php';
+	require_once WPHC_INC_DIR . '/class-wp-healthcheck-cli.php';
 }
