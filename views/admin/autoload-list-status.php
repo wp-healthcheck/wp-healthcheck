@@ -7,13 +7,19 @@ if ( ! WP_Healthcheck_AJAX::is_doing_ajax() || ! isset( $options ) ) {
 	return;
 }
 
-$fail = array_filter( $options, function( $k ) {
-	return false === $k;
-} );
+$fail = array_filter(
+	$options,
+	function( $k ) {
+		return false === $k;
+	}
+);
 
-$success = array_filter( $options, function( $k ) {
-	return false !== $k;
-} );
+$success = array_filter(
+	$options,
+	function( $k ) {
+		return false !== $k;
+	}
+);
 
 $message = ( isset( $reactivate ) && $reactivate ) ? __( 'reactivate', 'wp-healthcheck' ) : __( 'deactivate', 'wp-healthcheck' );
 
