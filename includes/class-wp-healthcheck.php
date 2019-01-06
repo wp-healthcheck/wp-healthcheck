@@ -460,7 +460,7 @@ class WP_Healthcheck {
 				return false;
 			}
 
-			$socket = @stream_socket_client( 'ssl://' . $siteurl['host'] . ':443', $errno, $errstr, 20, STREAM_CLIENT_CONNECT, $context ); // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+			$socket = @stream_socket_client( 'ssl://' . $siteurl['host'] . ':443', $errno, $errstr, 20, STREAM_CLIENT_CONNECT, $context ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 
 			if ( ! $socket ) {
 				set_transient( self::SSL_DATA_TRANSIENT, array(), DAY_IN_SECONDS );
@@ -668,7 +668,7 @@ class WP_Healthcheck {
 				return false;
 			}
 
-			$socket = @fsockopen( 'ssl://' . $siteurl['host'], 443, $errno, $errstr, 20 ); // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+			$socket = @fsockopen( 'ssl://' . $siteurl['host'], 443, $errno, $errstr, 20 ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 
 			$is_available = ( false != $socket );
 

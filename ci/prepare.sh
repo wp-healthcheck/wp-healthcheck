@@ -12,7 +12,7 @@ fi
 composer install -q
 
 # Add extensions to PHP Code Sniffer
-vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs/,vendor/wimg/php-compatibility/
+vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs/,vendor/phpcompatibility/php-compatibility/
 
 # Install WordPress test suite
 if [[ -z $WP_VERSION ]]; then
