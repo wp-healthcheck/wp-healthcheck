@@ -155,8 +155,12 @@ class WP_Healthcheck {
 		}
 
 		if ( $only_expired ) {
-			return $wpdb->query( $wpdb->prepare( "DELETE a, b FROM $wpdb->options a INNER JOIN $wpdb->options b ON b.option_name = REPLACE(a.option_name, '_timeout', '') WHERE
-			a.option_name REGEXP '^(_site)?_transient_timeout' AND a.option_value < %s;", time() ) );
+			return $wpdb->query(
+				$wpdb->prepare(
+					"DELETE a, b FROM $wpdb->options a INNER JOIN $wpdb->options b ON b.option_name = REPLACE(a.option_name, '_timeout', '') WHERE a.option_name REGEXP '^(_site)?_transient_timeout' AND a.option_value < %s;",
+					time()
+				)
+			);
 		}
 
 		return $wpdb->query( "DELETE FROM $wpdb->options WHERE option_name REGEXP '^_(site_)?transient';" );
@@ -294,9 +298,12 @@ class WP_Healthcheck {
 				$slug = explode( '/', $file );
 				$slug = preg_replace( '/\.php/', '', $slug[0] );
 
-				$wp_api = plugins_api( 'plugin_information', array(
-					'slug' => $slug,
-				) );
+				$wp_api = plugins_api(
+					'plugin_information',
+					array(
+						'slug' => $slug,
+					)
+				);
 
 				if ( empty( $wp_api->errors ) && ! empty( $wp_api->last_updated ) ) {
 					$today       = new DateTime();
@@ -438,12 +445,14 @@ class WP_Healthcheck {
 		$ssl_data = get_transient( self::SSL_DATA_TRANSIENT );
 
 		if ( false === $ssl_data ) {
-			$context = stream_context_create( array(
-				'ssl' => array(
-					'capture_peer_cert' => true,
-					'verify_peer'       => false,
-				),
-			) );
+			$context = stream_context_create(
+				array(
+					'ssl' => array(
+						'capture_peer_cert' => true,
+						'verify_peer'       => false,
+					),
+				)
+			);
 
 			$siteurl = parse_url( get_option( 'siteurl' ) );
 
@@ -451,7 +460,7 @@ class WP_Healthcheck {
 				return false;
 			}
 
-			$socket = @stream_socket_client( 'ssl://' . $siteurl['host'] . ':443', $errno, $errstr, 20, STREAM_CLIENT_CONNECT, $context ); // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+			$socket = @stream_socket_client( 'ssl://' . $siteurl['host'] . ':443', $errno, $errstr, 20, STREAM_CLIENT_CONNECT, $context ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 
 			if ( ! $socket ) {
 				set_transient( self::SSL_DATA_TRANSIENT, array(), DAY_IN_SECONDS );
@@ -659,7 +668,7 @@ class WP_Healthcheck {
 				return false;
 			}
 
-			$socket = @fsockopen( 'ssl://' . $siteurl['host'], 443, $errno, $errstr, 20 ); // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+			$socket = @fsockopen( 'ssl://' . $siteurl['host'], 443, $errno, $errstr, 20 ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 
 			$is_available = ( false != $socket );
 
