@@ -11,7 +11,7 @@
   "license": "GPL-3.0+",
   "homepage": "https://wp-healthcheck.com",
   "devDependencies": {
-    "grunt": "^1.0.4",
+    "grunt": "^1.1.0",
     "grunt-checktextdomain": "^1.0.1",
     "grunt-contrib-compress": "^1.6.0",
     "grunt-contrib-cssmin": "^3.0.0",
