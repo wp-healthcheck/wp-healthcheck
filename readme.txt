@@ -1,10 +1,10 @@
 === WP Healthcheck ===
 Contributors: tiagohillebrandt, marksabbath
 Tags: performance, transients, autoload, cron, healthcheck, load time, ssl, https, check
-Requires at least: 3.9
-Tested up to: 4.9.6
+Requires at least: 4.0
+Tested up to: 5.9.2
 Requires PHP: 5.5
-Stable tag: 1.3.1
+Stable tag: 1.3.4
 License: GPLv3+
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
