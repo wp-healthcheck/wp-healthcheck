@@ -76,6 +76,16 @@ If you are a developer and want to contribute writing new features, enhancements
 
 == Changelog ==
 
+= [1.3.4] 2022-03-29 =
+* Change: Update the user agent for the API request.
+* Bump up the WP supported version.
+
+= [1.3.3] 2021-02-15 =
+* Bump up the WP supported version.
+
+= [1.3.2] 2019-01-25 =
+* Update readme.txt to update WordPress version compatibility to 5.0.3.
+
 = [1.3.1] 2018-06-03 =
 * Hotfix: Fixes an issue when trying to retrieve web server details on recent PHP versions ([#35](https://github.com/wp-healthcheck/wp-healthcheck/issues/35)).
 * Hotfix: Fixes couple of UI issues ([#32](https://github.com/wp-healthcheck/wp-healthcheck/issues/32)).
