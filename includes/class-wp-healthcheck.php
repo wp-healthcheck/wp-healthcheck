@@ -395,7 +395,7 @@ class WP_Healthcheck {
 		if ( false === $requirements ) {
 			$options = array(
 				'timeout'    => 20,
-				'user-agent' => 'WP Healthcheck/' . WPHC_VERSION,
+				'user-agent' => 'WP Healthcheck/' . WPHC_VERSION . '; ' . site_url(),
 			);
 
 			$res = wp_remote_get( 'https://api.wp-healthcheck.com/v1/requirements', $options );
