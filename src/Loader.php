@@ -117,8 +117,8 @@ class Loader {
 	 * @since 2.0.0
 	 */
 	public function register_hooks() {
-		register_activation_hook( __FILE__, [ wphc()->main, 'plugin_activation' ] );
-		register_deactivation_hook( __FILE__, [ wphc()->main, 'plugin_deactivation' ] );
-		register_uninstall_hook( __FILE__, [ wphc()->main, 'plugin_uninstall' ] );
+		register_activation_hook( __FILE__, WP_Healthcheck::plugin_activation() );
+		register_deactivation_hook( __FILE__, WP_Healthcheck::plugin_deactivation() );
+		register_uninstall_hook( __FILE__, WP_Healthcheck::plugin_uninstall() );
 	}
 }

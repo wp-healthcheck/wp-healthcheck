@@ -713,38 +713,6 @@ class WP_Healthcheck {
 	}
 
 	/**
-	 * Add options when plugin is activated.
-	 *
-	 * @since 1.0.0
-	 */
-	public function plugin_activation() {
-		if ( ! get_option( self::DISABLE_AUTOLOAD_OPTION ) ) {
-			add_option( self::DISABLE_AUTOLOAD_OPTION, '', '', 'no' );
-		}
-
-		$this->get_outdated_plugins();
-		$this->is_ssl_available();
-	}
-
-	/**
-	 * Cleanup transients when plugin is deactivated.
-	 *
-	 * @since 1.0.0
-	 */
-	public function plugin_deactivation() {
-		$this->cleanup_options( true );
-	}
-
-	/**
-	 * Cleanup options and transients when plugin is uninstalled.
-	 *
-	 * @since 1.0.0
-	 */
-	public function plugin_uninstall() {
-		$this->cleanup_options();
-	}
-
-	/**
 	 * Sets the wp-healthcheck auto update option value
 	 * which could be 'disabled', 'minor', 'major' or 'dev'.
 	 *
@@ -880,5 +848,37 @@ class WP_Healthcheck {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Add options when plugin is activated.
+	 *
+	 * @since 1.0.0
+	 */
+	public static function plugin_activation() {
+		if ( ! get_option( self::DISABLE_AUTOLOAD_OPTION ) ) {
+			add_option( self::DISABLE_AUTOLOAD_OPTION, '', '', 'no' );
+		}
+
+		wphc()->main->get_outdated_plugins();
+		wphc()->main->is_ssl_available();
+	}
+
+	/**
+	 * Cleanup transients when plugin is deactivated.
+	 *
+	 * @since 1.0.0
+	 */
+	public static function plugin_deactivation() {
+		wphc()->main->cleanup_options( true );
+	}
+
+	/**
+	 * Cleanup options and transients when plugin is uninstalled.
+	 *
+	 * @since 1.0.0
+	 */
+	public static function plugin_uninstall() {
+		wphc()->main->cleanup_options();
 	}
 }
