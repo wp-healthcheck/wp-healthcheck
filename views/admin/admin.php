@@ -13,7 +13,7 @@ if ( ! defined( 'WPHC' ) ) {
 
 	<div id="poststuff">
 		<div id="post-body" class="postbox-container">
-			<?php WP_Healthcheck_Admin::do_meta_boxes(); ?>
+			<?php wphc()->dashboard->do_meta_boxes(); ?>
 		</div>
 	</div>
 

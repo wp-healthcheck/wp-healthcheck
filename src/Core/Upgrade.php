@@ -1,15 +1,19 @@
 <?php
+namespace WPHC\Core;
+
 /**
- * The WP_Healthcheck_Upgrade class
+ * The Upgrade class.
  *
  * @package wp-healthcheck
- * @since 1.1
+ *
+ * @since 1.1.0
  */
-class WP_Healthcheck_Upgrade {
+class Upgrade {
 	/**
 	 * Option to store the current plugin version.
 	 *
-	 * @since 1.1
+	 * @since 1.1.0
+	 *
 	 * @var string
 	 */
 	const PLUGIN_VERSION_OPTION = 'wphc_version';
@@ -17,13 +21,13 @@ class WP_Healthcheck_Upgrade {
 	/**
 	 * Clean up the transients if plugin is updated.
 	 *
-	 * @since 1.1
+	 * @since 1.1.0
 	 */
-	public static function maybe_upgrade_db() {
+	public function maybe_upgrade_db() {
 		$version = get_option( self::PLUGIN_VERSION_OPTION );
 
 		if ( WPHC_VERSION != $version ) {
-			WP_Healthcheck::_cleanup_options( true );
+			wphc()->main->cleanup_options( true );
 
 			update_option( self::PLUGIN_VERSION_OPTION, WPHC_VERSION );
 		}

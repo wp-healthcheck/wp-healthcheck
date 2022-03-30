@@ -8,7 +8,7 @@ if ( ! defined( 'WPHC' ) ) {
 
 <p><?php _e( '<strong>Minor</strong> updates are released more often than major ones. These releases usually includes security updates, fixes, and enhancements. <strong>Major</strong> updates are released 3-4 times a year, and they always include new features, major enhancements, and bug fixes to WordPress.', 'wp-healthcheck' ); ?></p>
 
-<?php if ( WP_Healthcheck::get_core_auto_update_option() !== false ) : ?>
+<?php if ( wphc()->main->get_core_auto_update_option() !== false ) : ?>
 	<?php
 	$wp_update_options = array(
 		'minor'    => esc_html__( 'Install minor updates automatically.', 'wp-healthcheck' ),
@@ -21,7 +21,7 @@ if ( ! defined( 'WPHC' ) ) {
 
 	<p class="wphc_wp_auto_update">
 		<?php foreach ( $wp_update_options as $option => $description ) : ?>
-			<span><label><input id="wphc-opt-wp-updates" name="wphc-opt-wp-updates" type="radio" value="<?php echo $option; ?>" <?php echo ( WP_Healthcheck::get_core_auto_update_option() === $option ) ? 'checked="checked"' : ''; ?> /> <?php echo $description; ?></label></span>
+			<span><label><input id="wphc-opt-wp-updates" name="wphc-opt-wp-updates" type="radio" value="<?php echo $option; ?>" <?php echo ( wphc()->main->get_core_auto_update_option() === $option ) ? 'checked="checked"' : ''; ?> /> <?php echo $description; ?></label></span>
 		<?php endforeach; ?>
 	</p>
 

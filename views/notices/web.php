@@ -3,8 +3,8 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$requirements = WP_Healthcheck::get_server_requirements();
-$server_data  = WP_Healthcheck::get_server_data();
+$requirements = wphc()->main->get_server_requirements();
+$server_data  = wphc()->main->get_server_data();
 
 if ( empty( $server_data['web']['service'] ) || empty( $server_data['web']['version'] ) || ! preg_match( '/(nginx|apache)/i', $server_data['web']['service'] ) ) {
 	return false;
@@ -12,7 +12,7 @@ if ( empty( $server_data['web']['service'] ) || empty( $server_data['web']['vers
 
 $service = $server_data['web']['service'];
 
-$status = WP_Healthcheck::is_software_updated( $service );
+$status = wphc()->main->is_software_updated( $service );
 
 if ( 'updated' == $status || false === $status ) {
 	return false;

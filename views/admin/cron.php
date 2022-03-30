@@ -10,7 +10,7 @@ if ( ! defined( 'WPHC' ) ) {
 
 <p>To avoid this situation, we highly recommend you to follow the instructions below to disable the native WordPress Cron and enable a Crontab job in their place.</p>
 
-<?php if ( ! WP_Healthcheck::is_wpcron_disabled() ) : ?>
+<?php if ( ! wphc()->main->is_wpcron_disabled() ) : ?>
 	<p>Add the following line to your wp-config.php:</p>
 
 	<pre>define( 'DISABLE_WP_CRON', true );</pre>
@@ -18,6 +18,6 @@ if ( ! defined( 'WPHC' ) ) {
 
 <p>Add the following line to your crontab (usually available at /etc/crontab):</p>
 
-<pre>*/5 * * * * <?php echo WP_Healthcheck::get_site_owner(); ?> wget -qO- <?php echo home_url(); ?>/wp-cron.php &amp;> /dev/null</pre>
+<pre>*/5 * * * * <?php echo wphc()->main->get_site_owner(); ?> wget -qO- <?php echo home_url(); ?>/wp-cron.php &amp;> /dev/null</pre>
 
 <p>If you don't know what crontab is or how to use it, please send this request to your developers or to your hosting company. They will be able to easily enable it for you.</p>

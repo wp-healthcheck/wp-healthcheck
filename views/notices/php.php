@@ -3,14 +3,14 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$status = WP_Healthcheck::is_software_updated( 'php' );
+$status = wphc()->main->is_software_updated( 'php' );
 
 if ( 'updated' == $status || false === $status ) {
 	return false;
 }
 
-$requirements = WP_Healthcheck::get_server_requirements();
-$server_data  = WP_Healthcheck::get_server_data();
+$requirements = wphc()->main->get_server_requirements();
+$server_data  = wphc()->main->get_server_data();
 
 $messages = array(
 	'outdated' => array(

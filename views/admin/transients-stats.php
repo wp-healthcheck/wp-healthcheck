@@ -3,7 +3,7 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$transients = WP_Healthcheck::get_transients_stats();
+$transients = wphc()->main->get_transients_stats();
 ?>
 
 <?php if ( ! wp_using_ext_object_cache() ) : ?>
@@ -19,7 +19,7 @@ $transients = WP_Healthcheck::get_transients_stats();
 	</div>
 <?php endif; ?>
 
-<?php if ( WP_Healthcheck_AJAX::is_doing_ajax() ) : ?>
+<?php if ( wphc()->ajax->is_doing_ajax() ) : ?>
 	<?php $message = ( $object_cache ) ? __( 'object cache items', 'wp-healthcheck' ) : __( 'transients', 'wp-healthcheck' ); ?>
 
 	<?php if ( isset( $cleanup ) && false !== $cleanup ) : ?>

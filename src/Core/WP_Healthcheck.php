@@ -1,15 +1,19 @@
 <?php
+namespace WPHC\Core;
+
 /**
  * The WP_Healthcheck class
  *
  * @package wp-healthcheck
- * @since 1.0
+ *
+ * @since 1.0.0
  */
 class WP_Healthcheck {
 	/**
 	 * Option to store the history of disabled autoload options.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	const DISABLE_AUTOLOAD_OPTION = 'wphc_disable_autoload_history';
@@ -17,7 +21,8 @@ class WP_Healthcheck {
 	/**
 	 * Option to disable admin notices.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	const DISABLE_NOTICES_OPTION = 'wphc_disable_admin_notices';
@@ -26,6 +31,7 @@ class WP_Healthcheck {
 	 * Option to store the auto update status.
 	 *
 	 * @since 1.3.0
+	 *
 	 * @var string
 	 */
 	const CORE_AUTO_UPDATE_OPTION = 'wphc_auto_update_status';
@@ -34,6 +40,7 @@ class WP_Healthcheck {
 	 * Option to disable outdated plugins check.
 	 *
 	 * @since 1.3.0
+	 *
 	 * @var string
 	 */
 	const DISABLE_OUTDATED_PLUGINS_OPTION = 'wphc_disable_outdated_plugins_check';
@@ -41,7 +48,8 @@ class WP_Healthcheck {
 	/**
 	 * Transient to store if an admin notice should be displayed or not.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	const HIDE_NOTICES_TRANSIENT = 'wphc_hide_admin_notices';
@@ -49,7 +57,8 @@ class WP_Healthcheck {
 	/**
 	 * Transient to store the minimum requirements.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	const MIN_REQUIREMENTS_TRANSIENT = 'wphc_min_requirements';
@@ -58,6 +67,7 @@ class WP_Healthcheck {
 	 * Transient to store the outdated plugins.
 	 *
 	 * @since 1.3.0
+	 *
 	 * @var string
 	 */
 	const OUTDATED_PLUGINS_TRANSIENT = 'wphc_plugins_outdated';
@@ -65,7 +75,8 @@ class WP_Healthcheck {
 	/**
 	 * Transient to store the server data.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	const SERVER_DATA_TRANSIENT = 'wphc_server_data';
@@ -73,7 +84,8 @@ class WP_Healthcheck {
 	/**
 	 * Transient to store the SSL data.
 	 *
-	 * @since 1.2
+	 * @since 1.2.0
+	 *
 	 * @var string
 	 */
 	const SSL_DATA_TRANSIENT = 'wphc_ssl_data';
@@ -82,39 +94,17 @@ class WP_Healthcheck {
 	 * Transient to store if SSL is available or not.
 	 *
 	 * @since 1.3.0
+	 *
 	 * @var string
 	 */
 	const SSL_AVAILABLE_TRANSIENT = 'wphc_ssl_available';
 
 	/**
-	 * Whether to initiate the WordPress hooks.
-	 *
-	 * @since 1.0
-	 * @var boolean
-	 */
-	private static $initiated = false;
-
-	/**
-	 * Constructor.
-	 *
-	 * @since 1.0
-	 */
-	public static function init() {
-		if ( ! self::$initiated ) {
-			WP_Healthcheck_Upgrade::maybe_upgrade_db();
-
-			self::init_hooks();
-		}
-	}
-
-	/**
 	 * Initialize the WordPress hooks.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 */
-	public static function init_hooks() {
-		self::$initiated = true;
-
+	public function init() {
 		add_action( 'wp_loaded', array( 'WP_Healthcheck', 'check_core_updates' ) );
 		add_action( 'upgrader_process_complete', array( 'WP_Healthcheck', 'plugin_deactivation' ) );
 		add_action( 'shutdown', array( 'WP_Healthcheck', 'get_ssl_data' ) );
@@ -125,8 +115,8 @@ class WP_Healthcheck {
 	 *
 	 * @since 1.3.0
 	 */
-	public static function check_core_updates() {
-		$core_auto_update_option = self::get_core_auto_update_option();
+	public function check_core_updates() {
+		$core_auto_update_option = $this->get_core_auto_update_option();
 
 		if ( $core_auto_update_option && preg_match( '/^(minor|major|dev|disabled)$/', $core_auto_update_option ) ) {
 			if ( 'disabled' === $core_auto_update_option ) {
@@ -141,13 +131,13 @@ class WP_Healthcheck {
 	 * Cleans up the WordPress transients, or flushes the object cache if
 	 * it is enabled.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 *
 	 * @param boolean $only_expired Only expired transients.
 	 *
 	 * @return int|false Number of affected rows or false on error.
 	 */
-	public static function cleanup_transients( $only_expired = true ) {
+	public function cleanup_transients( $only_expired = true ) {
 		global $wpdb;
 
 		if ( wp_using_ext_object_cache() ) {
@@ -176,8 +166,8 @@ class WP_Healthcheck {
 	 *
 	 * @return int|false Number of affected rows or false on error.
 	 */
-	public static function deactivate_autoload_option( $option_name, $logging = true ) {
-		return self::_update_autoload_option( $option_name, 'no', $logging );
+	public function deactivate_autoload_option( $option_name, $logging = true ) {
+		return $this->_update_autoload_option( $option_name, 'no', $logging );
 	}
 
 	/**
@@ -189,8 +179,8 @@ class WP_Healthcheck {
 	 *
 	 * @return int|false Number of affected rows or false on error.
 	 */
-	public static function reactivate_autoload_option( $option_name ) {
-		return self::_update_autoload_option( $option_name, 'yes' );
+	public function reactivate_autoload_option( $option_name ) {
+		return $this->_update_autoload_option( $option_name, 'yes' );
 	}
 
 	/**
@@ -200,7 +190,7 @@ class WP_Healthcheck {
 	 *
 	 * @return array|false Name and timestamp of the options or false if none.
 	 */
-	public static function get_autoload_history() {
+	public function get_autoload_history() {
 		$history = get_option( self::DISABLE_AUTOLOAD_OPTION );
 
 		if ( $history ) {
@@ -232,7 +222,7 @@ class WP_Healthcheck {
 	 *
 	 * @return array The name and size of the biggest autoload options.
 	 */
-	public static function get_autoload_options() {
+	public function get_autoload_options() {
 		global $wpdb;
 
 		$options = array();
@@ -253,7 +243,7 @@ class WP_Healthcheck {
 	 *
 	 * @return array Stats of the autoload options.
 	 */
-	public static function get_autoload_stats() {
+	public function get_autoload_stats() {
 		global $wpdb;
 
 		$result = $wpdb->get_row( "SELECT COUNT(*) AS count, SUM(LENGTH(option_value)) / POWER(1024,2) AS size FROM $wpdb->options WHERE autoload = 'yes' AND option_name NOT REGEXP '^_(site_)?transient';" );
@@ -276,7 +266,7 @@ class WP_Healthcheck {
 	 * @return array|false Slug and number of days since last update
 	 * of the plugins or false if none.
 	 */
-	public static function get_outdated_plugins() {
+	public function get_outdated_plugins() {
 		if ( get_option( self::DISABLE_OUTDATED_PLUGINS_OPTION ) ) {
 			return false;
 		}
@@ -306,8 +296,8 @@ class WP_Healthcheck {
 				);
 
 				if ( empty( $wp_api->errors ) && ! empty( $wp_api->last_updated ) ) {
-					$today       = new DateTime();
-					$last_update = new DateTime( $wp_api->last_updated );
+					$today       = new \DateTime();
+					$last_update = new \DateTime( $wp_api->last_updated );
 
 					$days = $today->diff( $last_update )->format( '%a' );
 
@@ -330,7 +320,7 @@ class WP_Healthcheck {
 	 *
 	 * @return array The server data.
 	 */
-	public static function get_server_data() {
+	public function get_server_data() {
 		global $wpdb;
 
 		$server = get_transient( self::SERVER_DATA_TRANSIENT );
@@ -389,7 +379,7 @@ class WP_Healthcheck {
 	 *
 	 * @return array The server requirements.
 	 */
-	public static function get_server_requirements() {
+	public function get_server_requirements() {
 		$requirements = get_transient( self::MIN_REQUIREMENTS_TRANSIENT );
 
 		if ( false === $requirements ) {
@@ -419,7 +409,7 @@ class WP_Healthcheck {
 	 *
 	 * @return string Username of the site owner.
 	 */
-	public static function get_site_owner() {
+	public function get_site_owner() {
 		$uid = fileowner( ABSPATH );
 
 		$owner = ( is_numeric( $uid ) ) ? posix_getpwuid( $uid ) : null;
@@ -437,7 +427,7 @@ class WP_Healthcheck {
 	 *
 	 * @return array|false SSL data or false on error.
 	 */
-	public static function get_ssl_data() {
+	public function get_ssl_data() {
 		if ( ! is_ssl() && ( ! defined( 'WP_CLI' ) || ! WP_CLI ) ) {
 			return false;
 		}
@@ -496,7 +486,7 @@ class WP_Healthcheck {
 	 *
 	 * @return array The name and size of the biggest transients.
 	 */
-	public static function get_transients() {
+	public function get_transients() {
 		global $wpdb;
 
 		$transients = array();
@@ -517,7 +507,7 @@ class WP_Healthcheck {
 	 *
 	 * @return array Stats of the transients.
 	 */
-	public static function get_transients_stats() {
+	public function get_transients_stats() {
 		global $wpdb;
 
 		$result = $wpdb->get_row( "SELECT COUNT(*) AS count, SUM(LENGTH(option_value)) / POWER(1024,2) AS size FROM $wpdb->options WHERE option_name REGEXP '^_(site_)?transient';" );
@@ -538,7 +528,7 @@ class WP_Healthcheck {
 	 *
 	 * @return string|bool It can assume 'disabled', 'minor', 'major', 'dev' or false.
 	 */
-	public static function get_core_auto_update_option() {
+	public function get_core_auto_update_option() {
 		if ( self::is_wp_auto_update_available() ) {
 			return false;
 		}
@@ -557,7 +547,7 @@ class WP_Healthcheck {
 	 *
 	 * @return boolean True if autoload is disabled.
 	 */
-	public static function is_autoload_disabled( $option_name ) {
+	public function is_autoload_disabled( $option_name ) {
 		global $wpdb;
 
 		$autoload = $wpdb->get_var( $wpdb->prepare( "SELECT autoload FROM $wpdb->options WHERE option_name = %s;", $option_name ) );
@@ -574,7 +564,7 @@ class WP_Healthcheck {
 	 *
 	 * @return boolean True if it is a WP core option.
 	 */
-	public static function is_core_option( $option_name ) {
+	public function is_core_option( $option_name ) {
 		$wp_opts_file = WPHC_INC_DIR . '/data/wp_options.json';
 
 		if ( file_exists( $wp_opts_file ) ) {
@@ -593,18 +583,18 @@ class WP_Healthcheck {
 	 *
 	 * @return string|false The current status (updated, outdated, or obsolete) of the software or false on error.
 	 */
-	public static function is_software_updated( $software ) {
+	public function is_software_updated( $software ) {
 		if ( ! preg_match( '/^(php|mysql|mariadb|wp|nginx|apache)$/', $software ) ) {
 			return false;
 		}
 
-		$requirements = self::get_server_requirements();
+		$requirements = $this->get_server_requirements();
 
 		if ( ! $requirements ) {
 			return false;
 		}
 
-		$server_data = self::get_server_data();
+		$server_data = $this->get_server_data();
 
 		if ( 'wp' == $software ) {
 			$current_local = preg_replace( '/(\d{1,}\.\d{1,})(\.\d{1,})?/', '$1', $server_data['wp'] );
@@ -654,7 +644,7 @@ class WP_Healthcheck {
 	 *
 	 * @return boolean True if SSL is available.
 	 */
-	public static function is_ssl_available() {
+	public function is_ssl_available() {
 		if ( is_ssl() ) {
 			return true;
 		}
@@ -685,7 +675,7 @@ class WP_Healthcheck {
 	 *
 	 * @return int|false Number of days until certificate expiration or false on error.
 	 */
-	public static function is_ssl_expiring() {
+	public function is_ssl_expiring() {
 		$ssl_data = get_transient( self::SSL_DATA_TRANSIENT );
 
 		if ( false !== $ssl_data && ! empty( $ssl_data['validity']['to'] ) ) {
@@ -707,7 +697,7 @@ class WP_Healthcheck {
 	 *
 	 * @return boolean True if WordPress cron is disabled.
 	 */
-	public static function is_wpcron_disabled() {
+	public function is_wpcron_disabled() {
 		return ( defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON );
 	}
 
@@ -718,7 +708,7 @@ class WP_Healthcheck {
 	 *
 	 * @return boolean True if WordPress auto update constants are available.
 	 */
-	public static function is_wp_auto_update_available() {
+	public function is_wp_auto_update_available() {
 		return ( defined( 'AUTOMATIC_UPDATER_DISABLED' ) || defined( 'WP_AUTO_UPDATE_CORE' ) );
 	}
 
@@ -727,13 +717,13 @@ class WP_Healthcheck {
 	 *
 	 * @since 1.0
 	 */
-	public static function plugin_activation() {
+	public function plugin_activation() {
 		if ( ! get_option( self::DISABLE_AUTOLOAD_OPTION ) ) {
 			add_option( self::DISABLE_AUTOLOAD_OPTION, '', '', 'no' );
 		}
 
-		WP_Healthcheck::get_outdated_plugins();
-		WP_Healthcheck::is_ssl_available();
+		$this->get_outdated_plugins();
+		$this->is_ssl_available();
 	}
 
 	/**
@@ -741,8 +731,8 @@ class WP_Healthcheck {
 	 *
 	 * @since 1.0
 	 */
-	public static function plugin_deactivation() {
-		self::_cleanup_options( true );
+	public function plugin_deactivation() {
+		$this->cleanup_options( true );
 	}
 
 	/**
@@ -750,8 +740,8 @@ class WP_Healthcheck {
 	 *
 	 * @since 1.0
 	 */
-	public static function plugin_uninstall() {
-		self::_cleanup_options();
+	public function plugin_uninstall() {
+		$this->cleanup_options();
 	}
 
 	/**
@@ -762,10 +752,10 @@ class WP_Healthcheck {
 	 *
 	 * @since 1.3.0
 	 */
-	public static function set_core_auto_update_option( $option_value ) {
+	public function set_core_auto_update_option( $option_value ) {
 		$core_auto_update_option = get_option( self::CORE_AUTO_UPDATE_OPTION );
 
-		if ( self::is_wp_auto_update_available() ) {
+		if ( $this->is_wp_auto_update_available() ) {
 			if ( $core_auto_update_option ) {
 				delete_option( self::CORE_AUTO_UPDATE_OPTION );
 			}
@@ -781,7 +771,7 @@ class WP_Healthcheck {
 	 *
 	 * @param boolean $only_transients True to remove only the transients.
 	 */
-	public static function _cleanup_options( $only_transients = false ) {
+	public function cleanup_options( $only_transients = false ) {
 		if ( ! $only_transients ) {
 			$options = array(
 				self::DISABLE_AUTOLOAD_OPTION,
@@ -825,7 +815,7 @@ class WP_Healthcheck {
 	 *
 	 * @return int|false Number of affected rows or false on error.
 	 */
-	private static function _update_autoload_option( $option_name, $autoload = 'no', $logging = true ) {
+	private function _update_autoload_option( $option_name, $autoload = 'no', $logging = true ) {
 		global $wpdb;
 
 		if ( get_option( $option_name ) ) {

@@ -1,50 +1,43 @@
 <?php
+namespace WPHC\Admin;
+
+use WPHC\Core\WP_Healthcheck;
+
 /**
- * The WP_Healthcheck_AJAX class
+ * AJAX class
  *
  * @package wp-healthcheck
- * @since 1.0
+ *
+ * @since 1.0.0
  */
-class WP_Healthcheck_AJAX {
+class AJAX {
 	/**
 	 * Stores all the AJAX hooks.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
+	 *
 	 * @var array
 	 */
-	private static $ajax_actions = array();
-
-	/**
-	 * Whether to initiate the WordPress hooks.
-	 *
-	 * @since 1.0
-	 * @var boolean
-	 */
-	private static $initiated = false;
-
-	/**
-	 * Constructor.
-	 *
-	 * @since 1.0
-	 */
-	public static function init() {
-		if ( ! self::$initiated ) {
-			self::init_hooks();
-			self::add_ajax_actions();
-
-			add_action( 'admin_footer', array( 'WP_Healthcheck_AJAX', 'add_wp_nonces' ) );
-		}
-	}
+	public $ajax_actions = [];
 
 	/**
 	 * Initialize the WordPress hooks.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 */
-	public static function init_hooks() {
-		self::$initiated = true;
+	public function init() {
+		$this->add_ajax_actions();
 
-		self::$ajax_actions = array(
+		add_action( 'admin_footer', [ $this, 'add_wp_nonces' ] );
+	}
+
+	/**
+	 * Add the AJAX hooks.
+	 *
+	 * @since 1.0.0
+	 */
+	public function add_ajax_actions() {
+		$this->ajax_actions = [
 			'autoload_deactivate',
 			'autoload_history',
 			'autoload_list',
@@ -52,27 +45,20 @@ class WP_Healthcheck_AJAX {
 			'hide_admin_notice',
 			'transients_cleanup',
 			'wp_auto_update',
-		);
-	}
+		];
 
-	/**
-	 * Add the AJAX hooks.
-	 *
-	 * @since 1.0
-	 */
-	public static function add_ajax_actions() {
-		foreach ( self::$ajax_actions as $action ) {
-			add_action( 'wp_ajax_wphc_' . $action, array( 'WP_Healthcheck_AJAX', $action ) );
+		foreach ( $this->ajax_actions as $action ) {
+			add_action( 'wp_ajax_wphc_' . $action, [ $this, $action ] );
 		}
 	}
 
 	/**
 	 * Create a WP nonce for each hook.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 */
-	public static function add_wp_nonces() {
-		foreach ( self::$ajax_actions as $action ) {
+	public function add_wp_nonces() {
+		foreach ( $this->ajax_actions as $action ) {
 			wp_nonce_field( 'wphc_' . $action, 'wphc_' . $action . '_wpnonce' );
 		}
 	}
@@ -80,20 +66,20 @@ class WP_Healthcheck_AJAX {
 	/**
 	 * Determines if current request is WordPress AJAX request.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 *
-	 * @return True if it's an WordPress AJAX request.
+	 * @return bool True if it's an WordPress AJAX request.
 	 */
-	public static function is_doing_ajax() {
+	public function is_doing_ajax() {
 		return ( defined( 'DOING_AJAX' ) && DOING_AJAX );
 	}
 
 	/**
 	 * Hook: deactivate an autoload option.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 */
-	public static function autoload_deactivate() {
+	public function autoload_deactivate() {
 		check_ajax_referer( 'wphc_autoload_deactivate' );
 
 		$options = array();
@@ -102,7 +88,7 @@ class WP_Healthcheck_AJAX {
 			if ( preg_match( '/^wphc-opt-/', $name ) ) {
 				$option_name = preg_replace( '/^wphc-opt-/', '', urldecode( $name ) );
 
-				$options[ $option_name ] = WP_Healthcheck::deactivate_autoload_option( $option_name );
+				$options[ $option_name ] = wphc()->main->deactivate_autoload_option( $option_name );
 			}
 		}
 
@@ -114,9 +100,9 @@ class WP_Healthcheck_AJAX {
 	/**
 	 * Hook: list autoload options deactivated via WP Healthcheck.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 */
-	public static function autoload_history() {
+	public function autoload_history() {
 		check_ajax_referer( 'wphc_autoload_history' );
 
 		include WPHC_PLUGIN_DIR . '/views/admin/autoload-history.php';
@@ -127,9 +113,9 @@ class WP_Healthcheck_AJAX {
 	/**
 	 * Hook: list autoload options.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 */
-	public static function autoload_list() {
+	public function autoload_list() {
 		check_ajax_referer( 'wphc_autoload_list' );
 
 		include WPHC_PLUGIN_DIR . '/views/admin/autoload-list.php';
@@ -140,9 +126,9 @@ class WP_Healthcheck_AJAX {
 	/**
 	 * Hook: reactivate an autoload option.
 	 *
-	 * @since 1.1
+	 * @since 1.1.0
 	 */
-	public static function autoload_reactivate() {
+	public function autoload_reactivate() {
 		check_ajax_referer( 'wphc_autoload_reactivate' );
 
 		$options = array();
@@ -151,7 +137,7 @@ class WP_Healthcheck_AJAX {
 			if ( preg_match( '/^wphc-hopt-/', $name ) ) {
 				$option_name = preg_replace( '/^wphc-hopt-/', '', urldecode( $name ) );
 
-				$options[ $option_name ] = WP_Healthcheck::reactivate_autoload_option( $option_name );
+				$options[ $option_name ] = wphc()->main->reactivate_autoload_option( $option_name );
 			}
 		}
 
@@ -165,9 +151,9 @@ class WP_Healthcheck_AJAX {
 	/**
 	 * Hook: hide an admin notice.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 */
-	public static function hide_admin_notice() {
+	public function hide_admin_notice() {
 		check_ajax_referer( 'wphc_hide_admin_notice' );
 
 		if ( isset( $_POST['software'] ) && preg_match( '/(?:php|database|wordpress|web|ssl|https|plugins)/', $_POST['software'] ) ) {
@@ -188,12 +174,12 @@ class WP_Healthcheck_AJAX {
 	/**
 	 * Hook: clean up transients.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 */
-	public static function transients_cleanup() {
+	public function transients_cleanup() {
 		check_ajax_referer( 'wphc_transients_cleanup' );
 
-		$cleanup = WP_Healthcheck::cleanup_transients( isset( $_POST['expired'] ) );
+		$cleanup = wphc()->main->cleanup_transients( isset( $_POST['expired'] ) );
 
 		$object_cache = isset( $_POST['object_cache'] );
 
@@ -207,11 +193,11 @@ class WP_Healthcheck_AJAX {
 	 *
 	 * @since 1.3.0
 	 */
-	public static function wp_auto_update() {
+	public function wp_auto_update() {
 		check_ajax_referer( 'wphc_wp_auto_update' );
 
 		if ( preg_match( '/^(?:minor|major|disabled|dev)$/', $_POST['wp_auto_update'] ) ) {
-			WP_Healthcheck::set_core_auto_update_option( $_POST['wp_auto_update'] );
+			wphc()->main->set_core_auto_update_option( $_POST['wp_auto_update'] );
 		}
 
 		wp_die();

@@ -3,7 +3,7 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$days_to_expire = WP_Healthcheck::is_ssl_expiring();
+$days_to_expire = wphc()->main->is_ssl_expiring();
 
 if ( false === $days_to_expire || ! is_int( $days_to_expire ) ) {
 	return false;

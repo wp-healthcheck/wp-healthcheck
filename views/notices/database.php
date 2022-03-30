@@ -3,12 +3,12 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$requirements = WP_Healthcheck::get_server_requirements();
-$server_data  = WP_Healthcheck::get_server_data();
+$requirements = wphc()->main->get_server_requirements();
+$server_data  = wphc()->main->get_server_data();
 
 $db_service = $server_data['database']['service'];
 
-$status = WP_Healthcheck::is_software_updated( strtolower( $db_service ) );
+$status = wphc()->main->is_software_updated( strtolower( $db_service ) );
 
 if ( 'updated' == $status || false === $status ) {
 	return false;

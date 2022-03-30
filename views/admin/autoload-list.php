@@ -3,7 +3,7 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$opts = WP_Healthcheck::get_autoload_options();
+$opts = wphc()->main->get_autoload_options();
 
 $i = 1;
 ?>
@@ -23,7 +23,7 @@ $i = 1;
 			?>
 
 			<ul>
-				<?php if ( ! WP_Healthcheck::is_core_option( $name ) ) : ?>
+				<?php if ( ! wphc()->main->is_core_option( $name ) ) : ?>
 					<li><input name="<?php echo $id; ?>" id="<?php echo $id; ?>" type="checkbox" />&nbsp;</li>
 				<?php else : ?>
 					<?php $title = 'title="' . __( 'You can\'t deactivate a WordPress core option.', 'wp-healthcheck' ) . '"'; ?>

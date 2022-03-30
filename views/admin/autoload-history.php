@@ -3,7 +3,7 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$opts = WP_Healthcheck::get_autoload_history();
+$opts = wphc()->main->get_autoload_history();
 
 if ( sizeof( $opts ) == 0 ) {
 	return;
