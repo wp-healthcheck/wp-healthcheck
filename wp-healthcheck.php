@@ -26,10 +26,6 @@ define( 'WPHC_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 
 define( 'WPHC_INC_DIR', WPHC_PLUGIN_DIR . '/includes' );
 
-//register_activation_hook( __FILE__, array( 'WP_Healthcheck', 'plugin_activation' ) );
-//register_deactivation_hook( __FILE__, array( 'WP_Healthcheck', 'plugin_deactivation' ) );
-//register_uninstall_hook( __FILE__, array( 'WP_Healthcheck', 'plugin_uninstall' ) );
-
 /**
  * Plugin loader.
  *

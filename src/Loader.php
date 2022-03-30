@@ -16,15 +16,49 @@ use WPHC\Core\WP_Healthcheck;
  * @since 2.0.0
  */
 class Loader {
-
+	/**
+	 * The WP_Healthcheck object.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @var WP_Healthcheck
+	 */
 	public $main;
 
+	/**
+	 * The Dashboard object.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @var Dashboard
+	 */
 	public $dashboard;
 
+	/**
+	 * The AJAX object.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @var AJAX
+	 */
 	public $ajax;
 
+	/**
+	 * The Pointers object.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @var Pointers
+	 */
 	public $pointers;
 
+	/**
+	 * The Upgrade object.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @var Upgrade
+	 */
 	public $upgrade;
 
 	/**
@@ -72,5 +106,19 @@ class Loader {
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			new CLI();
 		}
+
+		// Enable the register hooks.
+		$this->register_hooks();
+	}
+
+	/**
+	 * Enable the register hooks to run on plugin activation, deactivation, and uninstallation.
+	 *
+	 * @since 2.0.0
+	 */
+	public function register_hooks() {
+		register_activation_hook( __FILE__, [ wphc()->main, 'plugin_activation' ] );
+		register_deactivation_hook( __FILE__, [ wphc()->main, 'plugin_deactivation' ] );
+		register_uninstall_hook( __FILE__, [ wphc()->main, 'plugin_uninstall' ] );
 	}
 }
