@@ -11,7 +11,7 @@ if ( false === $days_to_expire || ! is_int( $days_to_expire ) ) {
 
 $status = ( $days_to_expire <= 0 ) ? 'expired' : 'expiring_soon';
 
-$ssl_data = get_transient( WP_Healthcheck::SSL_DATA_TRANSIENT );
+$ssl_data = get_transient( \WPHC\Core\WP_Healthcheck::SSL_DATA_TRANSIENT );
 
 $issuer = ( empty( $ssl_data['issuer'] ) ) ? '' : ' (' . $ssl_data['issuer'] . ')';
 $days   = _n( 'day', 'days', abs( $days_to_expire ), 'wp-healthcheck' );

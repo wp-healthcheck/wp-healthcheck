@@ -105,9 +105,9 @@ class WP_Healthcheck {
 	 * @since 1.0.0
 	 */
 	public function init() {
-		add_action( 'wp_loaded', array( 'WP_Healthcheck', 'check_core_updates' ) );
-		add_action( 'upgrader_process_complete', array( 'WP_Healthcheck', 'plugin_deactivation' ) );
-		add_action( 'shutdown', array( 'WP_Healthcheck', 'get_ssl_data' ) );
+		add_action( 'wp_loaded', [ $this, 'check_core_updates' ] );
+		add_action( 'upgrader_process_complete', [ $this, 'plugin_deactivation' ] );
+		add_action( 'shutdown', [ $this, 'get_ssl_data' ] );
 	}
 
 	/**
@@ -159,7 +159,7 @@ class WP_Healthcheck {
 	/**
 	 * Deactivates an autoload option.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 *
 	 * @param string  $option_name The name of the option to disable.
 	 * @param boolean $logging Save deactivation to history.
@@ -173,7 +173,7 @@ class WP_Healthcheck {
 	/**
 	 * Reactivates an autoload option that was disabled previously.
 	 *
-	 * @since 1.1
+	 * @since 1.1.0
 	 *
 	 * @param string $option_name The name of the option to disable.
 	 *
@@ -186,7 +186,7 @@ class WP_Healthcheck {
 	/**
 	 * Returns the autoload options deactivated via WP Healthcheck.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 *
 	 * @return array|false Name and timestamp of the options or false if none.
 	 */
@@ -218,7 +218,7 @@ class WP_Healthcheck {
 	/**
 	 * Returns the 10 biggest WordPress autoload options.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 *
 	 * @return array The name and size of the biggest autoload options.
 	 */
@@ -239,7 +239,7 @@ class WP_Healthcheck {
 	/**
 	 * Returns the WordPress autoload options count and size.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 *
 	 * @return array Stats of the autoload options.
 	 */
@@ -316,7 +316,7 @@ class WP_Healthcheck {
 	/**
 	 * Retrieves the server data.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 *
 	 * @return array The server data.
 	 */
@@ -375,7 +375,7 @@ class WP_Healthcheck {
 	/**
 	 * Retrieves the server requirements from our API.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 *
 	 * @return array The server requirements.
 	 */
@@ -405,7 +405,7 @@ class WP_Healthcheck {
 	/**
 	 * Returns the system's username of the site owner.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 *
 	 * @return string Username of the site owner.
 	 */
@@ -423,7 +423,7 @@ class WP_Healthcheck {
 	 * Retrieves some information from SSL certificate associated with site
 	 * url.
 	 *
-	 * @since 1.2
+	 * @since 1.2.0
 	 *
 	 * @return array|false SSL data or false on error.
 	 */
@@ -482,7 +482,7 @@ class WP_Healthcheck {
 	/**
 	 * Returns the 10 biggest transients.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 *
 	 * @return array The name and size of the biggest transients.
 	 */
@@ -503,7 +503,7 @@ class WP_Healthcheck {
 	/**
 	 * Returns the WordPress transients count and size.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 *
 	 * @return array Stats of the transients.
 	 */
@@ -541,7 +541,7 @@ class WP_Healthcheck {
 	/**
 	 * Determine if an option is set to autoload or not.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 *
 	 * @param string $option_name The option name.
 	 *
@@ -558,7 +558,7 @@ class WP_Healthcheck {
 	/**
 	 * Determine if an option is a WP core one or not.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 *
 	 * @param string $option_name The option name.
 	 *
@@ -577,7 +577,7 @@ class WP_Healthcheck {
 	/**
 	 * Determine if server software is up-to-date or not.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 *
 	 * @param string $software The name of the software.
 	 *
@@ -671,7 +671,7 @@ class WP_Healthcheck {
 	/**
 	 * Determines if a SSL certificate will expire soon.
 	 *
-	 * @since 1.2
+	 * @since 1.2.0
 	 *
 	 * @return int|false Number of days until certificate expiration or false on error.
 	 */
@@ -693,7 +693,7 @@ class WP_Healthcheck {
 	/**
 	 * Determines if WordPress cron constant is enabled or not.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 *
 	 * @return boolean True if WordPress cron is disabled.
 	 */
@@ -715,7 +715,7 @@ class WP_Healthcheck {
 	/**
 	 * Add options when plugin is activated.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 */
 	public function plugin_activation() {
 		if ( ! get_option( self::DISABLE_AUTOLOAD_OPTION ) ) {
@@ -729,7 +729,7 @@ class WP_Healthcheck {
 	/**
 	 * Cleanup transients when plugin is deactivated.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 */
 	public function plugin_deactivation() {
 		$this->cleanup_options( true );
@@ -738,7 +738,7 @@ class WP_Healthcheck {
 	/**
 	 * Cleanup options and transients when plugin is uninstalled.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 */
 	public function plugin_uninstall() {
 		$this->cleanup_options();
@@ -767,7 +767,7 @@ class WP_Healthcheck {
 	/**
 	 * Cleans up the plugin options and transients.
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 *
 	 * @param boolean $only_transients True to remove only the transients.
 	 */
@@ -778,7 +778,7 @@ class WP_Healthcheck {
 				self::DISABLE_NOTICES_OPTION,
 				self::CORE_AUTO_UPDATE_OPTION,
 				self::DISABLE_OUTDATED_PLUGINS_OPTION,
-				WP_Healthcheck_Upgrade::PLUGIN_VERSION_OPTION,
+				Upgrade::PLUGIN_VERSION_OPTION,
 			);
 
 			foreach ( $options as $option ) {
@@ -807,7 +807,7 @@ class WP_Healthcheck {
 	/**
 	 * Updates the autoload value for the given option.
 	 *
-	 * @since 1.1
+	 * @since 1.1.0
 	 *
 	 * @param string $option_name The name of the option to disable.
 	 * @param string $autoload The new value for the autoload field. Only 'yes' or 'no'.
