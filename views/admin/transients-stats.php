@@ -21,9 +21,9 @@ $stats      = $transients->get_transients_stats();
 <?php endif; ?>
 
 <?php if ( wphc()->admin()->ajax()->is_doing_ajax() ) : ?>
-	<?php $message = ( $object_cache ) ? __( 'object cache items', 'wp-healthcheck' ) : __( 'transients', 'wp-healthcheck' ); ?>
+	<?php $message = ( $args['object_cache'] ) ? __( 'object cache items', 'wp-healthcheck' ) : __( 'transients', 'wp-healthcheck' ); ?>
 
-	<?php if ( isset( $cleanup ) && false !== $cleanup ) : ?>
+	<?php if ( isset( $args['cleanup'] ) && false !== $args['cleanup'] ) : ?>
 		<p class="wphc_internal_notice wphc_success">
 			<?php
 			/* translators: %1$s is 'transients' or 'object cache items' */

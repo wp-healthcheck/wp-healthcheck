@@ -40,7 +40,7 @@ class Options {
 	 * @return int|false Number of affected rows or false on error.
 	 */
 	public function reactivate_autoload_option( $option_name ) {
-		return $this->_update_autoload_option( $option_name, 'yes' );
+		return $this->update_autoload_option( $option_name, 'yes' );
 	}
 
 	/**

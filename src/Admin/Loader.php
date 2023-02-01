@@ -8,8 +8,31 @@ namespace WPHC\Admin;
  * @since 1.4.0
  */
 class Loader {
+	/**
+	 * The AJAX object.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @var AJAX
+	 */
 	private $ajax;
+
+	/**
+	 * The Dashboard object.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @var Dashboard
+	 */
 	private $dashboard;
+
+	/**
+	 * The Pointers object.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @var Pointers
+	 */
 	private $pointers;
 
 	/**
@@ -21,14 +44,35 @@ class Loader {
 		$this->setup();
 	}
 
+	/**
+	 * Get the AJAX object.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return AJAX
+	 */
 	public function ajax() {
 		return $this->ajax;
 	}
 
+	/**
+	 * Get the Dashboard object.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return Dashboard
+	 */
 	public function dashboard() {
 		return $this->dashboard;
 	}
 
+	/**
+	 * Get the Pointers object.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return Pointers
+	 */
 	public function pointers() {
 		return $this->pointers;
 	}
@@ -39,8 +83,8 @@ class Loader {
 	 * @since 1.4.0
 	 */
 	public function setup() {
-		$this->dashboard = new Dashboard();
-		$this->pointers  = new Pointers();
 		$this->ajax      = new AJAX();
+		$this->pointers  = new Pointers();
+		$this->dashboard = new Dashboard();
 	}
 }

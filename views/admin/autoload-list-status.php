@@ -3,28 +3,28 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-if ( ! WP_Healthcheck_AJAX::is_doing_ajax() || ! isset( $options ) ) {
+if ( ! wphc()->admin()->ajax()->is_doing_ajax() || ! isset( $args['options'] ) ) {
 	return;
 }
 
 $fail = array_filter(
-	$options,
+	$args['options'],
 	function( $k ) {
 		return false === $k;
 	}
 );
 
 $success = array_filter(
-	$options,
+	$args['options'],
 	function( $k ) {
 		return false !== $k;
 	}
 );
 
-$message = ( isset( $reactivate ) && $reactivate ) ? __( 'reactivate', 'wp-healthcheck' ) : __( 'deactivate', 'wp-healthcheck' );
+$message = ( isset( $args['reactivate'] ) && $args['reactivate'] ) ? __( 'reactivate', 'wp-healthcheck' ) : __( 'deactivate', 'wp-healthcheck' );
 
-$message_singular = ( isset( $reactivate ) && $reactivate ) ? _x( 'reactivated', 'singular: option was reactivated', 'wp-healthcheck' ) : _x( 'deactivated', 'singular: option was disabled', 'wp-healthcheck' );
-$message_plural   = ( isset( $reactivate ) && $reactivate ) ? _x( 'reactivated', 'plural: options were reactivated', 'wp-healthcheck' ) : _x( 'deactivated', 'plural: options were disabled', 'wp-healthcheck' );
+$message_singular = ( isset( $args['reactivate'] ) && $args['reactivate'] ) ? _x( 'reactivated', 'singular: option was reactivated', 'wp-healthcheck' ) : _x( 'deactivated', 'singular: option was disabled', 'wp-healthcheck' );
+$message_plural   = ( isset( $args['reactivate'] ) && $args['reactivate'] ) ? _x( 'reactivated', 'plural: options were reactivated', 'wp-healthcheck' ) : _x( 'deactivated', 'plural: options were disabled', 'wp-healthcheck' );
 ?>
 
 <?php if ( sizeof( $success ) == 1 ) : ?>

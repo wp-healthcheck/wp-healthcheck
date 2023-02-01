@@ -12,6 +12,7 @@ class Dashboard {
 	 * Option to disable admin notices.
 	 *
 	 * @since 1.0
+	 *
 	 * @var string
 	 */
 	const DISABLE_NOTICES_OPTION = 'wphc_disable_admin_notices';
@@ -20,6 +21,7 @@ class Dashboard {
 	 * Transient to store if an admin notice should be displayed or not.
 	 *
 	 * @since 1.0
+	 *
 	 * @var string
 	 */
 	const HIDE_NOTICES_TRANSIENT = 'wphc_hide_admin_notices';
@@ -28,6 +30,7 @@ class Dashboard {
 	 * Admin page hookname.
 	 *
 	 * @since 1.0
+	 *
 	 * @var string
 	 */
 	private $hookname = null;
@@ -64,7 +67,7 @@ class Dashboard {
 	public function load_resources() {
 		$suffix = ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? '' : '.min';
 
-		wp_register_script( 'wp-healthcheck-js', WPHC_PLUGIN_URL . '/assets/wp-healthcheck' . $suffix . '.js', false, WPHC_VERSION );
+		wp_register_script( 'wp-healthcheck-js', WPHC_PLUGIN_URL . '/assets/wp-healthcheck' . $suffix . '.js', [ 'jquery' ], WPHC_VERSION );
 		wp_register_style( 'wp-healthcheck-css', WPHC_PLUGIN_URL . '/assets/wp-healthcheck' . $suffix . '.css', false, WPHC_VERSION );
 
 		wp_enqueue_script( 'wp-healthcheck-js' );
@@ -126,7 +129,7 @@ class Dashboard {
 			return;
 		}
 
-		$notices = array( 'php', 'database', 'wordpress', 'web', 'ssl', 'https', 'plugins' );
+		$notices = [ 'php', 'database', 'wordpress', 'web', 'ssl', 'https', 'plugins' ];
 
 		$notices_transient = get_transient( self::HIDE_NOTICES_TRANSIENT );
 
@@ -192,14 +195,10 @@ class Dashboard {
 	 * @param string $metabox The metabox data.
 	 */
 	public function view( $name, $metabox = null ) {
-		if ( isset( $metabox['args']['name'] ) ) {
+		if ( ! empty( $metabox['args']['name'] ) ) {
 			$name = $metabox['args']['name'];
 		}
 
-		$file = WPHC_PLUGIN_DIR . '/views/' . $name . '.php';
-
-		if ( file_exists( $file ) ) {
-			include $file;
-		}
+		wphc_view( $name );
 	}
 }

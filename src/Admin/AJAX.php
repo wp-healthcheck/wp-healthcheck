@@ -12,6 +12,7 @@ class AJAX {
 	 * Stores all the AJAX hooks.
 	 *
 	 * @since 1.0
+	 *
 	 * @var array
 	 */
 	private $ajax_actions;
@@ -33,7 +34,6 @@ class AJAX {
 		];
 
 		$this->hooks();
-		$this->add_ajax_actions();
 	}
 
 	/**
@@ -42,6 +42,7 @@ class AJAX {
 	 * @since 1.0
 	 */
 	public function hooks() {
+		add_action( 'admin_init', [ $this, 'add_ajax_actions' ] );
 		add_action( 'admin_footer', [ $this, 'add_wp_nonces' ] );
 	}
 
@@ -86,7 +87,7 @@ class AJAX {
 	public function autoload_deactivate() {
 		check_ajax_referer( 'wphc_autoload_deactivate' );
 
-		$options = array();
+		$options = [];
 
 		foreach ( $_POST as $name => $value ) {
 			if ( preg_match( '/^wphc-opt-/', $name ) ) {
@@ -96,7 +97,12 @@ class AJAX {
 			}
 		}
 
-		include WPHC_PLUGIN_DIR . '/views/admin/autoload-list-status.php';
+		wphc_view(
+			'admin/autoload-list-status',
+			[
+				'options' => $options,
+			]
+		);
 
 		wp_die();
 	}
@@ -109,7 +115,7 @@ class AJAX {
 	public function autoload_history() {
 		check_ajax_referer( 'wphc_autoload_history' );
 
-		include WPHC_PLUGIN_DIR . '/views/admin/autoload-history.php';
+		wphc_view( 'admin/autoload-history' );
 
 		wp_die();
 	}
@@ -122,7 +128,7 @@ class AJAX {
 	public function autoload_list() {
 		check_ajax_referer( 'wphc_autoload_list' );
 
-		include WPHC_PLUGIN_DIR . '/views/admin/autoload-list.php';
+		wphc_view( 'admin/autoload-list' );
 
 		wp_die();
 	}
@@ -135,7 +141,7 @@ class AJAX {
 	public function autoload_reactivate() {
 		check_ajax_referer( 'wphc_autoload_reactivate' );
 
-		$options = array();
+		$options = [];
 
 		foreach ( $_POST as $name => $value ) {
 			if ( preg_match( '/^wphc-hopt-/', $name ) ) {
@@ -145,9 +151,13 @@ class AJAX {
 			}
 		}
 
-		$reactivate = true;
-
-		include WPHC_PLUGIN_DIR . '/views/admin/autoload-list-status.php';
+		wphc_view(
+			'admin/autoload-list-status',
+			[
+				'options'    => $options,
+				'reactivate' => true,
+			]
+		);
 
 		wp_die();
 	}
@@ -160,7 +170,7 @@ class AJAX {
 	public function hide_admin_notice() {
 		check_ajax_referer( 'wphc_hide_admin_notice' );
 
-		if ( isset( $_POST['software'] ) && preg_match( '/(?:php|database|wordpress|web|ssl|https|plugins)/', $_POST['software'] ) ) {
+		if ( isset( $_POST['software'] ) && preg_match( '/(?:php|database|wordpress|web|ssl|https|plugins)/', sanitize_key( $_POST['software'] ) ) ) {
 			$notices_transient = get_transient( Dashboard::HIDE_NOTICES_TRANSIENT );
 
 			if ( false === $notices_transient ) {
@@ -187,7 +197,13 @@ class AJAX {
 
 		$object_cache = isset( $_POST['object_cache'] );
 
-		include WPHC_PLUGIN_DIR . '/views/admin/transients-stats.php';
+		wphc_view(
+			'admin/transients-stats',
+			[
+				'cleanup'      => $cleanup,
+				'object_cache' => $object_cache,
+			]
+		);
 
 		wp_die();
 	}

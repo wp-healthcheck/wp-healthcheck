@@ -45,6 +45,8 @@ class Loader {
 	 * @since 1.4.0
 	 */
 	public function setup() {
+		require_once WPHC_PLUGIN_DIR . '/src/Utils/Helpers.php';
+
 		$this->core = new \WPHC\Core\Loader();
 		$this->admin = new \WPHC\Admin\Loader();
 
