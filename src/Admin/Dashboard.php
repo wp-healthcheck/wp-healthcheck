@@ -2,12 +2,12 @@
 namespace WPHC\Admin;
 
 /**
- * The Admin class
+ * The Dashboard class.
  *
  * @package wp-healthcheck
  * @since 1.4.0
  */
-class Admin {
+class Dashboard {
 	/**
 	 * Option to disable admin notices.
 	 *
@@ -43,7 +43,6 @@ class Admin {
 		}
 
 		$this->hooks();
-		$this->ajax();
 	}
 
 	/**
@@ -55,20 +54,6 @@ class Admin {
 		add_action( 'admin_menu', [ $this, 'admin_menu' ], 5 );
 		add_action( 'admin_notices', [ $this, 'admin_notices' ] );
 		add_action( 'admin_init', [ $this, 'load_resources' ] );
-	}
-
-	/**
-	 * Initialize the AJAX implementation.
-	 *
-	 * @since 1.0
-	 */
-	public function ajax() {
-		new Pointers();
-		//require_once WPHC_INC_DIR . '/class-wp-healthcheck-ajax.php';
-		//require_once WPHC_INC_DIR . '/class-wp-healthcheck-pointers.php';
-
-		//add_action( 'admin_init', array( 'WP_Healthcheck_AJAX', 'init' ) );
-		//add_action( 'admin_init', array( 'WP_Healthcheck_Pointers', 'init' ), 4 );
 	}
 
 	/**
@@ -158,7 +143,7 @@ class Admin {
 	 * @since 1.0
 	 */
 	public function admin_page() {
-		$this->view( 'admin/admin' );
+		$this->view( 'admin/dashboard' );
 	}
 
 	/**

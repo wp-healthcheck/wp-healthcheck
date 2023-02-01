@@ -1,8 +1,6 @@
 <?php
 namespace WPHC\Core;
 
-use WPHC\Admin\AJAX;
-
 /**
  * The Core\Loader class.
  *
@@ -10,7 +8,6 @@ use WPHC\Admin\AJAX;
  * @since 1.4.0
  */
 class Loader {
-	private $ajax;
 	private $options;
 	private $plugins;
 	private $server;
@@ -25,10 +22,6 @@ class Loader {
 	 */
 	public function __construct() {
 		$this->setup();
-	}
-
-	public function ajax() {
-		return $this->ajax;
 	}
 
 	public function options() {
@@ -61,7 +54,6 @@ class Loader {
 	 * @since 1.4.0
 	 */
 	public function setup() {
-		$this->ajax       = new AJAX();
 		$this->options    = new Options();
 		$this->plugins    = new Plugins();
 		$this->server     = new Server();

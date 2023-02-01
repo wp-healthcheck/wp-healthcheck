@@ -1,7 +1,6 @@
 <?php
 namespace WPHC;
 
-use WPHC\Admin\Admin;
 use WPHC\Utils\CLI;
 
 /**
@@ -47,7 +46,7 @@ class Loader {
 	 */
 	public function setup() {
 		$this->core = new \WPHC\Core\Loader();
-		$this->admin = new Admin();
+		$this->admin = new \WPHC\Admin\Loader();
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			new CLI();

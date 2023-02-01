@@ -13,7 +13,7 @@ if ( ! defined( 'WPHC' ) ) {
 
 	<div id="poststuff">
 		<div id="post-body" class="postbox-container">
-			<?php wphc()->admin()->do_meta_boxes(); ?>
+			<?php wphc()->admin()->dashboard()->do_meta_boxes(); ?>
 		</div>
 	</div>
 

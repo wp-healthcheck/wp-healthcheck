@@ -20,7 +20,7 @@ $stats      = $transients->get_transients_stats();
 	</div>
 <?php endif; ?>
 
-<?php if ( wphc()->core()->ajax()->is_doing_ajax() ) : ?>
+<?php if ( wphc()->admin()->ajax()->is_doing_ajax() ) : ?>
 	<?php $message = ( $object_cache ) ? __( 'object cache items', 'wp-healthcheck' ) : __( 'transients', 'wp-healthcheck' ); ?>
 
 	<?php if ( isset( $cleanup ) && false !== $cleanup ) : ?>
