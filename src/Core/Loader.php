@@ -11,7 +11,10 @@ use WPHC\Admin\AJAX;
  */
 class Loader {
 	private $ajax;
+	private $options;
+	private $plugins;
 	private $server;
+	private $ssl;
 	private $transients;
 	private $wordpress;
 
@@ -32,8 +35,16 @@ class Loader {
 		return $this->options;
 	}
 
+	public function plugins() {
+		return $this->plugins;
+	}
+
 	public function server() {
 		return $this->server;
+	}
+
+	public function ssl() {
+		return $this->ssl;
 	}
 
 	public function transients() {
@@ -52,7 +63,9 @@ class Loader {
 	public function setup() {
 		$this->ajax       = new AJAX();
 		$this->options    = new Options();
+		$this->plugins    = new Plugins();
 		$this->server     = new Server();
+		$this->ssl        = new SSL();
 		$this->transients = new Transients();
 		$this->wordpress  = new WordPress();
 	}

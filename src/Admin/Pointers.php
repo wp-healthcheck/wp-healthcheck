@@ -5,26 +5,16 @@ namespace WPHC\Admin;
  * The WP_Healthcheck_Pointers class
  *
  * @package wp-healthcheck
- * @since 1.0
+ * @since 1.4.0
  */
 class Pointers {
-	/**
-	 * Whether to initiate the WordPress hooks.
-	 *
-	 * @since 1.0
-	 * @var boolean
-	 */
-	private static $initiated = false;
-
 	/**
 	 * Constructor.
 	 *
 	 * @since 1.0
 	 */
-	public static function init() {
-		if ( ! self::$initiated ) {
-			self::init_hooks();
-		}
+	public function __construct() {
+		$this->hooks();
 	}
 
 	/**
@@ -32,11 +22,9 @@ class Pointers {
 	 *
 	 * @since 1.0
 	 */
-	public static function init_hooks() {
-		self::$initiated = true;
-
-		add_action( 'admin_init', array( 'WP_Healthcheck_Pointers', 'load_resources' ), 5 );
-		add_action( 'admin_print_footer_scripts', array( 'WP_Healthcheck_Pointers', 'enqueue_pointers' ) );
+	public function hooks() {
+		add_action( 'admin_init', [ $this, 'load_resources' ], 5 );
+		add_action( 'admin_print_footer_scripts', [ $this, 'enqueue_pointers' ] );
 	}
 
 	/**
@@ -44,7 +32,7 @@ class Pointers {
 	 *
 	 * @since 1.0
 	 */
-	public static function load_resources() {
+	public function load_resources() {
 		wp_enqueue_script( 'wp-pointer' );
 		wp_enqueue_style( 'wp-pointer' );
 	}
@@ -54,21 +42,19 @@ class Pointers {
 	 *
 	 * @since 1.0
 	 */
-	public static function enqueue_pointers() {
-		include WPHC_PLUGIN_DIR . '/views/admin/help.php';
-
-		$pointers = array(
-			array(
-				'title'   => $transients_help['title'],
-				'content' => $transients_help['content'],
+	public function enqueue_pointers() {
+		$pointers = [
+			[
+				'title'   => __( 'Cleaning Up Transients', 'wp-healthcheck' ),
+				'content' => __( 'You don\'t have to be afraid! Cleaning up transients won\'t affect your site functionality.<br/><br/>In fact, plugins, themes, and WordPress itself will recreate them according to their needs.', 'wp-healthcheck' ),
 				'target'  => 'wphc-btn-transients-help',
-			),
-			array(
-				'title'   => $autoload_help['title'],
-				'content' => $autoload_help['content'],
+			],
+			[
+				'title'   => __( 'Deactivating An Autoload Option', 'wp-healthcheck' ),
+				'content' => __( 'No worries, when you deactivate an autoload option, you are not removing it.<br/></br>You are just telling WordPress to not load that option automatically on every request it does.<br/><br/>In other words, the option will be loaded only when it is needed.', 'wp-healthcheck' ),
 				'target'  => 'wphc-btn-autoload-help',
-			),
-		);
+			],
+		];
 
 		$js = '';
 

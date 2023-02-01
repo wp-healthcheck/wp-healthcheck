@@ -5,9 +5,25 @@ namespace WPHC\Admin;
  * The Admin class
  *
  * @package wp-healthcheck
- * @since 1.0
+ * @since 1.4.0
  */
 class Admin {
+	/**
+	 * Option to disable admin notices.
+	 *
+	 * @since 1.0
+	 * @var string
+	 */
+	const DISABLE_NOTICES_OPTION = 'wphc_disable_admin_notices';
+
+	/**
+	 * Transient to store if an admin notice should be displayed or not.
+	 *
+	 * @since 1.0
+	 * @var string
+	 */
+	const HIDE_NOTICES_TRANSIENT = 'wphc_hide_admin_notices';
+
 	/**
 	 * Admin page hookname.
 	 *
@@ -27,7 +43,7 @@ class Admin {
 		}
 
 		$this->hooks();
-		//$this->init_ajax();
+		$this->ajax();
 	}
 
 	/**
@@ -37,7 +53,7 @@ class Admin {
 	 */
 	public function hooks() {
 		add_action( 'admin_menu', [ $this, 'admin_menu' ], 5 );
-		//add_action( 'admin_notices', array( 'WP_Healthcheck_Admin', 'admin_notices' ) );
+		add_action( 'admin_notices', [ $this, 'admin_notices' ] );
 		add_action( 'admin_init', [ $this, 'load_resources' ] );
 	}
 
@@ -46,9 +62,10 @@ class Admin {
 	 *
 	 * @since 1.0
 	 */
-	public function init_ajax() {
-		require_once WPHC_INC_DIR . '/class-wp-healthcheck-ajax.php';
-		require_once WPHC_INC_DIR . '/class-wp-healthcheck-pointers.php';
+	public function ajax() {
+		new Pointers();
+		//require_once WPHC_INC_DIR . '/class-wp-healthcheck-ajax.php';
+		//require_once WPHC_INC_DIR . '/class-wp-healthcheck-pointers.php';
 
 		//add_action( 'admin_init', array( 'WP_Healthcheck_AJAX', 'init' ) );
 		//add_action( 'admin_init', array( 'WP_Healthcheck_Pointers', 'init' ), 4 );
@@ -114,23 +131,23 @@ class Admin {
 	 * @since 1.0
 	 */
 	public function admin_notices() {
-		if ( get_option( WP_Healthcheck::DISABLE_NOTICES_OPTION ) ) {
+		if ( get_option( self::DISABLE_NOTICES_OPTION ) ) {
 			return;
 		}
 
 		$screen = get_current_screen();
 
-		if ( ! preg_match( '/^(' . self::$hookname . '|dashboard)$/', $screen->id ) ) {
+		if ( ! preg_match( '/^(' . $this->hookname . '|dashboard)$/', $screen->id ) ) {
 			return;
 		}
 
 		$notices = array( 'php', 'database', 'wordpress', 'web', 'ssl', 'https', 'plugins' );
 
-		$notices_transient = get_transient( WP_Healthcheck::HIDE_NOTICES_TRANSIENT );
+		$notices_transient = get_transient( self::HIDE_NOTICES_TRANSIENT );
 
 		foreach ( $notices as $notice ) {
 			if ( ! isset( $notices_transient[ $notice ] ) ) {
-				self::view( 'notices/' . $notice );
+				$this->view( 'notices/' . $notice );
 			}
 		}
 	}

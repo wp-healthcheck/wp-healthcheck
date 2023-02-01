@@ -3,7 +3,7 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$status = WP_Healthcheck::is_software_updated( 'wp' );
+$status = wphc()->core()->server()->is_software_updated( 'wp' );
 
 if ( 'updated' == $status || false === $status ) {
 	return false;

@@ -3,10 +3,10 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$plugins = WP_Healthcheck::get_outdated_plugins();
+$plugins = wphc()->core()->plugins()->get_outdated_plugins();
 
 if ( ! $plugins || sizeof( $plugins ) == 0 ) {
-	return false;
+	return;
 }
 ?>
 
