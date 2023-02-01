@@ -1,4 +1,8 @@
 <?php
+namespace WPHC\Utils;
+
+use WP_CLI;
+
 /**
  * The WP_Healthcheck_CLI class
  *
@@ -7,7 +11,7 @@
  * @package wp-healthcheck
  * @since 1.1
  */
-class WP_Healthcheck_CLI extends WP_CLI_Command {
+class CLI extends WP_CLI_Command {
 	/**
 	 * List the top WordPress autoload options.
 	 *

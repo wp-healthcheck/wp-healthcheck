@@ -2,9 +2,9 @@
 Contributors: tiagohillebrandt, marksabbath
 Tags: performance, transients, autoload, cron, healthcheck, load time, ssl, https, check
 Requires at least: 4.0
-Tested up to: 5.9.2
-Requires PHP: 5.5
-Stable tag: 1.3.4
+Tested up to: 6.1.1
+Requires PHP: 5.6
+Stable tag: 1.4.0
 License: GPLv3+
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 

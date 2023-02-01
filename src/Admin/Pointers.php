@@ -1,11 +1,13 @@
 <?php
+namespace WPHC\Admin;
+
 /**
  * The WP_Healthcheck_Pointers class
  *
  * @package wp-healthcheck
  * @since 1.0
  */
-class WP_Healthcheck_Pointers {
+class Pointers {
 	/**
 	 * Whether to initiate the WordPress hooks.
 	 *

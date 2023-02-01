@@ -5,14 +5,10 @@
         "phpunit/phpunit": "^9.5",
         "phpcompatibility/php-compatibility": "^9.3"
     },
-    "autoload-dev": {
-        "files": [
-            "includes/class-wp-healthcheck.php",
-            "includes/class-wp-healthcheck-admin.php",
-            "includes/class-wp-healthcheck-ajax.php",
-            "includes/class-wp-healthcheck-pointers.php",
-            "includes/class-wp-healthcheck-upgrade.php"
-        ]
+    "autoload": {
+        "psr-4": {
+            "WPHC\\": "src"
+        }
     },
     "scripts": {
         "post-update-cmd": "./vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs/,vendor/phpcompatibility/php-compatibility/",

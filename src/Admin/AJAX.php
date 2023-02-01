@@ -1,11 +1,13 @@
 <?php
+namespace WPHC\Admin;
+
 /**
  * The WP_Healthcheck_AJAX class
  *
  * @package wp-healthcheck
  * @since 1.0
  */
-class WP_Healthcheck_AJAX {
+class AJAX {
 	/**
 	 * Stores all the AJAX hooks.
 	 *
@@ -84,7 +86,7 @@ class WP_Healthcheck_AJAX {
 	 *
 	 * @return True if it's an WordPress AJAX request.
 	 */
-	public static function is_doing_ajax() {
+	public function is_doing_ajax() {
 		return ( defined( 'DOING_AJAX' ) && DOING_AJAX );
 	}
 

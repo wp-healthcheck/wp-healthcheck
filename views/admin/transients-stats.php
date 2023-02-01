@@ -3,23 +3,24 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$transients = WP_Healthcheck::get_transients_stats();
+$transients = wphc()->core()->transients();
+$stats      = $transients->get_transients_stats();
 ?>
 
 <?php if ( ! wp_using_ext_object_cache() ) : ?>
 	<div class="wphc_stats">
 		<ul>
 			<li><?php _e( 'Total:', 'wp-healthcheck' ); ?></li>
-			<li><?php echo $transients['count']; ?></li>
+			<li><?php echo $stats['count']; ?></li>
 		</ul>
 		<ul>
 			<li><?php _e( 'Size:', 'wp-healthcheck' ); ?></li>
-			<li><?php echo number_format( $transients['size'], 2 ); ?>MB</li>
+			<li><?php echo number_format( $stats['size'], 2 ); ?>MB</li>
 		</ul>
 	</div>
 <?php endif; ?>
 
-<?php if ( WP_Healthcheck_AJAX::is_doing_ajax() ) : ?>
+<?php if ( wphc()->core()->ajax()->is_doing_ajax() ) : ?>
 	<?php $message = ( $object_cache ) ? __( 'object cache items', 'wp-healthcheck' ) : __( 'transients', 'wp-healthcheck' ); ?>
 
 	<?php if ( isset( $cleanup ) && false !== $cleanup ) : ?>
