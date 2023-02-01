@@ -3,6 +3,5 @@
 
 /vendor
 /node_modules
-composer.lock
 
 wp-healthcheck.zip
