@@ -11,14 +11,14 @@
   "license": "GPL-3.0+",
   "homepage": "https://wp-healthcheck.com",
   "devDependencies": {
-    "grunt": "^1.0.4",
+    "grunt": "^1.6.1",
     "grunt-checktextdomain": "^1.0.1",
-    "grunt-contrib-compress": "^1.6.0",
-    "grunt-contrib-cssmin": "^3.0.0",
-    "grunt-contrib-jshint": "^1.1.0",
-    "grunt-contrib-uglify": "^3.4.0",
+    "grunt-contrib-compress": "^2.0.0",
+    "grunt-contrib-cssmin": "^4.0.0",
+    "grunt-contrib-jshint": "^3.2.0",
+    "grunt-contrib-uglify": "^5.2.2",
     "grunt-contrib-watch": "^1.1.0",
-    "grunt-shell": "^3.0.1",
+    "grunt-shell": "^4.0.0",
     "grunt-wp-i18n": "^1.0.3"
   }
 }
