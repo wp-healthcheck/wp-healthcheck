@@ -58,6 +58,7 @@ class CLI extends WP_CLI_Command {
 	 * @subcommand autoload
 	 */
 	public function autoload( $args, $assoc_args ) {
+
 		if ( isset( $assoc_args['deactivate'] ) ) {
 			$option_name = $assoc_args['deactivate'];
 
@@ -93,18 +94,18 @@ class CLI extends WP_CLI_Command {
 				WP_CLI::halt( 2 );
 			}
 
-			$list = array();
+			$list = [];
 
 			foreach ( $opts as $name => $timestamp ) {
-				$item = array(
+				$item = [
 					'name'              => $name,
-					'deactivation_time' => date( 'Y-m-d H:i:s', $timestamp ),
-				);
+					'deactivation_time' => gmdate( 'Y-m-d H:i:s', $timestamp ),
+				];
 
 				$list[] = $item;
 			}
 
-			WP_CLI\Utils\format_items( 'table', $list, array( 'name', 'deactivation_time' ) );
+			WP_CLI\Utils\format_items( 'table', $list, [ 'name', 'deactivation_time' ] );
 		} else {
 			$autoload = wphc()->core()->options()->get_autoload_options();
 
@@ -130,17 +131,18 @@ class CLI extends WP_CLI_Command {
 	 * @subcommand server
 	 */
 	public function server() {
+
 		$info         = wphc()->core()->server()->get_server_data();
 		$requirements = wphc()->core()->server()->get_server_requirements();
 
-		$list = array();
+		$list = [];
 
 		foreach ( $info as $name => $version ) {
 			if ( empty( $version ) ) {
 				continue;
 			}
 
-			if ( 'database' == $name ) {
+			if ( 'database' === $name ) {
 				$name    = strtolower( $version['service'] );
 				$version = $version['version'];
 			}
@@ -148,19 +150,19 @@ class CLI extends WP_CLI_Command {
 			$status = wphc()->core()->server()->is_software_updated( $name );
 			$action = '-';
 
-			if ( 'wp' == $name && 'updated' != $status ) {
+			if ( 'wp' === $name && 'updated' !== $status ) {
 				$action = WP_CLI::colorize( 'run %Ywp core update%n to update WordPress to latest version' );
 			}
 
 			if ( preg_match( '/(?:php|mysql|mariadb)/', $name ) ) {
-				if ( 'outdated' == $status ) {
+				if ( 'outdated' === $status ) {
 					$action = 'Your ' . strtoupper( $name ) . ' version is compatible with the current WordPress install. However, in order to get better performance and other improvements, you should consider to upgrade it to version ' . $requirements[ $name ]['recommended'] . ' or greater.';
-				} elseif ( 'obsolete' == $status ) {
+				} elseif ( 'obsolete' === $status ) {
 					$action = 'This ' . strtoupper( $name ) . ' version is not supported by WordPress anymore! Please upgrade it to version ' . $requirements[ $name ]['recommended'] . ' or greater.';
 				}
 			}
 
-			if ( 'web' == $name && isset( $info['web'] ) && is_array( $info['web'] ) ) {
+			if ( 'web' === $name && isset( $info['web'] ) && is_array( $info['web'] ) ) {
 				if ( preg_match( '/(?:apache|nginx)/', $info['web']['service'] ) ) {
 					$version = $info['web']['service'] . '/' . $info['web']['version'];
 				} else {
@@ -168,14 +170,14 @@ class CLI extends WP_CLI_Command {
 				}
 			}
 
-			$item = array(
+			$item = [
 				'name'    => $name,
 				'version' => $version,
 				'action'  => $action,
-			);
+			];
 
 			if ( preg_match( '/(?:obsolete|outdated)/', $status ) ) {
-				$color = ( 'obsolete' == $status ) ? 'r' : 'y';
+				$color = ( 'obsolete' === $status ) ? 'r' : 'y';
 
 				$item['version'] = WP_CLI::colorize( '%' . $color . $version . '%n' );
 			}
@@ -183,7 +185,7 @@ class CLI extends WP_CLI_Command {
 			$list[] = $item;
 		}
 
-		WP_CLI\Utils\format_items( 'table', $list, array( 'name', 'version', 'action' ) );
+		WP_CLI\Utils\format_items( 'table', $list, [ 'name', 'version', 'action' ] );
 	}
 
 	/**
@@ -204,29 +206,30 @@ class CLI extends WP_CLI_Command {
 	 * @subcommand ssl
 	 */
 	public function ssl( $args, $assoc_args ) {
+
 		$ssl_data = wphc()->core()->ssl()->get_ssl_data();
 
 		if ( false === $ssl_data || empty( $ssl_data ) ) {
 			WP_CLI::error( 'We couldn\'t find any SSL certificates associated with your site. Is HTTPS enabled?' );
 		}
 
-		$ssl_data = array(
+		$ssl_data = [
 			'common_name' => $ssl_data['common_name'],
 			'issued_by'   => $ssl_data['issuer'],
 			'issued_on'   => $ssl_data['validity']['from'],
 			'expires_on'  => $ssl_data['validity']['to'],
-		);
+		];
 
-		$data = array();
+		$data = [];
 
 		foreach ( $ssl_data as $key => $value ) {
-			$data[] = array(
+			$data[] = [
 				'field' => $key,
 				'value' => $value,
-			);
+			];
 		}
 
-		WP_CLI\Utils\format_items( 'table', $data, array( 'field', 'value' ) );
+		WP_CLI\Utils\format_items( 'table', $data, [ 'field', 'value' ] );
 	}
 
 	/**
@@ -274,6 +277,7 @@ class CLI extends WP_CLI_Command {
 	 * @alias transients
 	 */
 	public function transient( $args, $assoc_args ) {
+
 		if ( isset( $assoc_args['delete-all'] ) || isset( $assoc_args['delete-expired'] ) ) {
 			$only_expired = isset( $assoc_args['delete-expired'] );
 
@@ -301,13 +305,14 @@ class CLI extends WP_CLI_Command {
 	 * @param array $data An array with name and size of the options.
 	 */
 	private function _list_options( $data ) {
-		$list = array();
+
+		$list = [];
 
 		foreach ( $data as $name => $size ) {
-			$item = array(
+			$item = [
 				'name' => preg_replace( '/^(_site)?_transient_/', '', $name ),
 				'size' => number_format( $size, 2 ) . ' MB',
-			);
+			];
 
 			$list[] = $item;
 		}

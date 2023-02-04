@@ -27,7 +27,7 @@ class RegisterHooks {
 		register_deactivation_hook( WPHC_PLUGIN_FILE, [ '\WPHC\Utils\RegisterHooks', 'plugin_deactivation' ] );
 		register_uninstall_hook( WPHC_PLUGIN_FILE, [ '\WPHC\Utils\RegisterHooks', 'plugin_uninstall' ] );
 
-		add_action( 'upgrader_process_complete', [ $this, 'plugin_deactivation' ] );
+		add_action( 'upgrader_process_complete', [ '\WPHC\Utils\RegisterHooks', 'plugin_uninstall' ] );
 	}
 
 	/**
