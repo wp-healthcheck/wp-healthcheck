@@ -14,6 +14,7 @@ class Plugins {
 	 * Option to disable outdated plugins check.
 	 *
 	 * @since 1.3.0
+	 *
 	 * @var string
 	 */
 	const DISABLE_OUTDATED_PLUGINS_OPTION = 'wphc_disable_outdated_plugins_check';
@@ -22,6 +23,7 @@ class Plugins {
 	 * Transient to store the outdated plugins.
 	 *
 	 * @since 1.3.0
+	 *
 	 * @var string
 	 */
 	const OUTDATED_PLUGINS_TRANSIENT = 'wphc_plugins_outdated';
@@ -32,10 +34,10 @@ class Plugins {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @return array|false Slug and number of days since last update
-	 * of the plugins or false if none.
+	 * @return array|false Slug and number of days since last update of the plugins or false if none.
 	 */
 	public static function get_outdated_plugins() {
+
 		if ( get_option( self::DISABLE_OUTDATED_PLUGINS_OPTION ) ) {
 			return false;
 		}
@@ -43,6 +45,7 @@ class Plugins {
 		$outdated_plugins = get_transient( self::OUTDATED_PLUGINS_TRANSIENT );
 
 		if ( false === $outdated_plugins ) {
+
 			if ( ! function_exists( 'get_plugins' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/plugin.php';
 			}
@@ -51,7 +54,7 @@ class Plugins {
 				require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 			}
 
-			$outdated_plugins = array();
+			$outdated_plugins = [];
 
 			foreach ( get_plugins() as $file => $plugin ) {
 				$slug = explode( '/', $file );
@@ -59,9 +62,9 @@ class Plugins {
 
 				$wp_api = plugins_api(
 					'plugin_information',
-					array(
+					[
 						'slug' => $slug,
-					)
+					]
 				);
 
 				if ( empty( $wp_api->errors ) && ! empty( $wp_api->last_updated ) ) {

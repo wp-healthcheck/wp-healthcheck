@@ -41,6 +41,7 @@ class Loader {
 	 * @since 1.4.0
 	 */
 	public function __construct() {
+
 		$this->setup();
 	}
 
@@ -52,6 +53,7 @@ class Loader {
 	 * @return AJAX
 	 */
 	public function ajax() {
+
 		return $this->ajax;
 	}
 
@@ -63,6 +65,7 @@ class Loader {
 	 * @return Dashboard
 	 */
 	public function dashboard() {
+
 		return $this->dashboard;
 	}
 
@@ -74,6 +77,7 @@ class Loader {
 	 * @return Pointers
 	 */
 	public function pointers() {
+
 		return $this->pointers;
 	}
 
@@ -83,6 +87,7 @@ class Loader {
 	 * @since 1.4.0
 	 */
 	public function setup() {
+
 		$this->ajax      = new AJAX();
 		$this->pointers  = new Pointers();
 		$this->dashboard = new Dashboard();

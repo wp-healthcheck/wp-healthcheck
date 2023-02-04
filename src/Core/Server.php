@@ -21,6 +21,7 @@ class Server {
 	 * Transient to store the server data.
 	 *
 	 * @since 1.0
+	 *
 	 * @var string
 	 */
 	const SERVER_DATA_TRANSIENT = 'wphc_server_data';
@@ -33,6 +34,7 @@ class Server {
 	 * @return array The server data.
 	 */
 	public function get_server_data() {
+
 		global $wpdb;
 
 		$server = get_transient( self::SERVER_DATA_TRANSIENT );
@@ -45,22 +47,22 @@ class Server {
 			$db_service = ( preg_match( '/MariaDB/', $wpdb->dbh->server_info ) ) ? 'MariaDB' : 'MySQL';
 			$db_version = $wpdb->db_version();
 
-			if ( 'MariaDB' == $db_service ) {
+			if ( 'MariaDB' === $db_service ) {
 				$db_version = preg_replace( '/[^0-9.].*/', '', $wpdb->get_var( 'SELECT @@version;' ) );
 			}
 
-			$server = array(
-				'database' => array(
+			$server = [
+				'database' => [
 					'service' => $db_service,
 					'version' => $db_version,
-				),
+				],
 				'php'      => $phpversion[0],
 				'wp'       => $wp_version,
-				'web'      => array(),
-			);
+				'web'      => [],
+			];
 
 			if ( ! empty( $_SERVER['SERVER_SOFTWARE'] ) ) {
-				$matches = array();
+				$matches = [];
 
 				if ( preg_match( '/(apache|nginx)/i', $_SERVER['SERVER_SOFTWARE'], $matches ) ) {
 					$server['web']['service'] = strtolower( $matches[0] );
@@ -71,10 +73,10 @@ class Server {
 						$server['web']['version'] = '';
 					}
 				} else {
-					$server['web'] = array(
+					$server['web'] = [
 						'service' => 'Web',
 						'version' => $_SERVER['SERVER_SOFTWARE'],
-					);
+					];
 				}
 			}
 
@@ -92,17 +94,18 @@ class Server {
 	 * @return array The server requirements.
 	 */
 	public function get_server_requirements() {
+
 		$requirements = get_transient( self::MIN_REQUIREMENTS_TRANSIENT );
 
 		if ( false === $requirements ) {
-			$options = array(
+			$options = [
 				'timeout'    => 20,
 				'user-agent' => 'WP Healthcheck/' . WPHC_VERSION . '; ' . site_url(),
-			);
+			];
 
 			$res = wp_remote_get( 'https://api.wp-healthcheck.com/v1/requirements', $options );
 
-			if ( is_array( $res ) && 200 == wp_remote_retrieve_response_code( $res ) ) {
+			if ( is_array( $res ) && 200 === wp_remote_retrieve_response_code( $res ) ) {
 				$requirements = json_decode( $res['body'], true );
 
 				set_transient( self::MIN_REQUIREMENTS_TRANSIENT, $requirements, WEEK_IN_SECONDS );
@@ -124,6 +127,7 @@ class Server {
 	 * @return string|false The current status (updated, outdated, or obsolete) of the software or false on error.
 	 */
 	public function is_software_updated( $software ) {
+
 		if ( ! preg_match( '/^(php|mysql|mariadb|wp|nginx|apache)$/', $software ) ) {
 			return false;
 		}
@@ -136,7 +140,7 @@ class Server {
 
 		$server_data = self::get_server_data();
 
-		if ( 'wp' == $software ) {
+		if ( 'wp' === $software ) {
 			$current_local = preg_replace( '/(\d{1,}\.\d{1,})(\.\d{1,})?/', '$1', $server_data['wp'] );
 
 			foreach ( $requirements['wordpress'] as $version ) {

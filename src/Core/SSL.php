@@ -12,6 +12,7 @@ class SSL {
 	 * Transient to store the SSL data.
 	 *
 	 * @since 1.2
+	 *
 	 * @var string
 	 */
 	const SSL_DATA_TRANSIENT = 'wphc_ssl_data';
@@ -20,6 +21,7 @@ class SSL {
 	 * Transient to store if SSL is available or not.
 	 *
 	 * @since 1.3.0
+	 *
 	 * @var string
 	 */
 	const SSL_AVAILABLE_TRANSIENT = 'wphc_ssl_available';
@@ -30,6 +32,7 @@ class SSL {
 	 * @since 1.0
 	 */
 	public function __construct() {
+
 		$this->hooks();
 	}
 
@@ -39,6 +42,7 @@ class SSL {
 	 * @since 1.0
 	 */
 	public function hooks() {
+
 		add_action( 'shutdown', [ $this, 'get_ssl_data' ] );
 	}
 
@@ -51,6 +55,7 @@ class SSL {
 	 * @return array|false SSL data or false on error.
 	 */
 	public function get_ssl_data() {
+
 		if ( ! is_ssl() && ( ! defined( 'WP_CLI' ) || ! WP_CLI ) ) {
 			return false;
 		}
@@ -59,15 +64,15 @@ class SSL {
 
 		if ( false === $ssl_data ) {
 			$context = stream_context_create(
-				array(
-					'ssl' => array(
+				[
+					'ssl' => [
 						'capture_peer_cert' => true,
 						'verify_peer'       => false,
-					),
-				)
+					],
+				]
 			);
 
-			$siteurl = parse_url( get_option( 'siteurl' ) );
+			$siteurl = wp_parse_url( get_option( 'siteurl' ) );
 
 			if ( empty( $siteurl['host'] ) ) {
 				return false;
@@ -76,7 +81,7 @@ class SSL {
 			$socket = @stream_socket_client( 'ssl://' . $siteurl['host'] . ':443', $errno, $errstr, 20, STREAM_CLIENT_CONNECT, $context ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 
 			if ( ! $socket ) {
-				set_transient( self::SSL_DATA_TRANSIENT, array(), DAY_IN_SECONDS );
+				set_transient( self::SSL_DATA_TRANSIENT, [], DAY_IN_SECONDS );
 
 				return false;
 			}
@@ -86,14 +91,14 @@ class SSL {
 			if ( ! empty( $params['options']['ssl']['peer_certificate'] ) ) {
 				$certificate = openssl_x509_parse( $params['options']['ssl']['peer_certificate'] );
 
-				$ssl_data = array(
+				$ssl_data = [
 					'common_name' => $certificate['subject']['CN'],
 					'issuer'      => $certificate['issuer']['CN'],
-					'validity'    => array(
-						'from' => date( 'Y-m-d H:i:s', $certificate['validFrom_time_t'] ),
-						'to'   => date( 'Y-m-d H:i:s', $certificate['validTo_time_t'] ),
-					),
-				);
+					'validity'    => [
+						'from' => gmdate( 'Y-m-d H:i:s', $certificate['validFrom_time_t'] ),
+						'to'   => gmdate( 'Y-m-d H:i:s', $certificate['validTo_time_t'] ),
+					],
+				];
 
 				set_transient( self::SSL_DATA_TRANSIENT, $ssl_data, DAY_IN_SECONDS );
 			}
@@ -110,6 +115,7 @@ class SSL {
 	 * @return boolean True if SSL is available.
 	 */
 	public function is_ssl_available() {
+
 		if ( is_ssl() ) {
 			return true;
 		}
@@ -117,7 +123,7 @@ class SSL {
 		$is_available = get_transient( self::SSL_AVAILABLE_TRANSIENT );
 
 		if ( false === $is_available ) {
-			$siteurl = parse_url( get_option( 'siteurl' ) );
+			$siteurl = wp_parse_url( get_option( 'siteurl' ) );
 
 			if ( empty( $siteurl['host'] ) ) {
 				return false;
@@ -125,7 +131,7 @@ class SSL {
 
 			$socket = @fsockopen( 'ssl://' . $siteurl['host'], 443, $errno, $errstr, 20 ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 
-			$is_available = ( false != $socket );
+			$is_available = ( false !== $socket );
 
 			set_transient( self::SSL_AVAILABLE_TRANSIENT, $is_available, DAY_IN_SECONDS );
 		}
@@ -141,6 +147,7 @@ class SSL {
 	 * @return int|false Number of days until certificate expiration or false on error.
 	 */
 	public function is_ssl_expiring() {
+
 		$ssl_data = get_transient( self::SSL_DATA_TRANSIENT );
 
 		if ( false !== $ssl_data && ! empty( $ssl_data['validity']['to'] ) ) {

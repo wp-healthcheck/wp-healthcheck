@@ -10,8 +10,7 @@ namespace WPHC\Core;
 class Transients {
 
 	/**
-	 * Cleans up the WordPress transients, or flushes the object cache if
-	 * it is enabled.
+	 * Cleans up the WordPress transients, or flushes the object cache if it is enabled.
 	 *
 	 * @since 1.0
 	 *
@@ -20,6 +19,7 @@ class Transients {
 	 * @return int|false Number of affected rows or false on error.
 	 */
 	public function cleanup_transients( $only_expired = true ) {
+
 		global $wpdb;
 
 		if ( wp_using_ext_object_cache() ) {
@@ -46,9 +46,10 @@ class Transients {
 	 * @return array The name and size of the biggest transients.
 	 */
 	public function get_transients() {
+
 		global $wpdb;
 
-		$transients = array();
+		$transients = [];
 
 		$result = $wpdb->get_results( "SELECT option_name, ROUND(LENGTH(option_value) / POWER(1024,2), 3) AS size FROM $wpdb->options WHERE option_name REGEXP '^_(site_)?transient' ORDER BY size DESC LIMIT 0,10;" );
 
@@ -67,6 +68,7 @@ class Transients {
 	 * @return array Stats of the transients.
 	 */
 	public function get_transients_stats() {
+
 		global $wpdb;
 
 		$result = $wpdb->get_row( "SELECT COUNT(*) AS count, SUM(LENGTH(option_value)) / POWER(1024,2) AS size FROM $wpdb->options WHERE option_name REGEXP '^_(site_)?transient';" );
@@ -74,9 +76,9 @@ class Transients {
 		$count = (int) $result->count;
 		$size  = (float) $result->size;
 
-		return array(
+		return [
 			'count' => $count,
 			'size'  => $size,
-		);
+		];
 	}
 }
