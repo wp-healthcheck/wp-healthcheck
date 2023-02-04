@@ -54,7 +54,7 @@ class SSL {
 	 *
 	 * @return array|false SSL data or false on error.
 	 */
-	public function get_ssl_data() {
+	public function get_ssl_data() { // phpcs:ignore Generic.Metrics.CyclomaticComplexity.TooHigh
 
 		if ( ! is_ssl() && ( ! defined( 'WP_CLI' ) || ! WP_CLI ) ) {
 			return false;
@@ -129,7 +129,7 @@ class SSL {
 				return false;
 			}
 
-			$socket = @fsockopen( 'ssl://' . $siteurl['host'], 443, $errno, $errstr, 20 ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+			$socket = @fsockopen( 'ssl://' . $siteurl['host'], 443, $errno, $errstr, 20 ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged,WordPress.WP.AlternativeFunctions.file_system_read_fsockopen
 
 			$is_available = ( false !== $socket );
 

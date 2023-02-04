@@ -48,7 +48,7 @@ class Server {
 			$db_version = $wpdb->db_version();
 
 			if ( 'MariaDB' === $db_service ) {
-				$db_version = preg_replace( '/[^0-9.].*/', '', $wpdb->get_var( 'SELECT @@version;' ) );
+				$db_version = preg_replace( '/[^0-9.].*/', '', $wpdb->get_var( 'SELECT @@version;' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
 			}
 
 			$server = [
@@ -61,13 +61,15 @@ class Server {
 				'web'      => [],
 			];
 
-			if ( ! empty( $_SERVER['SERVER_SOFTWARE'] ) ) {
+			$server_software = ! empty( $_SERVER['SERVER_SOFTWARE'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) : false;
+
+			if ( ! empty( $server_software ) ) {
 				$matches = [];
 
-				if ( preg_match( '/(apache|nginx)/i', $_SERVER['SERVER_SOFTWARE'], $matches ) ) {
+				if ( preg_match( '/(apache|nginx)/i', $server_software, $matches ) ) {
 					$server['web']['service'] = strtolower( $matches[0] );
 
-					if ( preg_match( '/([0-9]{1,}\.){2}([0-9]{1,})?/', $_SERVER['SERVER_SOFTWARE'], $matches ) ) {
+					if ( preg_match( '/([0-9]{1,}\.){2}([0-9]{1,})?/', $server_software, $matches ) ) {
 						$server['web']['version'] = trim( $matches[0] );
 					} else {
 						$server['web']['version'] = '';
@@ -75,7 +77,7 @@ class Server {
 				} else {
 					$server['web'] = [
 						'service' => 'Web',
-						'version' => $_SERVER['SERVER_SOFTWARE'],
+						'version' => $server_software,
 					];
 				}
 			}
@@ -91,7 +93,7 @@ class Server {
 	 *
 	 * @since 1.0
 	 *
-	 * @return array The server requirements.
+	 * @return array|false The server requirements, or false on error.
 	 */
 	public function get_server_requirements() {
 
@@ -126,7 +128,7 @@ class Server {
 	 *
 	 * @return string|false The current status (updated, outdated, or obsolete) of the software or false on error.
 	 */
-	public function is_software_updated( $software ) {
+	public function is_software_updated( $software ) { // phpcs:ignore Generic.Metrics.CyclomaticComplexity.MaxExceeded
 
 		if ( ! preg_match( '/^(php|mysql|mariadb|wp|nginx|apache)$/', $software ) ) {
 			return false;

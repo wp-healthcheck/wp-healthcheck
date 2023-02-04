@@ -68,34 +68,77 @@ class Loader {
 	 * @since 1.4.0
 	 */
 	public function __construct() {
+
 		$this->setup();
 	}
 
+	/**
+	 * Get the Options object.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return Options
+	 */
 	public function options() {
 
 		return $this->options;
 	}
 
+	/**
+	 * Get the Plugins object.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return Plugins
+	 */
 	public function plugins() {
 
 		return $this->plugins;
 	}
 
+	/**
+	 * Get the Server object.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return Server
+	 */
 	public function server() {
 
 		return $this->server;
 	}
 
+	/**
+	 * Get the SSL object.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return SSL
+	 */
 	public function ssl() {
 
 		return $this->ssl;
 	}
 
+	/**
+	 * Get the Transients object.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return Transients
+	 */
 	public function transients() {
 
 		return $this->transients;
 	}
 
+	/**
+	 * Get the WordPress object.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return WordPress
+	 */
 	public function wordpress() {
 
 		return $this->wordpress;
