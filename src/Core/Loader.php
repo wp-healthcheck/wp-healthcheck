@@ -1,6 +1,8 @@
 <?php
 namespace WPHC\Core;
 
+use WPHC\Utils\Upgrade;
+
 /**
  * The Core\Loader class.
  *
@@ -151,6 +153,12 @@ class Loader {
 	 */
 	public function setup() {
 
+		// If the plugin version has been upgraded, cleans up the transients and updates the 'wphc_version' option.
+		$upgrade = new Upgrade();
+
+		$upgrade->maybe_upgrade_db();
+
+		// Set up the objects.
 		$this->options    = new Options();
 		$this->plugins    = new Plugins();
 		$this->server     = new Server();

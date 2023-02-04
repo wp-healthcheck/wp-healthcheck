@@ -26,8 +26,8 @@ class Upgrade {
 
 		$version = get_option( self::PLUGIN_VERSION_OPTION );
 
-		if ( WPHC_VERSION != $version ) {
-			WP_Healthcheck::_cleanup_options( true );
+		if ( WPHC_VERSION !== $version ) {
+			RegisterHooks::cleanup_options( true );
 
 			update_option( self::PLUGIN_VERSION_OPTION, WPHC_VERSION );
 		}
