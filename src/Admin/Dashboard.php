@@ -41,6 +41,7 @@ class Dashboard {
 	 * @since 1.0
 	 */
 	public function __construct() {
+
 		if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
@@ -54,6 +55,7 @@ class Dashboard {
 	 * @since 1.0
 	 */
 	public function hooks() {
+
 		add_action( 'admin_menu', [ $this, 'admin_menu' ], 5 );
 		add_action( 'admin_notices', [ $this, 'admin_notices' ] );
 		add_action( 'admin_init', [ $this, 'load_resources' ] );
@@ -65,6 +67,7 @@ class Dashboard {
 	 * @since 1.0
 	 */
 	public function load_resources() {
+
 		$suffix = ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? '' : '.min';
 
 		wp_register_script( 'wp-healthcheck-js', WPHC_PLUGIN_URL . '/assets/wp-healthcheck' . $suffix . '.js', [ 'jquery' ], WPHC_VERSION );
@@ -85,6 +88,7 @@ class Dashboard {
 	 * @since 1.0
 	 */
 	public function admin_menu() {
+
 		$this->hookname = add_menu_page( 'WP Healthcheck', 'WP Healthcheck', 'manage_options', 'wp-healthcheck', [ $this, 'admin_page' ], 'none', 200 );
 
 		add_action( 'load-' . $this->hookname, [ $this, 'admin_meta_boxes' ] );
@@ -97,12 +101,13 @@ class Dashboard {
 	 * @since 1.0
 	 */
 	public function admin_meta_boxes() {
-		$metaboxes = array(
+
+		$metaboxes = [
 			'wphc-transients' => __( 'Transients', 'wp-healthcheck' ),
 			'wphc-autoload'   => __( 'Autoload Options', 'wp-healthcheck' ),
 			'wphc-wp-updates' => __( 'WordPress Automatic Background Updates', 'wp-healthcheck' ),
 			'wphc-support'    => __( 'Support &amp; Services', 'wp-healthcheck' ),
-		);
+		];
 
 		foreach ( $metaboxes as $id => $title ) {
 			$args = [
@@ -119,6 +124,7 @@ class Dashboard {
 	 * @since 1.0
 	 */
 	public function admin_notices() {
+
 		if ( get_option( self::DISABLE_NOTICES_OPTION ) ) {
 			return;
 		}
@@ -146,6 +152,7 @@ class Dashboard {
 	 * @since 1.0
 	 */
 	public function admin_page() {
+
 		$this->view( 'admin/dashboard' );
 	}
 
@@ -155,20 +162,21 @@ class Dashboard {
 	 * @since 1.0
 	 */
 	public function admin_tabs() {
+
 		include WPHC_PLUGIN_DIR . '/views/admin/help.php';
 
-		$tabs = array(
-			array(
+		$tabs = [
+			[
 				'id'      => 'wphc-help-transients',
 				'title'   => $transients_help['title'],
 				'content' => '<p>' . $transients_help['content'] . '</p>',
-			),
-			array(
+			],
+			[
 				'id'      => 'wphc-help-autoload',
 				'title'   => $autoload_help['title'],
 				'content' => '<p>' . $autoload_help['content'] . '</p>',
-			),
-		);
+			],
+		];
 
 		foreach ( $tabs as $tab ) {
 			get_current_screen()->add_help_tab( $tab );
@@ -183,6 +191,7 @@ class Dashboard {
 	 * @since 1.0
 	 */
 	public function do_meta_boxes() {
+
 		do_meta_boxes( $this->hookname, 'normal', null );
 	}
 
@@ -191,10 +200,11 @@ class Dashboard {
 	 *
 	 * @since 1.0
 	 *
-	 * @param string $name The name of the view to load.
+	 * @param string $name    The name of the view to load.
 	 * @param string $metabox The metabox data.
 	 */
 	public function view( $name, $metabox = null ) {
+
 		if ( ! empty( $metabox['args']['name'] ) ) {
 			$name = $metabox['args']['name'];
 		}

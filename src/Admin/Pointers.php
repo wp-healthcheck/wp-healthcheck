@@ -2,7 +2,7 @@
 namespace WPHC\Admin;
 
 /**
- * The WP_Healthcheck_Pointers class
+ * The Pointers class.
  *
  * @package wp-healthcheck
  * @since 1.4.0
@@ -14,6 +14,7 @@ class Pointers {
 	 * @since 1.0
 	 */
 	public function __construct() {
+
 		$this->hooks();
 	}
 
@@ -23,6 +24,7 @@ class Pointers {
 	 * @since 1.0
 	 */
 	public function hooks() {
+
 		add_action( 'admin_init', [ $this, 'load_resources' ], 5 );
 		add_action( 'admin_print_footer_scripts', [ $this, 'enqueue_pointers' ] );
 	}
@@ -33,6 +35,7 @@ class Pointers {
 	 * @since 1.0
 	 */
 	public function load_resources() {
+
 		wp_enqueue_script( 'wp-pointer' );
 		wp_enqueue_style( 'wp-pointer' );
 	}
@@ -43,6 +46,7 @@ class Pointers {
 	 * @since 1.0
 	 */
 	public function enqueue_pointers() {
+
 		include WPHC_PLUGIN_DIR . '/views/admin/help.php';
 
 		$pointers = [

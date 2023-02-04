@@ -2,7 +2,7 @@
 namespace WPHC\Utils;
 
 /**
- * The WP_Healthcheck_Upgrade class
+ * The Upgrade class.
  *
  * @package wp-healthcheck
  * @since 1.1
@@ -12,6 +12,7 @@ class Upgrade {
 	 * Option to store the current plugin version.
 	 *
 	 * @since 1.1
+	 *
 	 * @var string
 	 */
 	const PLUGIN_VERSION_OPTION = 'wphc_version';
@@ -22,6 +23,7 @@ class Upgrade {
 	 * @since 1.1
 	 */
 	public function maybe_upgrade_db() {
+
 		$version = get_option( self::PLUGIN_VERSION_OPTION );
 
 		if ( WPHC_VERSION != $version ) {

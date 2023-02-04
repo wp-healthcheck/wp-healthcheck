@@ -25,10 +25,8 @@ define( 'WPHC_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'WPHC_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 define( 'WPHC_INC_DIR', WPHC_PLUGIN_DIR . '/includes' );
 
-if ( file_exists( WP_CONTENT_DIR . '/vendor/autoload.php' ) ) {
-	require_once WP_CONTENT_DIR . '/vendor/autoload.php';
-} else {
-	require_once __DIR__ . '/vendor/autoload.php';
+if ( file_exists( WPHC_PLUGIN_DIR . '/vendor/autoload.php' ) ) {
+	require_once WPHC_PLUGIN_DIR . '/vendor/autoload.php';
 }
 
 /**
