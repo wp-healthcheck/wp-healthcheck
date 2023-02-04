@@ -79,6 +79,7 @@ class Loader {
 	 */
 	public function setup() {
 
+		require_once WPHC_PLUGIN_DIR . '/src/Utils/RegisterHooks.php';
 		require_once WPHC_PLUGIN_DIR . '/src/Utils/Helpers.php';
 
 		$this->core  = new Core\Loader();

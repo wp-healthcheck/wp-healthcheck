@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0fabda3b453d0bafd88d3bea53436540",
+    "content-hash": "452a8b14e0c86b7f4a91d943f4276230",
     "packages": [],
     "packages-dev": [
         {
@@ -14,12 +14,6 @@
                 "type": "git",
                 "url": "https://github.com/awesomemotive/wpforms-phpcs.git",
                 "reference": "5bd4700740e2c4ad61778458d64e7a6ce25e65a8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/awesomemotive/wpforms-phpcs/zipball/5bd4700740e2c4ad61778458d64e7a6ce25e65a8",
-                "reference": "5bd4700740e2c4ad61778458d64e7a6ce25e65a8",
-                "shasum": ""
             },
             "require": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^v0.7",
@@ -50,10 +44,6 @@
                 "GPL-2.0-or-later"
             ],
             "description": "WPForms Coding Standards",
-            "support": {
-                "source": "https://github.com/awesomemotive/wpforms-phpcs/tree/1.0.6",
-                "issues": "https://github.com/awesomemotive/wpforms-phpcs/issues"
-            },
             "time": "2022-09-20T10:03:14+00:00"
         },
         {

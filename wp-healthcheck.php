@@ -23,6 +23,7 @@ define( 'WPHC', true );
 define( 'WPHC_VERSION', '1.4.0' );
 define( 'WPHC_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'WPHC_PLUGIN_URL', plugins_url( '', __FILE__ ) );
+define( 'WPHC_PLUGIN_FILE', __FILE__ );
 define( 'WPHC_INC_DIR', WPHC_PLUGIN_DIR . '/includes' );
 
 if ( file_exists( WPHC_PLUGIN_DIR . '/vendor/autoload.php' ) ) {
@@ -48,7 +49,3 @@ function wphc() {
 }
 
 wphc();
-
-/*register_activation_hook( __FILE__, [ 'WP_Healthcheck', 'plugin_activation' ] );
-register_deactivation_hook( __FILE__, [ 'WP_Healthcheck', 'plugin_deactivation' ] );
-register_uninstall_hook( __FILE__, [ 'WP_Healthcheck', 'plugin_uninstall' ] );*/

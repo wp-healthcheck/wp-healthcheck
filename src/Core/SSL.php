@@ -92,8 +92,8 @@ class SSL {
 				$certificate = openssl_x509_parse( $params['options']['ssl']['peer_certificate'] );
 
 				$ssl_data = [
-					'common_name' => $certificate['subject']['CN'],
-					'issuer'      => $certificate['issuer']['CN'],
+					'common_name' => ! empty( $certificate['subject']['CN'] ) ? $certificate['subject']['CN'] : '',
+					'issuer'      => ! empty( $certificate['issuer']['CN'] ) ? $certificate['issuer']['CN'] : '',
 					'validity'    => [
 						'from' => gmdate( 'Y-m-d H:i:s', $certificate['validFrom_time_t'] ),
 						'to'   => gmdate( 'Y-m-d H:i:s', $certificate['validTo_time_t'] ),
