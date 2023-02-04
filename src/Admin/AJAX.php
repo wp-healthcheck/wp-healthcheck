@@ -2,7 +2,7 @@
 namespace WPHC\Admin;
 
 /**
- * The WP_Healthcheck_AJAX class
+ * The AJAX class.
  *
  * @package wp-healthcheck
  * @since 1.0
@@ -180,14 +180,14 @@ class AJAX {
 
 		check_ajax_referer( 'wphc_hide_admin_notice' );
 
-		if ( isset( $_POST['software'] ) && preg_match( '/(?:php|database|wordpress|web|ssl|https|plugins)/', sanitize_key( $_POST['software'] ) ) ) {
+		if ( isset( $_POST['software'] ) && preg_match( '/(?:php|database|wordpress|web|ssl|https|plugins)/', sanitize_key( wp_unslash( $_POST['software'] ) ) ) ) { // phpcs:ignore WordPress.WP.CapitalPDangit.Misspelled
 			$notices_transient = get_transient( Dashboard::HIDE_NOTICES_TRANSIENT );
 
 			if ( false === $notices_transient ) {
 				$notices_transient = [];
 			}
 
-			$notices_transient[ trim( $_POST['software'] ) ] = 1;
+			$notices_transient[ trim( sanitize_key( wp_unslash( $_POST['software'] ) ) ) ] = 1;
 
 			set_transient( Dashboard::HIDE_NOTICES_TRANSIENT, $notices_transient, DAY_IN_SECONDS );
 		}
@@ -228,8 +228,8 @@ class AJAX {
 
 		check_ajax_referer( 'wphc_wp_auto_update' );
 
-		if ( preg_match( '/^(?:minor|major|disabled|dev)$/', $_POST['wp_auto_update'] ) ) {
-			wphc()->core()->wordpress()->set_core_auto_update_option( $_POST['wp_auto_update'] );
+		if ( ! empty( $_POST['wp_auto_update'] ) && preg_match( '/^(?:minor|major|disabled|dev)$/', sanitize_key( wp_unslash( $_POST['wp_auto_update'] ) ) ) ) {
+			wphc()->core()->wordpress()->set_core_auto_update_option( sanitize_key( wp_unslash( $_POST['wp_auto_update'] ) ) );
 		}
 
 		wp_die();

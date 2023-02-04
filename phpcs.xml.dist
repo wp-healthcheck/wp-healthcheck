@@ -12,6 +12,7 @@
 
   <rule ref="WPForms">
   	<exclude name="WPForms.PHP.ConditionsYodaDisable.YodaRemove"/>
+  	<exclude name="WPForms.PHP.HooksMethod.InvalidPlaceForAddingHooks"/>
   </rule>
 
   <rule ref="WordPress.PHP.YodaConditions"/>
