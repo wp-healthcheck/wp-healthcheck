@@ -1,10 +1,10 @@
 === WP Healthcheck ===
 Contributors: tiagohillebrandt, marksabbath
 Tags: performance, transients, autoload, cron, healthcheck, load time, ssl, https, check
-Requires at least: 4.0
-Tested up to: 5.9.2
-Requires PHP: 5.5
-Stable tag: 1.3.4
+Requires at least: 5.0
+Tested up to: 6.4.1
+Requires PHP: 7.0
+Stable tag: 1.4.0
 License: GPLv3+
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -75,6 +75,12 @@ If you are a developer and want to contribute writing new features, enhancements
 3. WP-CLI extension.
 
 == Changelog ==
+
+= [1.4.0] 2023-11-xx =
+* Added: Supervisor banner.
+* Changed: Bumped minimum PHP version to 7.0.
+* Changed: Bumped minimum WordPress version to 5.0.
+* Fixed: Sanitize data.
 
 = [1.3.4] 2022-03-29 =
 * Change: Update the user agent for the API request.

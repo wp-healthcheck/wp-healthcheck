@@ -147,7 +147,9 @@ class WP_Healthcheck_AJAX {
 
 		$options = array();
 
-		foreach ( $_POST as $name => $value ) {
+		foreach ( $_POST as $name => $value )
+			$name = sanitize_text_field( $name );
+
 			if ( preg_match( '/^wphc-hopt-/', $name ) ) {
 				$option_name = preg_replace( '/^wphc-hopt-/', '', urldecode( $name ) );
 
@@ -170,14 +172,14 @@ class WP_Healthcheck_AJAX {
 	public static function hide_admin_notice() {
 		check_ajax_referer( 'wphc_hide_admin_notice' );
 
-		if ( isset( $_POST['software'] ) && preg_match( '/(?:php|database|wordpress|web|ssl|https|plugins)/', $_POST['software'] ) ) {
+		if ( isset( $_POST['software'] ) && preg_match( '/(?:php|database|wordpress|web|ssl|https|plugins)/', sanitize_key( $_POST['software'] ) ) ) {
 			$notices_transient = get_transient( WP_Healthcheck::HIDE_NOTICES_TRANSIENT );
 
 			if ( false === $notices_transient ) {
 				$notices_transient = array();
 			}
 
-			$notices_transient[ trim( $_POST['software'] ) ] = 1;
+			$notices_transient[ trim( sanitize_key( $_POST['software'] ) ) ] = 1;
 
 			set_transient( WP_Healthcheck::HIDE_NOTICES_TRANSIENT, $notices_transient, DAY_IN_SECONDS );
 		}
@@ -210,8 +212,8 @@ class WP_Healthcheck_AJAX {
 	public static function wp_auto_update() {
 		check_ajax_referer( 'wphc_wp_auto_update' );
 
-		if ( preg_match( '/^(?:minor|major|disabled|dev)$/', $_POST['wp_auto_update'] ) ) {
-			WP_Healthcheck::set_core_auto_update_option( $_POST['wp_auto_update'] );
+		if ( preg_match( '/^(?:minor|major|disabled|dev)$/', sanitize_key( $_POST['wp_auto_update'] ) ) ) {
+			WP_Healthcheck::set_core_auto_update_option( sanitize_key( $_POST['wp_auto_update'] ) );
 		}
 
 		wp_die();
