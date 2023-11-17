@@ -147,7 +147,7 @@ class WP_Healthcheck_AJAX {
 
 		$options = array();
 
-		foreach ( $_POST as $name => $value )
+		foreach ( $_POST as $name => $value ) {
 			$name = sanitize_text_field( $name );
 
 			if ( preg_match( '/^wphc-hopt-/', $name ) ) {
