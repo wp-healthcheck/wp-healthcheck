@@ -1,10 +1,11 @@
 === WP Healthcheck ===
 Contributors: tiagohillebrandt, marksabbath
+Donate link: https://www.paypal.com/donate/?hosted_button_id=45R6Q8J8JERVS
 Tags: performance, transients, autoload, cron, healthcheck, load time, ssl, https, check
 Requires at least: 5.0
 Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 1.4.0
+Stable tag: 1.3.4
 License: GPLv3+
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -79,12 +80,12 @@ If you are a developer and want to contribute writing new features, enhancements
 = [1.4.0] 2024-07-16 =
 * Changed: Bumped the minimum PHP version up to 7.0.
 * Changed: Bumped the minimum WordPress version up to 5.0.
-* Changed: Bumped the tested WP version up to 6.5.5.
+* Changed: Bumped the tested WP version up to 6.6.
 * Fixed: Added sanitization to some specific inputs.
 
 = [1.3.4] 2022-03-29 =
-* Change: Update the user agent for the API request.
-* Bump up the WP supported version.
+* Changed: Updated the user agent for the API request.
+* Changed: Bumped the tested WP version up to 5.9.2.
 
 = [1.3.3] 2021-02-15 =
 * Bump up the WP supported version.
