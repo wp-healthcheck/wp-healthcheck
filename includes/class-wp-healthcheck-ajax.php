@@ -99,7 +99,7 @@ class WP_Healthcheck_AJAX {
 		$options = array();
 
 		foreach ( $_POST as $name => $value ) {
-			if ( preg_match( '/^wphc-opt-/', $name ) ) {
+			if ( preg_match( '/^wphc-opt-/', sanitize_text_field( $name ) ) ) {
 				$option_name = preg_replace( '/^wphc-opt-/', '', urldecode( $name ) );
 
 				$options[ $option_name ] = WP_Healthcheck::deactivate_autoload_option( $option_name );
