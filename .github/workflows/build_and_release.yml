@@ -1,0 +1,67 @@
+name: Build & Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Version tag (e.g. 1.4.0)'
+        required: true
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Confirm the version tag format is valid
+        run: if echo "${{ github.event.inputs.tag }}" | egrep -qv "([0-9]{1,}.){2}[0-9]{1,}"; then echo "Version tag format is invalid."; exit 1; fi
+
+      - name: Extract changes from the CHANGELOG.md file
+        run: |
+          grep "\[${{ github.event.inputs.tag }}\]" CHANGELOG.md -A1000 | tail -n +2 | sed '/## \[.*/Q' | sed '$d' > /tmp/changelog_output
+          if [[ -s "/tmp/changelog_output" ]]; then cat /tmp/changelog_output; else echo "Please make sure the CHANGELOG.md is updated: couldn't find the changes for '${{ github.event.inputs.tag }}'."; exit 1; fi
+
+      - name: Search for the version tag and replace it
+        run: grep -Rin "@since {VERSION}" --exclude-dir=vendor --exclude-dir=assets --exclude-dir=.github --exclude-dir=.git | while read -r file; do filename=$(echo "$file" | cut -d ':' -f1); if echo "$filename" | egrep -qv ".(js|php)$"; then continue; fi; sed -i "s/@since {VERSION}$/@since ${{ github.event.inputs.tag }}/g" $filename; done
+
+      - name: Update constants
+        run: |
+          if [[ -f "wp-healthcheck.php" ]]; then sed -i '/Version: */d' wp-healthcheck.php; sed -i "/Description:*/a \ * Version:     ${{ github.event.inputs.tag }}" wp-healthcheck.php; sed -i "s/'WPHC_VERSION', '.*'/'WPHC_VERSION', '${{ github.event.inputs.tag }}'/g" wp-healthcheck.php; fi
+          if [[ -f "readme.txt" ]]; then sed -i '/Stable tag: */d' readme.txt; sed -i "/Requires PHP:*/a Stable tag: ${{ github.event.inputs.tag }}" readme.txt; fi
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "$(git log -n 1 --pretty=format:%an)"
+          git config --global user.email "$(git log -n 1 --pretty=format:%ae)"
+          git commit -a -m "Updates the version tag to ${{ github.event.inputs.tag }}."
+          git tag ${{ github.event.inputs.tag }}
+
+      - name: Push changes & Create the tag
+        uses: ad-m/github-push-action@master
+        with:
+          branch: ${{ github.head_ref }}
+          tags: true
+
+      - name: Build zip
+        run: |
+          currdir=$(pwd)
+          mkdir /tmp/wp-healthcheck
+          cp -R * /tmp/wp-healthcheck
+          cd /tmp/wp-healthcheck
+          composer install -o --no-dev --no-scripts
+          rm -rf assets/scss .git* .editorconfig *.md phpcs.xml.dist composer.* package*.json Gruntfile.js
+          cd /tmp
+          zip -r wp-healthcheck-${{ github.event.inputs.tag }}.zip wp-healthcheck/
+          cd $currdir
+
+      - name: Create the GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: /tmp/changelog_output
+          files: /tmp/wp-healthcheck-${{ github.event.inputs.tag }}.zip
+          prerelease: false
+          tag_name: "${{ github.event.inputs.tag }}"
