@@ -53,7 +53,7 @@ jobs:
           cp -R * /tmp/wp-healthcheck
           cd /tmp/wp-healthcheck
           composer install -o --no-dev --no-scripts
-          rm -rf assets/scss .git* .editorconfig *.md phpcs.xml.dist composer.* package*.json Gruntfile.js
+          rm -rf assets/scss .git* .editorconfig *.md phpcs.xml.dist composer.* package*.json Gruntfile.js phpunit.xml.dist ci/ tests/
           cd /tmp
           zip -r wp-healthcheck-${{ github.event.inputs.tag }}.zip wp-healthcheck/
           cd $currdir
