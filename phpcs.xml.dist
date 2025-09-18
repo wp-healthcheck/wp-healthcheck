@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="Supervisor">
+<ruleset name="WP Healthcheck">
 	<description>The coding standards for WP Healthcheck plugin.</description>
 
 	<arg name="extensions" value="php"/>
