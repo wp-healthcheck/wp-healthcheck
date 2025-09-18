@@ -8,6 +8,11 @@
         "awesomemotive/wpforms-phpcs": "^1.5",
         "phpunit/phpunit": "^9.6"
     },
+    "autoload": {
+        "psr-4": {
+            "THSCD\\WPHC\\": "src"
+        }
+    },
     "autoload-dev": {
         "files": [
             "includes/class-wp-healthcheck.php",

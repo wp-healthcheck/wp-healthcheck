@@ -21,17 +21,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'WPHC', true );
 define( 'WPHC_VERSION', '1.4.0' );
+define( 'WPHC_PLUGIN_FILE', __FILE__ );
 define( 'WPHC_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'WPHC_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 
 define( 'WPHC_INC_DIR', WPHC_PLUGIN_DIR . '/includes' );
 
-require_once WPHC_INC_DIR . '/class-wp-healthcheck-upgrade.php';
 require_once WPHC_INC_DIR . '/class-wp-healthcheck.php';
-
-register_activation_hook( __FILE__, array( 'WP_Healthcheck', 'plugin_activation' ) );
-register_deactivation_hook( __FILE__, array( 'WP_Healthcheck', 'plugin_deactivation' ) );
-register_uninstall_hook( __FILE__, array( 'WP_Healthcheck', 'plugin_uninstall' ) );
 
 add_action( 'init', array( 'WP_Healthcheck', 'init' ) );
 
@@ -44,3 +40,34 @@ if ( is_admin() ) {
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	require_once WPHC_INC_DIR . '/class-wp-healthcheck-cli.php';
 }
+
+/**
+ * Loads the autoloader.
+ *
+ * @since {VERSION}
+ */
+if ( ! file_exists( WPHC_PLUGIN_DIR . '/vendor/autoload.php' ) ) {
+	return;
+}
+
+require_once WPHC_PLUGIN_DIR . '/vendor/autoload.php';
+
+/**
+ * Plugin loader.
+ *
+ * @since {VERSION}
+ *
+ * @return \THSCD\WPHC\Loader
+ */
+function wphc() {
+
+	static $wphc;
+
+	if ( ! $wphc ) {
+		$wphc = new THSCD\WPHC\Loader();
+	}
+
+	return $wphc;
+}
+
+wphc();
