@@ -42,9 +42,7 @@ class Dashboard {
 	 */
 	public function __construct() {
 
-		if ( current_user_can( 'manage_options' ) ) {
-			$this->hooks();
-		}
+		$this->hooks();
 	}
 
 	/**
@@ -122,6 +120,10 @@ class Dashboard {
 	 * @since {VERSION}
 	 */
 	public function render_page() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wp-healthcheck' ) );
+		}
 
 		wphc( 'util.view' )->render( 'admin/pages/dashboard' );
 	}

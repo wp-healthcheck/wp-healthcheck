@@ -49,7 +49,24 @@ class Pointers {
 
 		$this->initiated = true;
 
-		add_action( 'admin_init', [ $this, 'load_resources' ], 5 );
+		add_action( 'admin_menu', [ $this, 'setup_hooks' ], 20 );
+	}
+
+	/**
+	 * Setup hooks after menu is registered.
+	 *
+	 * @since {VERSION}
+	 */
+	public function setup_hooks() {
+
+		$dashboard = wphc( 'admin.dashboard' );
+		$hookname  = $dashboard->get_hookname();
+
+		if ( ! $hookname ) {
+			return;
+		}
+
+		add_action( 'load-' . $hookname, [ $this, 'load_resources' ] );
 		add_action( 'admin_print_footer_scripts', [ $this, 'enqueue_pointers' ] );
 	}
 
@@ -71,6 +88,11 @@ class Pointers {
 	 */
 	public function enqueue_pointers() {
 
+		$screen = get_current_screen();
+
+		if ( ! $screen || 'toplevel_page_wp-healthcheck' !== $screen->id ) {
+			return;
+		}
 		include WPHC_PLUGIN_DIR . '/views/admin/help.php';
 
 		$pointers = [
