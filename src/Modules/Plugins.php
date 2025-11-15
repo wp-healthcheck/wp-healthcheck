@@ -16,6 +16,8 @@ use DateTime;
  * Class Plugins.
  *
  * Manages plugin health checks.
+ *
+ * @since {VERSION}
  */
 class Plugins {
 
@@ -61,7 +63,7 @@ class Plugins {
 
 		$outdated_plugins = get_transient( self::OUTDATED_PLUGINS_TRANSIENT );
 
-		if ( false !== $outdated_plugins ) {
+		if ( $outdated_plugins !== false ) {
 			return $outdated_plugins;
 		}
 
@@ -99,11 +101,11 @@ class Plugins {
 	 */
 	private function check_plugins_freshness() {
 
-		$outdated_plugins = [];
+		$outdated_plugins  = [];
 		$installed_plugins = get_plugins();
 
 		foreach ( $installed_plugins as $file => $plugin ) {
-			$slug = $this->extract_plugin_slug( $file );
+			$slug              = $this->extract_plugin_slug( $file );
 			$days_since_update = $this->get_days_since_last_update( $slug );
 
 			if ( $days_since_update && $days_since_update > self::OUTDATED_THRESHOLD_DAYS ) {
@@ -128,7 +130,7 @@ class Plugins {
 		$slug = dirname( $file );
 
 		// If plugin is in root (single file plugin), use filename.
-		if ( '.' === $slug ) {
+		if ( $slug === '.' ) {
 			$slug = basename( $file, '.php' );
 		}
 
@@ -174,10 +176,9 @@ class Plugins {
 	 */
 	private function calculate_days_difference( $last_updated_date ) {
 
-		$today = new DateTime();
+		$today       = new DateTime();
 		$last_update = new DateTime( $last_updated_date );
 
 		return (int) $today->diff( $last_update )->format( '%a' );
 	}
 }
-

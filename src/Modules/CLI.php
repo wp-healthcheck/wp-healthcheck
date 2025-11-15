@@ -14,9 +14,11 @@ use WP_CLI;
 use WP_CLI_Command;
 
 /**
- * Class CLI
+ * Class CLI.
  *
  * WP-CLI commands for WP Healthcheck.
+ *
+ * @since {VERSION}
  */
 class CLI extends WP_CLI_Command {
 
@@ -64,63 +66,85 @@ class CLI extends WP_CLI_Command {
 	 *
 	 * @subcommand autoload
 	 *
+	 * @since {VERSION}
+	 *
 	 * @param array $args       Command arguments.
 	 * @param array $assoc_args Command associative arguments.
 	 */
 	public function autoload( $args, $assoc_args ) {
 
 		if ( isset( $assoc_args['deactivate'] ) ) {
-			$option_name = $assoc_args['deactivate'];
-
-			if ( empty( $option_name ) || ! is_string( $option_name ) ) {
-				WP_CLI::error( 'You need to provide the name of the option to deactivate.' );
-			}
-
-			if ( ! get_option( $option_name ) ) {
-				WP_CLI::error( WP_CLI::colorize( 'We couldn\'t find the %r' . $option_name . '%n option in your WordPress options table.' ) );
-			}
-
-			if ( wphc( 'module.autoload' )->is_core_option( $option_name ) ) {
-				WP_CLI::error( 'You can\'t deactivate a WordPress core option.' );
-			}
-
-			if ( wphc( 'module.autoload' )->is_deactivated( $option_name ) ) {
-				WP_CLI::warning( WP_CLI::colorize( 'The %y' . $option_name . '%n autoload option is already disabled.' ) );
-				WP_CLI::halt( 2 );
-			}
-
-			$deactivate = wphc( 'module.autoload' )->deactivate( $option_name );
-
-			if ( false !== $deactivate ) {
-				WP_CLI::success( WP_CLI::colorize( 'Yay, the %y' . $option_name . '%n option was deactivated successfully.' ) );
-			} else {
-				WP_CLI::error( WP_CLI::colorize( 'Oops, for some reason we couldn\'t deactivate the %y' . $option_name . '%n option.' ) );
-			}
+			$this->handle_deactivate( $assoc_args['deactivate'] );
 		} elseif ( isset( $assoc_args['history'] ) ) {
-			$opts = wphc( 'module.autoload' )->get_history();
-
-			if ( false === $opts || ! is_array( $opts ) || 0 === count( $opts ) ) {
-				WP_CLI::warning( 'The history is empty.' );
-				WP_CLI::halt( 2 );
-			}
-
-			$list = [];
-
-			foreach ( $opts as $name => $timestamp ) {
-				$item = [
-					'name'              => $name,
-					'deactivation_time' => date( 'Y-m-d H:i:s', $timestamp ),
-				];
-
-				$list[] = $item;
-			}
-
-			WP_CLI\Utils\format_items( 'table', $list, [ 'name', 'deactivation_time' ] );
+			$this->display_history();
 		} else {
 			$autoload = wphc( 'module.autoload' )->get();
 
 			$this->list_options( $autoload );
 		}
+	}
+
+	/**
+	 * Handle autoload option deactivation.
+	 *
+	 * @since {VERSION}
+	 *
+	 * @param string $option_name The option name to deactivate.
+	 */
+	private function handle_deactivate( $option_name ) {
+
+		if ( empty( $option_name ) || ! is_string( $option_name ) ) {
+			WP_CLI::error( 'You need to provide the name of the option to deactivate.' );
+		}
+
+		if ( ! get_option( $option_name ) ) {
+			WP_CLI::error( WP_CLI::colorize( 'We couldn\'t find the %r' . $option_name . '%n option in your WordPress options table.' ) );
+		}
+
+		if ( wphc( 'module.autoload' )->is_core_option( $option_name ) ) {
+			WP_CLI::error( 'You can\'t deactivate a WordPress core option.' );
+		}
+
+		if ( wphc( 'module.autoload' )->is_deactivated( $option_name ) ) {
+			WP_CLI::warning( WP_CLI::colorize( 'The %y' . $option_name . '%n autoload option is already disabled.' ) );
+			WP_CLI::halt( 2 );
+		}
+
+		$deactivate = wphc( 'module.autoload' )->deactivate( $option_name );
+
+		if ( $deactivate !== false ) {
+			WP_CLI::success( WP_CLI::colorize( 'Yay, the %y' . $option_name . '%n option was deactivated successfully.' ) );
+		} else {
+			WP_CLI::error( WP_CLI::colorize( 'Oops, for some reason we couldn\'t deactivate the %y' . $option_name . '%n option.' ) );
+		}
+	}
+
+	/**
+	 * Display autoload history.
+	 *
+	 * @since {VERSION}
+	 */
+	private function display_history() {
+
+		$opts = wphc( 'module.autoload' )->get_history();
+
+		if ( $opts === false || ! is_array( $opts ) || count( $opts ) === 0 ) {
+			WP_CLI::warning( 'The history is empty.' );
+			WP_CLI::halt( 2 );
+		}
+
+		$list = [];
+
+		foreach ( $opts as $name => $timestamp ) {
+			$item = [
+				'name'              => $name,
+				'deactivation_time' => gmdate( 'Y-m-d H:i:s', $timestamp ),
+			];
+
+			$list[] = $item;
+		}
+
+		WP_CLI\Utils\format_items( 'table', $list, [ 'name', 'deactivation_time' ] );
 	}
 
 	/**
@@ -139,6 +163,8 @@ class CLI extends WP_CLI_Command {
 	 *     +-------+--------------+--------+
 	 *
 	 * @subcommand server
+	 *
+	 * @since {VERSION}
 	 */
 	public function server() {
 
@@ -152,50 +178,71 @@ class CLI extends WP_CLI_Command {
 				continue;
 			}
 
-			if ( 'database' === $name ) {
-				$name    = strtolower( $version['service'] );
-				$version = $version['version'];
+			$item = $this->format_server_item( $name, $version, $info, $requirements );
+
+			if ( $item ) {
+				$list[] = $item;
 			}
-
-			$status = wphc( 'module.server' )->is_updated( $name );
-			$action = '-';
-
-			if ( 'wp' === $name && 'updated' !== $status ) {
-				$action = WP_CLI::colorize( 'run %Ywp core update%n to update WordPress to latest version' );
-			}
-
-			if ( preg_match( '/(?:php|mysql|mariadb)/', $name ) ) {
-				if ( 'outdated' === $status ) {
-					$action = 'Your ' . strtoupper( $name ) . ' version is compatible with the current WordPress install. However, in order to get better performance and other improvements, you should consider to upgrade it to version ' . $requirements[ $name ]['recommended'] . ' or greater.';
-				} elseif ( 'obsolete' === $status ) {
-					$action = 'This ' . strtoupper( $name ) . ' version is not supported by WordPress anymore! Please upgrade it to version ' . $requirements[ $name ]['recommended'] . ' or greater.';
-				}
-			}
-
-			if ( 'web' === $name && isset( $info['web'] ) && is_array( $info['web'] ) ) {
-				if ( preg_match( '/(?:apache|nginx)/', $info['web']['service'] ) ) {
-					$version = $info['web']['service'] . '/' . $info['web']['version'];
-				} else {
-					$version = $info['web']['version'];
-				}
-			}
-
-			$item = [
-				'name'    => $name,
-				'version' => $version,
-				'action'  => $action,
-			];
-
-			if ( preg_match( '/(?:obsolete|outdated)/', $status ) ) {
-				$color = ( 'obsolete' === $status ) ? 'r' : 'y';
-
-				$item['version'] = WP_CLI::colorize( '%' . $color . $version . '%n' );
-			}
-
-			$list[] = $item;
 		}
 
 		WP_CLI\Utils\format_items( 'table', $list, [ 'name', 'version', 'action' ] );
+	}
+
+	/**
+	 * Format a server item for display.
+	 *
+	 * @since {VERSION}
+	 *
+	 * @param string $name         Server component name.
+	 * @param mixed  $version      Version information.
+	 * @param array  $info         Server info array.
+	 * @param array  $requirements Requirements array.
+	 *
+	 * @return array|null Formatted item or null.
+	 */
+	private function format_server_item( $name, $version, $info, $requirements ) {
+
+		if ( $name === 'database' ) {
+			$name    = strtolower( $version['service'] );
+			$version = $version['version'];
+		}
+
+		$status = wphc( 'module.server' )->is_updated( $name );
+		$action = '-';
+
+		if ( $name === 'wp' && $status !== 'updated' ) {
+			$action = WP_CLI::colorize( 'run %Ywp core update%n to update WordPress to latest version' );
+		}
+
+		if ( preg_match( '/(?:php|mysql|mariadb)/', $name ) ) {
+			if ( $status === 'outdated' ) {
+				$action = 'Your ' . strtoupper( $name ) . ' version is compatible with the current WordPress install. However, in order to get better performance and other improvements, you should consider to upgrade it to version ' . $requirements[ $name ]['recommended'] . ' or greater.';
+			} elseif ( $status === 'obsolete' ) {
+				$action = 'This ' . strtoupper( $name ) . ' version is not supported by WordPress anymore! Please upgrade it to version ' . $requirements[ $name ]['recommended'] . ' or greater.';
+			}
+		}
+
+		if ( $name === 'web' && isset( $info['web'] ) && is_array( $info['web'] ) ) {
+			if ( preg_match( '/(?:apache|nginx)/', $info['web']['service'] ) ) {
+				$version = $info['web']['service'] . '/' . $info['web']['version'];
+			} else {
+				$version = $info['web']['version'];
+			}
+		}
+
+		$item = [
+			'name'    => $name,
+			'version' => $version,
+			'action'  => $action,
+		];
+
+		if ( preg_match( '/(?:obsolete|outdated)/', $status ) ) {
+			$color = ( $status === 'obsolete' ) ? 'r' : 'y';
+
+			$item['version'] = WP_CLI::colorize( '%' . $color . $version . '%n' );
+		}
+
+		return $item;
 	}
 
 	/**
@@ -215,6 +262,8 @@ class CLI extends WP_CLI_Command {
 	 *
 	 * @subcommand ssl
 	 *
+	 * @since {VERSION}
+	 *
 	 * @param array $args       Command arguments.
 	 * @param array $assoc_args Command associative arguments.
 	 */
@@ -222,7 +271,7 @@ class CLI extends WP_CLI_Command {
 
 		$ssl_data = wphc( 'module.ssl' )->get_data();
 
-		if ( false === $ssl_data || empty( $ssl_data ) ) {
+		if ( $ssl_data === false || empty( $ssl_data ) ) {
 			WP_CLI::error( 'We couldn\'t find any SSL certificates associated with your site. Is HTTPS enabled?' );
 		}
 
@@ -289,6 +338,8 @@ class CLI extends WP_CLI_Command {
 	 * @subcommand transient
 	 * @alias transients
 	 *
+	 * @since {VERSION}
+	 *
 	 * @param array $args       Command arguments.
 	 * @param array $assoc_args Command associative arguments.
 	 */
@@ -299,7 +350,7 @@ class CLI extends WP_CLI_Command {
 
 			$message = ( wp_using_ext_object_cache() ) ? 'object cache items' : 'transients';
 
-			if ( false !== wphc( 'module.transients' )->cleanup( $only_expired ) ) {
+			if ( wphc( 'module.transients' )->cleanup( $only_expired ) !== false ) {
 				WP_CLI::success( 'Yay! The ' . $message . ' were cleaned up successfully.' );
 			} else {
 				WP_CLI::error( 'Oops, for some reason we couldn\'t clean up your ' . $message . '.' );
@@ -338,4 +389,3 @@ class CLI extends WP_CLI_Command {
 		WP_CLI\Utils\format_items( 'table', $list, [ 'name', 'size' ] );
 	}
 }
-
