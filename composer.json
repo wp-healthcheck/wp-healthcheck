@@ -18,8 +18,7 @@
       "includes/class-wp-healthcheck.php",
       "includes/class-wp-healthcheck-admin.php",
       "includes/class-wp-healthcheck-ajax.php",
-      "includes/class-wp-healthcheck-pointers.php",
-      "includes/class-wp-healthcheck-upgrade.php"
+      "includes/class-wp-healthcheck-pointers.php"
     ]
   },
   "scripts": {

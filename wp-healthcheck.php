@@ -59,22 +59,9 @@ function wphc( $service = null ) {
 	return $container->get( $service );
 }
 
-require_once WPHC_INC_DIR . '/class-wp-healthcheck-upgrade.php';
-require_once WPHC_INC_DIR . '/class-wp-healthcheck.php';
-
-add_action( 'init', array( 'WP_Healthcheck', 'init' ) );
-
-if ( is_admin() ) {
-	require_once WPHC_INC_DIR . '/class-wp-healthcheck-admin.php';
-
-	add_action( 'init', array( 'WP_Healthcheck_Admin', 'init' ) );
-}
-
 /**
- * Loads the WP CLI commands.
+ * Initialize the plugin.
  *
  * @since {VERSION}
  */
-if ( defined( 'WP_CLI' ) && WP_CLI ) {
-	WP_CLI::add_command( 'healthcheck', \THSCD\WPHC\Modules\CLI::class );
-}
+\THSCD\WPHC\Core\Bootstrap::init();
