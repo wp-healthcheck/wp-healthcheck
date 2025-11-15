@@ -1,10 +1,10 @@
 === WP Healthcheck ===
-Contributors: tiagohillebrandt, marksabbath
+Contributors: tiagohillebrandt
 Donate link: https://www.paypal.com/donate/?hosted_button_id=45R6Q8J8JERVS
 Tags: performance, transients, autoload, cron, healthcheck, load time, ssl, https, check
-Requires at least: 5.0
-Tested up to: 6.6
-Requires PHP: 7.0
+Requires at least: 5.5
+Tested up to: 6.8.3
+Requires PHP: 7.2
 Stable tag: 1.4.0
 License: GPLv3+
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
