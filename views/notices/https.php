@@ -3,7 +3,7 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-if ( WP_Healthcheck::is_ssl_available() ) {
+if ( wphc( 'ssl' )->is_available() ) {
 	return false;
 }
 ?>

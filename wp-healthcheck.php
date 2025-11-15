@@ -26,6 +26,39 @@ define( 'WPHC_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 
 define( 'WPHC_INC_DIR', WPHC_PLUGIN_DIR . '/includes' );
 
+/**
+ * Loads the autoloader.
+ *
+ * @since {VERSION}
+ */
+if ( ! file_exists( WPHC_PLUGIN_DIR . '/vendor/autoload.php' ) ) {
+	return;
+}
+
+require_once WPHC_PLUGIN_DIR . '/vendor/autoload.php';
+
+/**
+ * Get the available container instance or resolve a service.
+ *
+ * Similar to Laravel's app() helper.
+ *
+ * @since {VERSION}
+ *
+ * @param string|null $service Service name to resolve.
+ *
+ * @return mixed|\THSCD\WPHC\Core\Container
+ */
+function wphc( $service = null ) {
+
+	$container = \THSCD\WPHC\Core\Container::get_instance();
+
+	if ( is_null( $service ) ) {
+		return $container;
+	}
+
+	return $container->get( $service );
+}
+
 require_once WPHC_INC_DIR . '/class-wp-healthcheck-upgrade.php';
 require_once WPHC_INC_DIR . '/class-wp-healthcheck.php';
 

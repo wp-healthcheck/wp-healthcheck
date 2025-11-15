@@ -3,7 +3,7 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$transients = WP_Healthcheck::get_transients_stats();
+$transients = wphc( 'transients' )->get_stats();
 ?>
 
 <?php if ( ! wp_using_ext_object_cache() ) : ?>

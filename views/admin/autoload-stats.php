@@ -3,8 +3,8 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$autoload = WP_Healthcheck::get_autoload_stats();
-$history  = WP_Healthcheck::get_autoload_history();
+$autoload = wphc( 'autoload' )->get_stats();
+$history  = wphc( 'autoload' )->get_history();
 ?>
 
 <div class="wphc_stats">

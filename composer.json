@@ -1,23 +1,28 @@
 {
-    "config": {
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
-    },
-    "require-dev": {
-        "awesomemotive/wpforms-phpcs": "^1.5",
-        "phpunit/phpunit": "^9.6"
-    },
-    "autoload-dev": {
-        "files": [
-            "includes/class-wp-healthcheck.php",
-            "includes/class-wp-healthcheck-admin.php",
-            "includes/class-wp-healthcheck-ajax.php",
-            "includes/class-wp-healthcheck-pointers.php",
-            "includes/class-wp-healthcheck-upgrade.php"
-        ]
-    },
-    "scripts": {
-        "phpcs": "phpcs --standard=phpcs.xml.dist -s --colors"
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
+  },
+  "require-dev": {
+    "awesomemotive/wpforms-phpcs": "^1.7",
+    "phpunit/phpunit": "^9.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "THSCD\\WPHC\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "files": [
+      "includes/class-wp-healthcheck.php",
+      "includes/class-wp-healthcheck-admin.php",
+      "includes/class-wp-healthcheck-ajax.php",
+      "includes/class-wp-healthcheck-pointers.php",
+      "includes/class-wp-healthcheck-upgrade.php"
+    ]
+  },
+  "scripts": {
+    "phpcs": "phpcs --standard=phpcs.xml.dist -s --colors"
+  }
 }
