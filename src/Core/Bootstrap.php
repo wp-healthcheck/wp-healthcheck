@@ -11,11 +11,14 @@
 namespace THSCD\WPHC\Core;
 
 use THSCD\WPHC\Modules\CLI;
+use WP_CLI;
 
 /**
- * Class Bootstrap
+ * Class Bootstrap.
  *
  * Initializes the plugin components.
+ *
+ * @since {VERSION}
  */
 class Bootstrap {
 
@@ -62,8 +65,7 @@ class Bootstrap {
 	private static function load_cli() {
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
-			\WP_CLI::add_command( 'healthcheck', CLI::class );
+			WP_CLI::add_command( 'healthcheck', CLI::class );
 		}
 	}
 }
-

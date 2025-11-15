@@ -1,13 +1,13 @@
 <?php
-
-namespace THSCD\WPHC\Core;
-
 /**
  * Service Container
  *
  * @package wp-healthcheck
  * @since {VERSION}
  */
+
+namespace THSCD\WPHC\Core;
+
 use THSCD\WPHC\Modules\Autoload;
 use THSCD\WPHC\Modules\Plugins;
 use THSCD\WPHC\Modules\Server;
@@ -25,10 +25,12 @@ use THSCD\WPHC\Utils\View;
 use Exception;
 
 /**
- * Class Container
+ * Class Container.
  *
  * PSR-11 compatible dependency injection container.
  * Implements get() and has() methods as per PSR-11 standard.
+ *
+ * @since {VERSION}
  */
 class Container {
 
@@ -78,16 +80,16 @@ class Container {
 		'module.wordpress'  => WordPress::class,
 
 		// Admin.
-		'admin.dashboard'  => Dashboard::class,
-		'admin.ajax'       => AJAX::class,
-		'admin.metaboxes'  => Metaboxes::class,
-		'admin.pointers'   => Pointers::class,
-		'admin.notices'    => Notices::class,
+		'admin.dashboard'   => Dashboard::class,
+		'admin.ajax'        => AJAX::class,
+		'admin.metaboxes'   => Metaboxes::class,
+		'admin.pointers'    => Pointers::class,
+		'admin.notices'     => Notices::class,
 
 		// Utils.
-		'util.install' => Install::class,
-		'util.upgrade' => Upgrade::class,
-		'util.view'    => View::class,
+		'util.install'      => Install::class,
+		'util.upgrade'      => Upgrade::class,
+		'util.view'         => View::class,
 	];
 
 	/**

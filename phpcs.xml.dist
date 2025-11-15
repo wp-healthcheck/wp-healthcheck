@@ -9,16 +9,16 @@
 
 	<exclude-pattern>/(vendor|languages|tests|node_modules)/*</exclude-pattern>
 	<exclude-pattern>/index\.php</exclude-pattern>
-	<exclude-pattern>/supervisor\.php</exclude-pattern>
 
 	<rule ref="WPForms">
 		<exclude name="WordPress.DB.DirectDatabaseQuery.NoCaching"/>
 		<exclude name="Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed"/>
+		<exclude name="WPForms.PHP.ValidateHooks.InvalidHookName"/>
 	</rule>
 
 	<rule ref="WPForms.PHP.ValidateDomain">
 		<properties>
-			<property name="supervisor" value="src/"/>
+			<property name="text_domain" value="wp-healthcheck"/>
 		</properties>
 	</rule>
 

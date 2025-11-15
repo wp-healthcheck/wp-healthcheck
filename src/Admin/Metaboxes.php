@@ -14,6 +14,8 @@ namespace THSCD\WPHC\Admin;
  * Class Metaboxes.
  *
  * Manages meta boxes for the admin page.
+ *
+ * @since {VERSION}
  */
 class Metaboxes {
 
@@ -73,7 +75,7 @@ class Metaboxes {
 	public function output() {
 
 		$hookname = wphc( 'admin.dashboard' )->get_hookname();
+
 		do_meta_boxes( $hookname, 'normal', null );
 	}
 }
-

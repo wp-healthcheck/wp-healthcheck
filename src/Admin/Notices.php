@@ -14,6 +14,8 @@ namespace THSCD\WPHC\Admin;
  * Class Notices.
  *
  * Manages admin notices for health checks.
+ *
+ * @since {VERSION}
  */
 class Notices {
 
@@ -102,4 +104,3 @@ class Notices {
 		}
 	}
 }
-
