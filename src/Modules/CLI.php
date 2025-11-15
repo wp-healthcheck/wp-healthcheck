@@ -1,13 +1,25 @@
 <?php
 /**
- * The WP_Healthcheck_CLI class
+ * The CLI class
  *
  * The WP Healthcheck extension for WP-CLI.
  *
  * @package wp-healthcheck
- * @since 1.1
+ * @since {VERSION}
  */
-class WP_Healthcheck_CLI extends WP_CLI_Command {
+
+namespace THSCD\WPHC\Modules;
+
+use WP_CLI;
+use WP_CLI_Command;
+
+/**
+ * Class CLI
+ *
+ * WP-CLI commands for WP Healthcheck.
+ */
+class CLI extends WP_CLI_Command {
+
 	/**
 	 * List the top WordPress autoload options.
 	 *
@@ -51,8 +63,12 @@ class WP_Healthcheck_CLI extends WP_CLI_Command {
 	 *     +-----------------------------+---------+
 	 *
 	 * @subcommand autoload
+	 *
+	 * @param array $args       Command arguments.
+	 * @param array $assoc_args Command associative arguments.
 	 */
 	public function autoload( $args, $assoc_args ) {
+
 		if ( isset( $assoc_args['deactivate'] ) ) {
 			$option_name = $assoc_args['deactivate'];
 
@@ -64,16 +80,16 @@ class WP_Healthcheck_CLI extends WP_CLI_Command {
 				WP_CLI::error( WP_CLI::colorize( 'We couldn\'t find the %r' . $option_name . '%n option in your WordPress options table.' ) );
 			}
 
-			if ( WP_Healthcheck::is_core_option( $option_name ) ) {
+			if ( wphc( 'autoload' )->is_core_option( $option_name ) ) {
 				WP_CLI::error( 'You can\'t deactivate a WordPress core option.' );
 			}
 
-			if ( WP_Healthcheck::is_autoload_disabled( $option_name ) ) {
+			if ( wphc( 'autoload' )->is_deactivated( $option_name ) ) {
 				WP_CLI::warning( WP_CLI::colorize( 'The %y' . $option_name . '%n autoload option is already disabled.' ) );
 				WP_CLI::halt( 2 );
 			}
 
-			$deactivate = WP_Healthcheck::deactivate_autoload_option( $option_name );
+			$deactivate = wphc( 'autoload' )->deactivate( $option_name );
 
 			if ( false !== $deactivate ) {
 				WP_CLI::success( WP_CLI::colorize( 'Yay, the %y' . $option_name . '%n option was deactivated successfully.' ) );
@@ -81,29 +97,29 @@ class WP_Healthcheck_CLI extends WP_CLI_Command {
 				WP_CLI::error( WP_CLI::colorize( 'Oops, for some reason we couldn\'t deactivate the %y' . $option_name . '%n option.' ) );
 			}
 		} elseif ( isset( $assoc_args['history'] ) ) {
-			$opts = WP_Healthcheck::get_autoload_history();
+			$opts = wphc( 'autoload' )->get_history();
 
-			if ( false === $opts || ! is_array( $opts ) || sizeof( $opts ) == 0 ) {
+			if ( false === $opts || ! is_array( $opts ) || 0 === count( $opts ) ) {
 				WP_CLI::warning( 'The history is empty.' );
 				WP_CLI::halt( 2 );
 			}
 
-			$list = array();
+			$list = [];
 
 			foreach ( $opts as $name => $timestamp ) {
-				$item = array(
+				$item = [
 					'name'              => $name,
 					'deactivation_time' => date( 'Y-m-d H:i:s', $timestamp ),
-				);
+				];
 
 				$list[] = $item;
 			}
 
-			WP_CLI\Utils\format_items( 'table', $list, array( 'name', 'deactivation_time' ) );
+			WP_CLI\Utils\format_items( 'table', $list, [ 'name', 'deactivation_time' ] );
 		} else {
-			$autoload = WP_Healthcheck::get_autoload_options();
+			$autoload = wphc( 'autoload' )->get();
 
-			$this->_list_options( $autoload );
+			$this->list_options( $autoload );
 		}
 	}
 
@@ -125,37 +141,38 @@ class WP_Healthcheck_CLI extends WP_CLI_Command {
 	 * @subcommand server
 	 */
 	public function server() {
-		$info         = WP_Healthcheck::get_server_data();
-		$requirements = WP_Healthcheck::get_server_requirements();
 
-		$list = array();
+		$info         = wphc( 'server' )->get_data();
+		$requirements = wphc( 'server' )->get_requirements();
+
+		$list = [];
 
 		foreach ( $info as $name => $version ) {
 			if ( empty( $version ) ) {
 				continue;
 			}
 
-			if ( 'database' == $name ) {
+			if ( 'database' === $name ) {
 				$name    = strtolower( $version['service'] );
 				$version = $version['version'];
 			}
 
-			$status = WP_Healthcheck::is_software_updated( $name );
+			$status = wphc( 'server' )->is_updated( $name );
 			$action = '-';
 
-			if ( 'wp' == $name && 'updated' != $status ) {
+			if ( 'wp' === $name && 'updated' !== $status ) {
 				$action = WP_CLI::colorize( 'run %Ywp core update%n to update WordPress to latest version' );
 			}
 
 			if ( preg_match( '/(?:php|mysql|mariadb)/', $name ) ) {
-				if ( 'outdated' == $status ) {
+				if ( 'outdated' === $status ) {
 					$action = 'Your ' . strtoupper( $name ) . ' version is compatible with the current WordPress install. However, in order to get better performance and other improvements, you should consider to upgrade it to version ' . $requirements[ $name ]['recommended'] . ' or greater.';
-				} elseif ( 'obsolete' == $status ) {
+				} elseif ( 'obsolete' === $status ) {
 					$action = 'This ' . strtoupper( $name ) . ' version is not supported by WordPress anymore! Please upgrade it to version ' . $requirements[ $name ]['recommended'] . ' or greater.';
 				}
 			}
 
-			if ( 'web' == $name && isset( $info['web'] ) && is_array( $info['web'] ) ) {
+			if ( 'web' === $name && isset( $info['web'] ) && is_array( $info['web'] ) ) {
 				if ( preg_match( '/(?:apache|nginx)/', $info['web']['service'] ) ) {
 					$version = $info['web']['service'] . '/' . $info['web']['version'];
 				} else {
@@ -163,14 +180,14 @@ class WP_Healthcheck_CLI extends WP_CLI_Command {
 				}
 			}
 
-			$item = array(
+			$item = [
 				'name'    => $name,
 				'version' => $version,
 				'action'  => $action,
-			);
+			];
 
 			if ( preg_match( '/(?:obsolete|outdated)/', $status ) ) {
-				$color = ( 'obsolete' == $status ) ? 'r' : 'y';
+				$color = ( 'obsolete' === $status ) ? 'r' : 'y';
 
 				$item['version'] = WP_CLI::colorize( '%' . $color . $version . '%n' );
 			}
@@ -178,7 +195,7 @@ class WP_Healthcheck_CLI extends WP_CLI_Command {
 			$list[] = $item;
 		}
 
-		WP_CLI\Utils\format_items( 'table', $list, array( 'name', 'version', 'action' ) );
+		WP_CLI\Utils\format_items( 'table', $list, [ 'name', 'version', 'action' ] );
 	}
 
 	/**
@@ -197,31 +214,35 @@ class WP_Healthcheck_CLI extends WP_CLI_Command {
 	 *     +-------------+----------------------------+
 	 *
 	 * @subcommand ssl
+	 *
+	 * @param array $args       Command arguments.
+	 * @param array $assoc_args Command associative arguments.
 	 */
 	public function ssl( $args, $assoc_args ) {
-		$ssl_data = WP_Healthcheck::get_ssl_data();
+
+		$ssl_data = wphc( 'ssl' )->get_data();
 
 		if ( false === $ssl_data || empty( $ssl_data ) ) {
 			WP_CLI::error( 'We couldn\'t find any SSL certificates associated with your site. Is HTTPS enabled?' );
 		}
 
-		$ssl_data = array(
+		$ssl_data = [
 			'common_name' => $ssl_data['common_name'],
 			'issued_by'   => $ssl_data['issuer'],
 			'issued_on'   => $ssl_data['validity']['from'],
 			'expires_on'  => $ssl_data['validity']['to'],
-		);
+		];
 
-		$data = array();
+		$data = [];
 
 		foreach ( $ssl_data as $key => $value ) {
-			$data[] = array(
+			$data[] = [
 				'field' => $key,
 				'value' => $value,
-			);
+			];
 		}
 
-		WP_CLI\Utils\format_items( 'table', $data, array( 'field', 'value' ) );
+		WP_CLI\Utils\format_items( 'table', $data, [ 'field', 'value' ] );
 	}
 
 	/**
@@ -267,14 +288,18 @@ class WP_Healthcheck_CLI extends WP_CLI_Command {
 	 *
 	 * @subcommand transient
 	 * @alias transients
+	 *
+	 * @param array $args       Command arguments.
+	 * @param array $assoc_args Command associative arguments.
 	 */
 	public function transient( $args, $assoc_args ) {
+
 		if ( isset( $assoc_args['delete-all'] ) || isset( $assoc_args['delete-expired'] ) ) {
 			$only_expired = ( isset( $assoc_args['delete-expired'] ) ) ? true : false;
 
 			$message = ( wp_using_ext_object_cache() ) ? 'object cache items' : 'transients';
 
-			if ( false !== WP_Healthcheck::cleanup_transients( $only_expired ) ) {
+			if ( false !== wphc( 'transients' )->cleanup( $only_expired ) ) {
 				WP_CLI::success( 'Yay! The ' . $message . ' were cleaned up successfully.' );
 			} else {
 				WP_CLI::error( 'Oops, for some reason we couldn\'t clean up your ' . $message . '.' );
@@ -284,31 +309,33 @@ class WP_Healthcheck_CLI extends WP_CLI_Command {
 				WP_CLI::error( 'Unfortunately we cannot list the transients when an external object cache is being used.' );
 			}
 
-			$transients = WP_Healthcheck::get_transients();
+			$transients = wphc( 'transients' )->get();
 
-			$this->_list_options( $transients );
+			$this->list_options( $transients );
 		}
 	}
 
 	/**
 	 * List the name and size of the options in WP-CLI table format.
 	 *
+	 * @since {VERSION}
+	 *
 	 * @param array $data An array with name and size of the options.
 	 */
-	private function _list_options( $data ) {
-		$list = array();
+	private function list_options( $data ) {
+
+		$list = [];
 
 		foreach ( $data as $name => $size ) {
-			$item = array(
+			$item = [
 				'name' => preg_replace( '/^(_site)?_transient_/', '', $name ),
 				'size' => number_format( $size, 2 ) . ' MB',
-			);
+			];
 
 			$list[] = $item;
 		}
 
-		WP_CLI\Utils\format_items( 'table', $list, array( 'name', 'size' ) );
+		WP_CLI\Utils\format_items( 'table', $list, [ 'name', 'size' ] );
 	}
 }
 
-WP_CLI::add_command( 'healthcheck', 'WP_Healthcheck_CLI' );

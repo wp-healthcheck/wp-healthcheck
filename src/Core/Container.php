@@ -12,6 +12,7 @@ use THSCD\WPHC\Modules\Autoload;
 use THSCD\WPHC\Modules\Server;
 use THSCD\WPHC\Modules\SSL;
 use THSCD\WPHC\Modules\Transients;
+use THSCD\WPHC\Modules\WordPress;
 use Exception;
 
 /**
@@ -63,6 +64,7 @@ class Container {
 		'server'     => Server::class,
 		'ssl'        => SSL::class,
 		'transients' => Transients::class,
+		'wordpress'  => WordPress::class,
 	];
 
 	/**

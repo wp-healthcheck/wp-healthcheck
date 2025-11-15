@@ -115,25 +115,7 @@ class WP_Healthcheck {
 	public static function init_hooks() {
 		self::$initiated = true;
 
-		add_action( 'wp_loaded', array( 'WP_Healthcheck', 'check_core_updates' ) );
 		add_action( 'upgrader_process_complete', array( 'WP_Healthcheck', 'plugin_deactivation' ) );
-	}
-
-	/**
-	 * Check and apply WordPress core updates option.
-	 *
-	 * @since 1.3.0
-	 */
-	public static function check_core_updates() {
-		$core_auto_update_option = self::get_core_auto_update_option();
-
-		if ( $core_auto_update_option && preg_match( '/^(minor|major|dev|disabled)$/', $core_auto_update_option ) ) {
-			if ( 'disabled' === $core_auto_update_option ) {
-				add_filter( 'automatic_updater_disabled', '__return_true' );
-			} else {
-				add_filter( 'allow_' . $core_auto_update_option . '_auto_core_updates', '__return_true' );
-			}
-		}
 	}
 
 	/**
@@ -210,23 +192,6 @@ class WP_Healthcheck {
 	}
 
 	/**
-	 * Returns the wp-healthcheck auto update option value.
-	 *
-	 * @since 1.3.0
-	 *
-	 * @return string|bool It can assume 'disabled', 'minor', 'major', 'dev' or false.
-	 */
-	public static function get_core_auto_update_option() {
-		if ( self::is_wp_auto_update_available() ) {
-			return false;
-		}
-
-		$core_auto_update = get_option( self::CORE_AUTO_UPDATE_OPTION );
-
-		return ( $core_auto_update ) ? $core_auto_update : 'minor';
-	}
-
-	/**
 	 * Determine if an option is a WP core one or not.
 	 *
 	 * @since 1.0
@@ -243,17 +208,6 @@ class WP_Healthcheck {
 		}
 
 		return ( in_array( $option_name, $wp_opts ) );
-	}
-
-	/**
-	 * Determines if WordPress cron constant is enabled or not.
-	 *
-	 * @since 1.0
-	 *
-	 * @return boolean True if WordPress cron is disabled.
-	 */
-	public static function is_wpcron_disabled() {
-		return ( defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON );
 	}
 
 	/**

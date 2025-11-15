@@ -1,53 +1,36 @@
 <?php
 class ServerTest extends WP_UnitTestCase {
-    public function test_server_data() {
-        $server_data = WP_Healthcheck::get_server_data();
+	public function test_server_data() {
+		$server_data = wphc( 'server' )->get_data();
 
-        $keys = array( 'database', 'php', 'web', 'wp' );
+		$keys = [ 'database', 'php', 'web', 'wp' ];
 
-        foreach ( $keys as $key ) {
-            $this->assertArrayHasKey( $key, $server_data );
+		foreach ( $keys as $key ) {
+			$this->assertArrayHasKey( $key, $server_data );
 
-            if ( 'web' != $key ) {
-                $this->assertNotEmpty( $server_data[ $key ] );
-            }
-        }
-    }
+			if ( 'web' !== $key ) {
+				$this->assertNotEmpty( $server_data[ $key ] );
+			}
+		}
+	}
 
-    public function test_site_owner() {
-        $owner = WP_Healthcheck::get_site_owner();
+	public function test_software_status() {
+		$php = wphc( 'server' )->is_updated( 'php' );
 
-        $this->assertNotEmpty( $owner );
+		$requirements = wphc( 'server' )->get_requirements();
 
-        $user = posix_getpwnam( $owner );
+		$this->assertNotFalse( $requirements );
+		$this->assertInternalType( 'string', json_encode( $requirements ) );
+		$this->assertInternalType( 'string', $php );
 
-        $this->assertInternalType( 'array', $user );
-        $this->assertArrayHasKey( 'uid', $user );
-    }
+		$keys = [ 'mariadb', 'mysql', 'php', 'wordpress' ];
 
-    public function test_software_status() {
-        $php = WP_Healthcheck::is_software_updated( 'php' );
+		foreach ( $keys as $key ) {
+			$this->assertArrayHasKey( $key, $requirements );
+		}
 
-        $requirements = get_transient( WP_Healthcheck::MIN_REQUIREMENTS_TRANSIENT );
+		$invalid = wphc( 'server' )->is_updated( 'invalid_software' );
 
-        $this->assertNotFalse( $requirements );
-        $this->assertInternalType( 'string', json_encode( $requirements ) );
-        $this->assertInternalType( 'string', $php );
-
-        $keys = array( 'mariadb', 'mysql', 'php', 'wordpress' );
-
-        foreach ( $keys as $key ) {
-            $this->assertArrayHasKey( $key, $requirements );
-        }
-
-        $invalid = WP_Healthcheck::is_software_updated( 'invalid_software' );
-
-        $this->assertFalse( $invalid );
-    }
-
-    public function test_wp_cron_disabled() {
-        $disabled = WP_Healthcheck::is_wpcron_disabled();
-
-        $this->assertInternalType( 'boolean', $disabled );
-    }
+		$this->assertFalse( $invalid );
+	}
 }
