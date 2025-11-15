@@ -14,6 +14,8 @@ namespace THSCD\WPHC\Utils;
  * Class View.
  *
  * Centralized view management.
+ *
+ * @since {VERSION}
  */
 class View {
 

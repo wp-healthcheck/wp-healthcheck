@@ -49,9 +49,9 @@ final class Install {
 	public function __construct() {
 
 		// Registers the hooks.
-		register_activation_hook( WPHC_PLUGIN_FILE, [ Install::class, 'plugin_activation' ] );
-		register_deactivation_hook( WPHC_PLUGIN_FILE, [ Install::class, 'plugin_deactivation' ] );
-		register_uninstall_hook( WPHC_PLUGIN_FILE, [ Install::class, 'plugin_uninstall' ] );
+		register_activation_hook( WPHC_PLUGIN_FILE, [ self::class, 'plugin_activation' ] );
+		register_deactivation_hook( WPHC_PLUGIN_FILE, [ self::class, 'plugin_deactivation' ] );
+		register_uninstall_hook( WPHC_PLUGIN_FILE, [ self::class, 'plugin_uninstall' ] );
 	}
 
 	/**

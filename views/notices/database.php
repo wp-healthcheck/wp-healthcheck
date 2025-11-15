@@ -6,8 +6,8 @@ if ( ! defined( 'WPHC' ) ) {
 $requirements = wphc( 'module.server' )->get_requirements();
 $server_data  = wphc( 'module.server' )->get_data();
 
-$db_service   = $server_data['database']['service'];
-$db_status    = wphc( 'module.server' )->is_updated( strtolower( $db_service ) );
+$db_service = $server_data['database']['service'];
+$db_status  = wphc( 'module.server' )->is_updated( strtolower( $db_service ) );
 
 if ( $db_status === 'updated' || $db_status === false ) {
 	return false;

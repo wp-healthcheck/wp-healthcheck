@@ -14,6 +14,8 @@ namespace THSCD\WPHC\Admin;
  * Class AJAX.
  *
  * Manages AJAX functionality.
+ *
+ * @since {VERSION}
  */
 class AJAX {
 
@@ -43,7 +45,6 @@ class AJAX {
 	public function __construct() {
 
 		$this->hooks();
-		$this->add_ajax_actions();
 	}
 
 	/**
@@ -82,15 +83,8 @@ class AJAX {
 			'transients_cleanup',
 			'wp_auto_update',
 		];
-	}
 
-	/**
-	 * Add AJAX action hooks.
-	 *
-	 * @since {VERSION}
-	 */
-	private function add_ajax_actions() {
-
+		// Register AJAX action hooks.
 		foreach ( $this->ajax_actions as $action ) {
 			add_action( 'wp_ajax_wphc_' . $action, [ $this, $action ] );
 		}
@@ -218,7 +212,7 @@ class AJAX {
 		if ( isset( $_POST['software'] ) && preg_match( '/(?:php|database|wordpress|web|ssl|https|plugins)/', sanitize_key( $_POST['software'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			$notices_transient = get_transient( Notices::HIDE_NOTICES_TRANSIENT );
 
-			if ( false === $notices_transient ) {
+			if ( $notices_transient === false ) {
 				$notices_transient = [];
 			}
 
@@ -257,11 +251,10 @@ class AJAX {
 
 		$this->verify_ajax_request( 'wp_auto_update' );
 
-		if ( preg_match( '/^(?:minor|major|disabled|dev)$/', sanitize_key( $_POST['wp_auto_update'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( isset( $_POST['wp_auto_update'] ) && preg_match( '/^(?:minor|major|disabled|dev)$/', sanitize_key( $_POST['wp_auto_update'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			wphc( 'module.wordpress' )->set_auto_update_policy( sanitize_key( $_POST['wp_auto_update'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		}
 
 		wp_die();
 	}
 }
-

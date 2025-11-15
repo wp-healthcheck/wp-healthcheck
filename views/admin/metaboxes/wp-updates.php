@@ -6,22 +6,22 @@ if ( ! defined( 'WPHC' ) ) {
 
 <p><?php esc_html_e( 'The default WordPress behavior is to always update automatically to the latest minor release available. For example, WordPress 4.9.6 will automatically be updated to 4.9.7 upon release.', 'wp-healthcheck' ); ?></p>
 
-<p><?php _e( '<strong>Minor</strong> updates are released more often than major ones. These releases usually includes security updates, fixes, and enhancements. <strong>Major</strong> updates are released 3-4 times a year, and they always include new features, major enhancements, and bug fixes to WordPress.', 'wp-healthcheck' ); ?></p>
+<p><?php esc_html_e( 'Minor updates are released more often than major ones. These releases usually includes security updates, fixes, and enhancements. Major updates are released 3-4 times a year, and they always include new features, major enhancements, and bug fixes to WordPress.', 'wp-healthcheck' ); ?></p>
 
 <?php if ( wphc( 'module.wordpress' )->get_auto_update_policy() !== false ) : ?>
 	<?php
-	$wp_update_options = array(
+	$wp_update_options = [
 		'minor'    => esc_html__( 'Install minor updates automatically.', 'wp-healthcheck' ),
 		'major'    => esc_html__( 'Install major and minor updates automatically.', 'wp-healthcheck' ),
 		'disabled' => esc_html__( 'Disable automatic updates on my site (not recommended).', 'wp-healthcheck' ),
-	);
+	];
 	?>
 
 	<p><?php esc_html_e( 'WordPress Update Policy:', 'wp-healthcheck' ); ?></p>
 
 	<p class="wphc_wp_auto_update">
 		<?php foreach ( $wp_update_options as $option => $description ) : ?>
-			<span><label><input id="wphc-opt-wp-updates" name="wphc-opt-wp-updates" type="radio" value="<?php echo $option; ?>" <?php echo ( wphc( 'module.wordpress' )->get_auto_update_policy() === $option ) ? 'checked="checked"' : ''; ?> /> <?php echo $description; ?></label></span>
+			<span><label><input id="wphc-opt-wp-updates" name="wphc-opt-wp-updates" type="radio" value="<?php echo esc_attr( $option ); ?>" <?php echo ( wphc( 'module.wordpress' )->get_auto_update_policy() === $option ) ? 'checked="checked"' : ''; ?> /> <?php echo esc_html( $description ); ?></label></span>
 		<?php endforeach; ?>
 	</p>
 
