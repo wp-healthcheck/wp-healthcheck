@@ -9,7 +9,7 @@ if ( ! defined( 'WPHC' ) ) {
 <p><?php esc_html_e( 'However, some badly coded plugins and themes can store too much information on these transients, or can even create an excessively high number of transients, resulting in performance degradation.', 'wp-healthcheck' ); ?></p>
 
 <div id="wphc-transients-stats">
-	<?php include 'transients-stats.php'; ?>
+	<?php wphc( 'util.view' )->render( 'admin/partials/transients-stats' ); ?>
 </div>
 
 <div>

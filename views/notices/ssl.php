@@ -3,7 +3,7 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$days_to_expire = wphc( 'ssl' )->is_expiring();
+$days_to_expire = wphc( 'module.ssl' )->is_expiring();
 
 if ( false === $days_to_expire || ! is_int( $days_to_expire ) ) {
 	return false;
@@ -11,7 +11,7 @@ if ( false === $days_to_expire || ! is_int( $days_to_expire ) ) {
 
 $status = ( $days_to_expire <= 0 ) ? 'expired' : 'expiring_soon';
 
-$ssl_data = wphc( 'ssl' )->get_data();
+$ssl_data = wphc( 'module.ssl' )->get_data();
 
 $issuer = ( empty( $ssl_data['issuer'] ) ) ? '' : ' (' . $ssl_data['issuer'] . ')';
 $days   = _n( 'day', 'days', abs( $days_to_expire ), 'wp-healthcheck' );

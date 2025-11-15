@@ -3,12 +3,12 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$requirements = wphc( 'server' )->get_requirements();
-$server_data  = wphc( 'server' )->get_data();
+$requirements = wphc( 'module.server' )->get_requirements();
+$server_data  = wphc( 'module.server' )->get_data();
 
 $db_service = $server_data['database']['service'];
 
-$status = wphc( 'server' )->is_updated( strtolower( $db_service ) );
+$status = wphc( 'module.server' )->is_updated( strtolower( $db_service ) );
 
 if ( 'updated' == $status || false === $status ) {
 	return false;

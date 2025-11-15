@@ -3,7 +3,7 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$status = wphc( 'server' )->is_updated( 'wp' );
+$status = wphc( 'module.server' )->is_updated( 'wp' );
 
 if ( 'updated' == $status || false === $status ) {
 	return false;

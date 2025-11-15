@@ -26,8 +26,6 @@ define( 'WPHC_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'WPHC_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 define( 'WPHC_PLUGIN_FILE', __FILE__ );
 
-define( 'WPHC_INC_DIR', WPHC_PLUGIN_DIR . '/includes' );
-
 /**
  * Loads the autoloader.
  *

@@ -13,14 +13,6 @@
       "THSCD\\WPHC\\": "src"
     }
   },
-  "autoload-dev": {
-    "files": [
-      "includes/class-wp-healthcheck.php",
-      "includes/class-wp-healthcheck-admin.php",
-      "includes/class-wp-healthcheck-ajax.php",
-      "includes/class-wp-healthcheck-pointers.php"
-    ]
-  },
   "scripts": {
     "phpcs": "phpcs --standard=phpcs.xml.dist -s --colors"
   }

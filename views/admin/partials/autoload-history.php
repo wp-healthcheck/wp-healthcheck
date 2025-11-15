@@ -3,7 +3,7 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$opts = wphc( 'autoload' )->get_history();
+$opts = wphc( 'module.autoload' )->get_history();
 
 if ( sizeof( $opts ) == 0 ) {
 	return;

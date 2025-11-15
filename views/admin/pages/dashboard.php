@@ -9,11 +9,11 @@ if ( ! defined( 'WPHC' ) ) {
 
 	<p class="wphc_welcome"><?php esc_html_e( 'Welcome and thank you for choosing the WP Healthcheck plugin.', 'wp-healthcheck' ); ?></p>
 
-	<?php require_once 'sysinfo.php'; ?>
+	<?php wphc( 'util.view' )->render( 'admin/partials/sysinfo' ); ?>
 
 	<div id="poststuff">
 		<div id="post-body" class="postbox-container">
-			<?php WP_Healthcheck_Admin::do_meta_boxes(); ?>
+			<?php wphc( 'admin.metaboxes' )->output(); ?>
 		</div>
 	</div>
 

@@ -9,6 +9,16 @@ namespace THSCD\WPHC\Modules;
  * @since {VERSION}
  */
 class Autoload {
+
+	/**
+	 * Option to store the history of disabled autoload options.
+	 *
+	 * @since {VERSION}
+	 *
+	 * @var string
+	 */
+	const DISABLE_AUTOLOAD_OPTION = 'wphc_disable_autoload_history';
+
 	/**
 	 * Option to store the history of deactivated autoload options.
 	 *

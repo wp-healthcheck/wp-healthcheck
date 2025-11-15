@@ -3,7 +3,7 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-if ( ! WP_Healthcheck_AJAX::is_doing_ajax() || ! isset( $options ) ) {
+if ( ! wphc( 'admin.ajax' )->is_doing_ajax() || ! isset( $options ) ) {
 	return;
 }
 

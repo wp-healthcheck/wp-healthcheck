@@ -3,7 +3,7 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-if ( wphc( 'ssl' )->is_available() ) {
+if ( wphc( 'module.ssl' )->is_available() ) {
 	return false;
 }
 ?>

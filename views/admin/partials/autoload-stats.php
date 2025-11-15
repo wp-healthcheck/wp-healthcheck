@@ -3,8 +3,8 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$autoload = wphc( 'autoload' )->get_stats();
-$history  = wphc( 'autoload' )->get_history();
+$autoload = wphc( 'module.autoload' )->get_stats();
+$history  = wphc( 'module.autoload' )->get_history();
 ?>
 
 <div class="wphc_stats">

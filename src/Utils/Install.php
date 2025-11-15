@@ -62,7 +62,7 @@ final class Install {
 	public static function plugin_activation() {
 
 		if ( ! ( defined( 'WP_CLI' ) && WP_CLI ) ) {
-			wphc( 'ssl' )->is_available();
+			wphc( 'module.ssl' )->is_available();
 		}
 	}
 

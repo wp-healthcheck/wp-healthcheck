@@ -80,16 +80,16 @@ class CLI extends WP_CLI_Command {
 				WP_CLI::error( WP_CLI::colorize( 'We couldn\'t find the %r' . $option_name . '%n option in your WordPress options table.' ) );
 			}
 
-			if ( wphc( 'autoload' )->is_core_option( $option_name ) ) {
+			if ( wphc( 'module.autoload' )->is_core_option( $option_name ) ) {
 				WP_CLI::error( 'You can\'t deactivate a WordPress core option.' );
 			}
 
-			if ( wphc( 'autoload' )->is_deactivated( $option_name ) ) {
+			if ( wphc( 'module.autoload' )->is_deactivated( $option_name ) ) {
 				WP_CLI::warning( WP_CLI::colorize( 'The %y' . $option_name . '%n autoload option is already disabled.' ) );
 				WP_CLI::halt( 2 );
 			}
 
-			$deactivate = wphc( 'autoload' )->deactivate( $option_name );
+			$deactivate = wphc( 'module.autoload' )->deactivate( $option_name );
 
 			if ( false !== $deactivate ) {
 				WP_CLI::success( WP_CLI::colorize( 'Yay, the %y' . $option_name . '%n option was deactivated successfully.' ) );
@@ -97,7 +97,7 @@ class CLI extends WP_CLI_Command {
 				WP_CLI::error( WP_CLI::colorize( 'Oops, for some reason we couldn\'t deactivate the %y' . $option_name . '%n option.' ) );
 			}
 		} elseif ( isset( $assoc_args['history'] ) ) {
-			$opts = wphc( 'autoload' )->get_history();
+			$opts = wphc( 'module.autoload' )->get_history();
 
 			if ( false === $opts || ! is_array( $opts ) || 0 === count( $opts ) ) {
 				WP_CLI::warning( 'The history is empty.' );
@@ -117,7 +117,7 @@ class CLI extends WP_CLI_Command {
 
 			WP_CLI\Utils\format_items( 'table', $list, [ 'name', 'deactivation_time' ] );
 		} else {
-			$autoload = wphc( 'autoload' )->get();
+			$autoload = wphc( 'module.autoload' )->get();
 
 			$this->list_options( $autoload );
 		}
@@ -142,8 +142,8 @@ class CLI extends WP_CLI_Command {
 	 */
 	public function server() {
 
-		$info         = wphc( 'server' )->get_data();
-		$requirements = wphc( 'server' )->get_requirements();
+		$info         = wphc( 'module.server' )->get_data();
+		$requirements = wphc( 'module.server' )->get_requirements();
 
 		$list = [];
 
@@ -157,7 +157,7 @@ class CLI extends WP_CLI_Command {
 				$version = $version['version'];
 			}
 
-			$status = wphc( 'server' )->is_updated( $name );
+			$status = wphc( 'module.server' )->is_updated( $name );
 			$action = '-';
 
 			if ( 'wp' === $name && 'updated' !== $status ) {
@@ -220,7 +220,7 @@ class CLI extends WP_CLI_Command {
 	 */
 	public function ssl( $args, $assoc_args ) {
 
-		$ssl_data = wphc( 'ssl' )->get_data();
+		$ssl_data = wphc( 'module.ssl' )->get_data();
 
 		if ( false === $ssl_data || empty( $ssl_data ) ) {
 			WP_CLI::error( 'We couldn\'t find any SSL certificates associated with your site. Is HTTPS enabled?' );
@@ -299,7 +299,7 @@ class CLI extends WP_CLI_Command {
 
 			$message = ( wp_using_ext_object_cache() ) ? 'object cache items' : 'transients';
 
-			if ( false !== wphc( 'transients' )->cleanup( $only_expired ) ) {
+			if ( false !== wphc( 'module.transients' )->cleanup( $only_expired ) ) {
 				WP_CLI::success( 'Yay! The ' . $message . ' were cleaned up successfully.' );
 			} else {
 				WP_CLI::error( 'Oops, for some reason we couldn\'t clean up your ' . $message . '.' );
@@ -309,7 +309,7 @@ class CLI extends WP_CLI_Command {
 				WP_CLI::error( 'Unfortunately we cannot list the transients when an external object cache is being used.' );
 			}
 
-			$transients = wphc( 'transients' )->get();
+			$transients = wphc( 'module.transients' )->get();
 
 			$this->list_options( $transients );
 		}

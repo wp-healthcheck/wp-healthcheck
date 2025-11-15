@@ -1,7 +1,7 @@
 <?php
 class ServerTest extends WP_UnitTestCase {
 	public function test_server_data() {
-		$server_data = wphc( 'server' )->get_data();
+		$server_data = wphc( 'module.server' )->get_data();
 
 		$keys = [ 'database', 'php', 'web', 'wp' ];
 
@@ -15,9 +15,9 @@ class ServerTest extends WP_UnitTestCase {
 	}
 
 	public function test_software_status() {
-		$php = wphc( 'server' )->is_updated( 'php' );
+		$php = wphc( 'module.server' )->is_updated( 'php' );
 
-		$requirements = wphc( 'server' )->get_requirements();
+		$requirements = wphc( 'module.server' )->get_requirements();
 
 		$this->assertNotFalse( $requirements );
 		$this->assertInternalType( 'string', json_encode( $requirements ) );
@@ -29,7 +29,7 @@ class ServerTest extends WP_UnitTestCase {
 			$this->assertArrayHasKey( $key, $requirements );
 		}
 
-		$invalid = wphc( 'server' )->is_updated( 'invalid_software' );
+		$invalid = wphc( 'module.server' )->is_updated( 'invalid_software' );
 
 		$this->assertFalse( $invalid );
 	}

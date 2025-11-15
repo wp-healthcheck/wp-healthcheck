@@ -9,10 +9,19 @@ namespace THSCD\WPHC\Core;
  * @since {VERSION}
  */
 use THSCD\WPHC\Modules\Autoload;
+use THSCD\WPHC\Modules\Plugins;
 use THSCD\WPHC\Modules\Server;
 use THSCD\WPHC\Modules\SSL;
 use THSCD\WPHC\Modules\Transients;
 use THSCD\WPHC\Modules\WordPress;
+use THSCD\WPHC\Admin\Dashboard;
+use THSCD\WPHC\Admin\AJAX;
+use THSCD\WPHC\Admin\Metaboxes;
+use THSCD\WPHC\Admin\Pointers;
+use THSCD\WPHC\Admin\Notices;
+use THSCD\WPHC\Utils\Install;
+use THSCD\WPHC\Utils\Upgrade;
+use THSCD\WPHC\Utils\View;
 use Exception;
 
 /**
@@ -60,11 +69,25 @@ class Container {
 	 * @var array
 	 */
 	protected $bindings = [
-		'autoload'   => Autoload::class,
-		'server'     => Server::class,
-		'ssl'        => SSL::class,
-		'transients' => Transients::class,
-		'wordpress'  => WordPress::class,
+		// Modules.
+		'module.autoload'   => Autoload::class,
+		'module.plugins'    => Plugins::class,
+		'module.server'     => Server::class,
+		'module.ssl'        => SSL::class,
+		'module.transients' => Transients::class,
+		'module.wordpress'  => WordPress::class,
+
+		// Admin.
+		'admin.dashboard'  => Dashboard::class,
+		'admin.ajax'       => AJAX::class,
+		'admin.metaboxes'  => Metaboxes::class,
+		'admin.pointers'   => Pointers::class,
+		'admin.notices'    => Notices::class,
+
+		// Utils.
+		'util.install' => Install::class,
+		'util.upgrade' => Upgrade::class,
+		'util.view'    => View::class,
 	];
 
 	/**

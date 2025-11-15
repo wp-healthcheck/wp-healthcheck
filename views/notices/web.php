@@ -3,8 +3,8 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$requirements = wphc( 'server' )->get_requirements();
-$server_data  = wphc( 'server' )->get_data();
+$requirements = wphc( 'module.server' )->get_requirements();
+$server_data  = wphc( 'module.server' )->get_data();
 
 if ( empty( $server_data['web']['service'] ) || empty( $server_data['web']['version'] ) || ! preg_match( '/(nginx|apache)/i', $server_data['web']['service'] ) ) {
 	return false;
@@ -12,7 +12,7 @@ if ( empty( $server_data['web']['service'] ) || empty( $server_data['web']['vers
 
 $service = $server_data['web']['service'];
 
-$status = wphc( 'server' )->is_updated( $service );
+$status = wphc( 'module.server' )->is_updated( $service );
 
 if ( 'updated' == $status || false === $status ) {
 	return false;

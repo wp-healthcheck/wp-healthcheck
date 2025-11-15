@@ -3,14 +3,14 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$status = wphc( 'server' )->is_updated( 'php' );
+$status = wphc( 'module.server' )->is_updated( 'php' );
 
 if ( 'updated' == $status || false === $status ) {
 	return false;
 }
 
-$requirements = wphc( 'server' )->get_requirements();
-$server_data  = wphc( 'server' )->get_data();
+$requirements = wphc( 'module.server' )->get_requirements();
+$server_data  = wphc( 'module.server' )->get_data();
 
 $messages = array(
 	'outdated' => array(

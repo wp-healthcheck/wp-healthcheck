@@ -10,8 +10,6 @@
 
 namespace THSCD\WPHC\Core;
 
-use THSCD\WPHC\Utils\Install;
-use THSCD\WPHC\Utils\Upgrade;
 use THSCD\WPHC\Modules\CLI;
 
 /**
@@ -29,45 +27,31 @@ class Bootstrap {
 	public static function init() {
 
 		// Initialize utilities.
-		new Upgrade();
-		new Install();
+		wphc( 'util.upgrade' );
+		wphc( 'util.install' );
 
-		// Load legacy classes.
-		self::load_legacy();
-
-		// Initialize legacy hooks.
-		self::init_legacy_hooks();
+		// Initialize admin classes.
+		self::init_admin();
 
 		// Load WP-CLI commands.
 		self::load_cli();
 	}
 
 	/**
-	 * Load legacy classes.
+	 * Initialize admin classes.
 	 *
 	 * @since {VERSION}
 	 */
-	private static function load_legacy() {
+	private static function init_admin() {
 
-		require_once WPHC_INC_DIR . '/class-wp-healthcheck.php';
-
-		if ( is_admin() ) {
-			require_once WPHC_INC_DIR . '/class-wp-healthcheck-admin.php';
+		if ( ! is_admin() ) {
+			return;
 		}
-	}
 
-	/**
-	 * Initialize legacy hooks.
-	 *
-	 * @since {VERSION}
-	 */
-	private static function init_legacy_hooks() {
-
-		add_action( 'init', [ 'WP_Healthcheck', 'init' ] );
-
-		if ( is_admin() ) {
-			add_action( 'init', [ 'WP_Healthcheck_Admin', 'init' ] );
-		}
+		wphc( 'admin.dashboard' );
+		wphc( 'admin.ajax' );
+		wphc( 'admin.pointers' );
+		wphc( 'admin.notices' );
 	}
 
 	/**
