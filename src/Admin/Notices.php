@@ -5,7 +5,7 @@
  * Handles displaying system notices in the admin interface.
  *
  * @package wp-healthcheck
- * @since   {VERSION}
+ * @since {VERSION}
  */
 
 namespace THSCD\WPHC\Admin;

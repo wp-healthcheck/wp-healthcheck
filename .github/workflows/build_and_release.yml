@@ -26,7 +26,7 @@ jobs:
           if [[ -s "/tmp/changelog_output" ]]; then cat /tmp/changelog_output; else echo "Please make sure the CHANGELOG.md is updated: couldn't find the changes for '${{ github.event.inputs.tag }}'."; exit 1; fi
 
       - name: Search for the version tag and replace it
-        run: grep -Rin "@since {VERSION}" --exclude-dir=vendor --exclude-dir=assets --exclude-dir=.github --exclude-dir=.git | while read -r file; do filename=$(echo "$file" | cut -d ':' -f1); if echo "$filename" | egrep -qv ".(js|php)$"; then continue; fi; sed -i "s/@since {VERSION}$/@since ${{ github.event.inputs.tag }}/g" $filename; done
+        run: grep -RinE "@since +\{VERSION\}" --exclude-dir=vendor --exclude-dir=assets --exclude-dir=.github --exclude-dir=.git | while read -r file; do filename=$(echo "$file" | cut -d ':' -f1); if echo "$filename" | egrep -qv ".(js|php)$"; then continue; fi; sed -i -E "s/@since +\{VERSION\}$/@since ${{ github.event.inputs.tag }}/g" $filename; done
 
       - name: Update constants
         run: |

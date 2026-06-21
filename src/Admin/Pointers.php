@@ -5,7 +5,7 @@
  * Handles WordPress admin pointers for help tooltips.
  *
  * @package wp-healthcheck
- * @since   {VERSION}
+ * @since {VERSION}
  */
 
 namespace THSCD\WPHC\Admin;

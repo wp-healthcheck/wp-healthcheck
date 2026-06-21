@@ -5,7 +5,7 @@
  * Handles AJAX requests for the admin interface.
  *
  * @package wp-healthcheck
- * @since   {VERSION}
+ * @since {VERSION}
  */
 
 namespace THSCD\WPHC\Admin;
