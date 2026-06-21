@@ -5,7 +5,7 @@
  * Handles the dashboard page registration and rendering.
  *
  * @package wp-healthcheck
- * @since   {VERSION}
+ * @since {VERSION}
  */
 
 namespace THSCD\WPHC\Admin;

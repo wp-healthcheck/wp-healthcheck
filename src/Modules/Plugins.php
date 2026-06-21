@@ -5,7 +5,7 @@
  * Handles plugin-related checks and monitoring.
  *
  * @package wp-healthcheck
- * @since   {VERSION}
+ * @since {VERSION}
  */
 
 namespace THSCD\WPHC\Modules;

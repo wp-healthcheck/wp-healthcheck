@@ -5,7 +5,7 @@
  * Handles the registration and rendering of meta boxes.
  *
  * @package wp-healthcheck
- * @since   {VERSION}
+ * @since {VERSION}
  */
 
 namespace THSCD\WPHC\Admin;

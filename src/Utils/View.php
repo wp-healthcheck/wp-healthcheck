@@ -5,7 +5,7 @@
  * Handles loading and rendering of view files.
  *
  * @package wp-healthcheck
- * @since   {VERSION}
+ * @since {VERSION}
  */
 
 namespace THSCD\WPHC\Utils;
