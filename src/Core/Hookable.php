@@ -7,7 +7,7 @@
  * request lifecycle, decoupling hook registration from object construction.
  *
  * @package wp-healthcheck
- * @since {VERSION}
+ * @since 1.4.1
  */
 
 namespace THSCD\WPHC\Core;
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * known order, so the timing of hook registration never depends on when the
  * service happens to be resolved from the container.
  *
- * @since {VERSION}
+ * @since 1.4.1
  */
 interface Hookable {
 
@@ -34,7 +34,7 @@ interface Hookable {
 	 * Bootstrap guarantees a single call per request, but implementations
 	 * should not assume any particular WordPress hook has already fired.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function hooks();
 }

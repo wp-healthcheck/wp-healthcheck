@@ -5,7 +5,7 @@
  * Handles AJAX requests for the admin interface.
  *
  * @package wp-healthcheck
- * @since {VERSION}
+ * @since 1.4.1
  */
 
 namespace THSCD\WPHC\Admin;
@@ -21,14 +21,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Manages AJAX functionality.
  *
- * @since {VERSION}
+ * @since 1.4.1
  */
 class AJAX implements Hookable {
 
 	/**
 	 * Stores all the AJAX hooks.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var array
 	 */
@@ -37,7 +37,7 @@ class AJAX implements Hookable {
 	/**
 	 * Determines if current request is WordPress AJAX request.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return bool True if it's a WordPress AJAX request.
 	 */
@@ -49,7 +49,7 @@ class AJAX implements Hookable {
 	/**
 	 * Register the WordPress hooks.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function hooks() {
 
@@ -74,7 +74,7 @@ class AJAX implements Hookable {
 	/**
 	 * Create WP nonces for each AJAX action.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function add_wp_nonces() {
 
@@ -86,7 +86,7 @@ class AJAX implements Hookable {
 	/**
 	 * Verify AJAX request nonce and user capabilities.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $action The action name for nonce verification.
 	 */
@@ -104,7 +104,7 @@ class AJAX implements Hookable {
 	/**
 	 * Hook: deactivate an autoload option.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function autoload_deactivate() {
 
@@ -133,7 +133,7 @@ class AJAX implements Hookable {
 	/**
 	 * Hook: list autoload options deactivated via WP Healthcheck.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function autoload_history() {
 
@@ -147,7 +147,7 @@ class AJAX implements Hookable {
 	/**
 	 * Hook: list autoload options.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function autoload_list() {
 
@@ -161,7 +161,7 @@ class AJAX implements Hookable {
 	/**
 	 * Hook: reactivate an autoload option.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function autoload_reactivate() {
 
@@ -189,7 +189,7 @@ class AJAX implements Hookable {
 	/**
 	 * Hook: hide an admin notice.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function hide_admin_notice() {
 
@@ -213,7 +213,7 @@ class AJAX implements Hookable {
 	/**
 	 * Hook: clean up transients.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function transients_cleanup() {
 
@@ -231,7 +231,7 @@ class AJAX implements Hookable {
 	/**
 	 * Hook: set WordPress auto update option.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function wp_auto_update() {
 

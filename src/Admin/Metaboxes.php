@@ -5,7 +5,7 @@
  * Handles the registration and rendering of meta boxes.
  *
  * @package wp-healthcheck
- * @since {VERSION}
+ * @since 1.4.1
  */
 
 namespace THSCD\WPHC\Admin;
@@ -19,14 +19,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Manages meta boxes for the admin page.
  *
- * @since {VERSION}
+ * @since 1.4.1
  */
 class Metaboxes {
 
 	/**
 	 * Register meta boxes.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function register() {
 
@@ -59,7 +59,7 @@ class Metaboxes {
 	/**
 	 * Render a meta box.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param mixed $post    Not used (required by WordPress).
 	 * @param array $metabox The metabox data.
@@ -74,7 +74,7 @@ class Metaboxes {
 	/**
 	 * Output meta boxes for the current page.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function output() {
 

@@ -5,7 +5,7 @@
  * Handles plugin-related checks and monitoring.
  *
  * @package wp-healthcheck
- * @since {VERSION}
+ * @since 1.4.1
  */
 
 namespace THSCD\WPHC\Modules;
@@ -21,14 +21,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Manages plugin health checks.
  *
- * @since {VERSION}
+ * @since 1.4.1
  */
 class Plugins {
 
 	/**
 	 * Option to disable outdated plugins check.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var string
 	 */
@@ -37,7 +37,7 @@ class Plugins {
 	/**
 	 * Transient to store the outdated plugins.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var string
 	 */
@@ -46,7 +46,7 @@ class Plugins {
 	/**
 	 * Number of days to consider a plugin outdated (2 years).
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var int
 	 */
@@ -55,7 +55,7 @@ class Plugins {
 	/**
 	 * Retrieves a list of plugins with no updates released in the last 2 years.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return array|false Slug and number of days since last update of the plugins or false if none.
 	 */
@@ -83,7 +83,7 @@ class Plugins {
 	/**
 	 * Load required WordPress plugin dependencies.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	private function load_plugin_dependencies() {
 
@@ -99,7 +99,7 @@ class Plugins {
 	/**
 	 * Check all plugins for outdated status.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return array Array of outdated plugins with days since last update.
 	 */
@@ -123,7 +123,7 @@ class Plugins {
 	/**
 	 * Extract plugin slug from plugin file path.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $file Plugin file path.
 	 *
@@ -144,7 +144,7 @@ class Plugins {
 	/**
 	 * Get the number of days since a plugin was last updated.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $slug Plugin slug.
 	 *
@@ -172,7 +172,7 @@ class Plugins {
 	/**
 	 * Calculate days between last update and today.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $last_updated_date Last updated date string.
 	 *

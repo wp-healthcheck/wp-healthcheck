@@ -10,14 +10,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  * The Autoload class.
  *
  * @package wp-healthcheck
- * @since {VERSION}
+ * @since 1.4.1
  */
 class Autoload {
 
 	/**
 	 * Option to store the history of deactivated autoload options.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var string
 	 */
@@ -26,7 +26,7 @@ class Autoload {
 	/**
 	 * Autoload values that are considered active.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var array
 	 */
@@ -35,7 +35,7 @@ class Autoload {
 	/**
 	 * Autoload values that are considered deactivated.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var array
 	 */
@@ -44,7 +44,7 @@ class Autoload {
 	/**
 	 * Returns the biggest WordPress autoload options.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return array The name and size of the biggest autoload options.
 	 */
@@ -53,7 +53,7 @@ class Autoload {
 		/**
 		 * Filters the total of autoload options that should be returned.
 		 *
-		 * @since {VERSION}
+		 * @since 1.4.1
 		 *
 		 * @param int $limit The total of autoload options that should be returned.
 		 */
@@ -87,7 +87,7 @@ class Autoload {
 		/**
 		 * Filters the list of biggest autoload options.
 		 *
-		 * @since {VERSION}
+		 * @since 1.4.1
 		 *
 		 * @param array $options The list of biggest autoload options.
 		 */
@@ -97,7 +97,7 @@ class Autoload {
 	/**
 	 * Returns the WordPress autoload options count and size.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return array Stats of the autoload options.
 	 */
@@ -126,7 +126,7 @@ class Autoload {
 		/**
 		 * Filters the autoload options stats.
 		 *
-		 * @since {VERSION}
+		 * @since 1.4.1
 		 *
 		 * @param array $stats Array with the total count and size of the autoload options.
 		 */
@@ -136,7 +136,7 @@ class Autoload {
 	/**
 	 * Returns the autoload options deactivated via Supervisor.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return array|false Name and timestamp of the options or false if none.
 	 */
@@ -150,7 +150,7 @@ class Autoload {
 			/**
 			 * Filters for how long a deactivated autoload option will remain in the history.
 			 *
-			 * @since {VERSION}
+			 * @since 1.4.1
 			 *
 			 * @param int $timestamp The expiration timestamp. Any options with deactivation timestamp older than expiration timestamp will be removed from history. False if should not expire.
 			 */
@@ -174,7 +174,7 @@ class Autoload {
 		/**
 		 * Filters the history of deactivated autoload options.
 		 *
-		 * @since {VERSION}
+		 * @since 1.4.1
 		 *
 		 * @param array $history List of deactivated options.
 		 */
@@ -184,7 +184,7 @@ class Autoload {
 	/**
 	 * Determine if an option is set to autoload or not.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $option_name The option name.
 	 *
@@ -208,7 +208,7 @@ class Autoload {
 	/**
 	 * Determine if an option is a WP core one or not.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $option_name The option name.
 	 *
@@ -229,7 +229,7 @@ class Autoload {
 		/**
 		 * Filters if a given option is a WordPress core option or not.
 		 *
-		 * @since {VERSION}
+		 * @since 1.4.1
 		 *
 		 * @param bool   $is_core_option True if it is a WP core option.
 		 * @param string $option_name    The option name.
@@ -240,7 +240,7 @@ class Autoload {
 	/**
 	 * Deactivates an autoload option.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string  $option_name The name of the option to disable.
 	 * @param boolean $logging     Save deactivation to history.
@@ -255,7 +255,7 @@ class Autoload {
 	/**
 	 * Reactivates an autoload option that was disabled previously.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $option_name The name of the option to disable.
 	 *
@@ -269,7 +269,7 @@ class Autoload {
 	/**
 	 * Updates the autoload value for the given option.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $option_name The name of the option to disable.
 	 * @param string $autoload    The new value for the autoload field. Only 'yes' or 'no'.
@@ -316,7 +316,7 @@ class Autoload {
 	/**
 	 * Validates that the autoload state matches expectations.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $option_name     The option name.
 	 * @param bool   $should_autoload Whether the option should be autoloaded.
@@ -341,7 +341,7 @@ class Autoload {
 	/**
 	 * Updates the deactivation history based on autoload action.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $option_name     The option name.
 	 * @param bool   $should_autoload Whether the option should be autoloaded.
@@ -358,7 +358,7 @@ class Autoload {
 	/**
 	 * Removes an option from the deactivation history.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $option_name The option name.
 	 */
@@ -380,7 +380,7 @@ class Autoload {
 	/**
 	 * Adds an option to the deactivation history.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $option_name The option name.
 	 */
@@ -396,7 +396,7 @@ class Autoload {
 	/**
 	 * Gets the deactivation history or creates it if it doesn't exist.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return array The deactivation history array.
 	 */
@@ -421,7 +421,7 @@ class Autoload {
 	/**
 	 * Determines the autoload value based on the provided autoload string.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $autoload The autoload value to determine.
 	 *

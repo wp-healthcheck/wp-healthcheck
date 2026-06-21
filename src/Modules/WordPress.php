@@ -11,14 +11,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  * The WordPress class.
  *
  * @package wp-healthcheck
- * @since {VERSION}
+ * @since 1.4.1
  */
 class WordPress implements Hookable {
 
 	/**
 	 * Option to store the auto update policy.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var string
 	 */
@@ -27,7 +27,7 @@ class WordPress implements Hookable {
 	/**
 	 * Register the WordPress hooks.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function hooks() {
 
@@ -37,7 +37,7 @@ class WordPress implements Hookable {
 	/**
 	 * Applies the WordPress auto update policy.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function apply_wp_auto_update_policy() {
 
@@ -60,7 +60,7 @@ class WordPress implements Hookable {
 	/**
 	 * Sets the auto update policy value which could be 'disabled', 'minor', 'major' or 'dev'.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $policy The auto update policy.
 	 */
@@ -74,7 +74,7 @@ class WordPress implements Hookable {
 	/**
 	 * Returns the selected auto update policy.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return string|bool It can assume 'disabled', 'minor', 'major', 'dev' or false.
 	 */
@@ -90,7 +90,7 @@ class WordPress implements Hookable {
 	/**
 	 * Determines if WordPress auto update constants are enabled or not.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return boolean True if WordPress auto update constants are available.
 	 */

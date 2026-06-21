@@ -3,7 +3,7 @@
  * Service Container
  *
  * @package wp-healthcheck
- * @since {VERSION}
+ * @since 1.4.1
  */
 
 namespace THSCD\WPHC\Core;
@@ -22,14 +22,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  * on demand; the container itself is intentionally agnostic about the
  * application's concrete classes.
  *
- * @since {VERSION}
+ * @since 1.4.1
  */
 class Container {
 
 	/**
 	 * The current globally available container instance.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var Container|null
 	 */
@@ -38,7 +38,7 @@ class Container {
 	/**
 	 * The container's registered services.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var array
 	 */
@@ -47,7 +47,7 @@ class Container {
 	/**
 	 * The container's singleton instances.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var array
 	 */
@@ -56,7 +56,7 @@ class Container {
 	/**
 	 * Get the globally available instance of the container.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return Container
 	 */
@@ -72,7 +72,7 @@ class Container {
 	/**
 	 * Bind a service to the container.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string          $name     Service name.
 	 * @param string|callable $concrete Class name or factory callback.
@@ -89,7 +89,7 @@ class Container {
 	/**
 	 * Register a singleton service in the container.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string          $name     Service name.
 	 * @param string|callable $concrete Class name or factory callback.
@@ -102,7 +102,7 @@ class Container {
 	/**
 	 * Finds an entry of the container by its identifier and returns it.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $id Identifier of the entry to look for.
 	 *
@@ -134,7 +134,7 @@ class Container {
 	/**
 	 * Build an instance of the given concrete type.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string|callable $concrete Class name or factory callback.
 	 *

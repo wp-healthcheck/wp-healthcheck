@@ -5,7 +5,7 @@
  * Handles WordPress admin pointers for help tooltips.
  *
  * @package wp-healthcheck
- * @since {VERSION}
+ * @since 1.4.1
  */
 
 namespace THSCD\WPHC\Admin;
@@ -21,14 +21,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Manages admin pointers functionality.
  *
- * @since {VERSION}
+ * @since 1.4.1
  */
 class Pointers implements Hookable {
 
 	/**
 	 * Register the WordPress hooks.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function hooks() {
 
@@ -38,7 +38,7 @@ class Pointers implements Hookable {
 	/**
 	 * Setup hooks after menu is registered.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function setup_hooks() {
 
@@ -56,7 +56,7 @@ class Pointers implements Hookable {
 	/**
 	 * Load pointer resources.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function load_resources() {
 
@@ -67,7 +67,7 @@ class Pointers implements Hookable {
 	/**
 	 * Enqueue admin pointers.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function enqueue_pointers() {
 

@@ -5,7 +5,7 @@
  * Handles the dashboard page registration and rendering.
  *
  * @package wp-healthcheck
- * @since {VERSION}
+ * @since 1.4.1
  */
 
 namespace THSCD\WPHC\Admin;
@@ -21,14 +21,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Manages the dashboard page functionality.
  *
- * @since {VERSION}
+ * @since 1.4.1
  */
 class Dashboard implements Hookable {
 
 	/**
 	 * Admin page hookname.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var string
 	 */
@@ -37,7 +37,7 @@ class Dashboard implements Hookable {
 	/**
 	 * Register the WordPress hooks.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function hooks() {
 
@@ -48,7 +48,7 @@ class Dashboard implements Hookable {
 	/**
 	 * Register the admin menu.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function register_menu() {
 
@@ -69,7 +69,7 @@ class Dashboard implements Hookable {
 	/**
 	 * Load admin resources (scripts and styles).
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function load_resources() {
 
@@ -100,7 +100,7 @@ class Dashboard implements Hookable {
 	/**
 	 * Render the admin page.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function render_page() {
 
@@ -114,7 +114,7 @@ class Dashboard implements Hookable {
 	/**
 	 * Add help tabs to the admin page.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function add_help_tabs() {
 
@@ -143,7 +143,7 @@ class Dashboard implements Hookable {
 	/**
 	 * Get the admin page hookname.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return string|null The hookname.
 	 */

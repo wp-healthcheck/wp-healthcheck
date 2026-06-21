@@ -15,14 +15,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  * The Install class.
  *
  * @package wp-healthcheck
- * @since {VERSION}
+ * @since 1.4.1
  */
 final class Install implements Hookable {
 
 	/**
 	 * All the plugin options.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var array
 	 */
@@ -35,7 +35,7 @@ final class Install implements Hookable {
 	/**
 	 * All the plugin transients.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var array
 	 */
@@ -49,7 +49,7 @@ final class Install implements Hookable {
 	/**
 	 * Register the plugin lifecycle hooks.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function hooks() {
 
@@ -61,7 +61,7 @@ final class Install implements Hookable {
 	/**
 	 * Plugin activation hook.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public static function plugin_activation() {
 
@@ -73,7 +73,7 @@ final class Install implements Hookable {
 	/**
 	 * Plugin deactivation hook.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public static function plugin_deactivation() {
 
@@ -83,7 +83,7 @@ final class Install implements Hookable {
 	/**
 	 * Plugin uninstall hook.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public static function plugin_uninstall() {
 
@@ -93,7 +93,7 @@ final class Install implements Hookable {
 	/**
 	 * Removes the plugins options and transients.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param bool $only_transients True if should remove only the transients.
 	 */

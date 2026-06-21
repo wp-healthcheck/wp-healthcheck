@@ -10,13 +10,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  * The Transients class.
  *
  * @package wp-healthcheck
- * @since {VERSION}
+ * @since 1.4.1
  */
 class Transients {
 	/**
 	 * Returns the 10 biggest transients.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return array The name and size of the biggest transients.
 	 */
@@ -39,7 +39,7 @@ class Transients {
 	/**
 	 * Returns the WordPress transients count and size.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return array Stats of the transients.
 	 */
@@ -61,7 +61,7 @@ class Transients {
 		/**
 		 * Filters the transients stats.
 		 *
-		 * @since {VERSION}
+		 * @since 1.4.1
 		 *
 		 * @param array $stats Array with the total count and size of the transients.
 		 */
@@ -71,7 +71,7 @@ class Transients {
 	/**
 	 * Cleans up the WordPress transients, or flushes the object cache if it is enabled.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param bool $only_expired Only expired transients.
 	 *

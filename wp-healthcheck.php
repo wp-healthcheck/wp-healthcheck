@@ -3,7 +3,7 @@
  * Plugin Name: WP Healthcheck
  * Plugin URI:  https://wp-healthcheck.com
  * Description: Checks the health of your WordPress install.
- * Version:     1.4.0
+ * Version:     1.4.1
  * Author:      Tiago Hillebrandt
  * Author URI:  https://wp-healthcheck.com/contributors
  * License:     GPL-3.0+
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'WPHC', true );
-define( 'WPHC_VERSION', '1.4.0' );
+define( 'WPHC_VERSION', '1.4.1' );
 
 define( 'WPHC_PLUGIN_DIR', dirname( __FILE__ ) );
 define( 'WPHC_PLUGIN_URL', plugins_url( '', __FILE__ ) );
@@ -29,7 +29,7 @@ define( 'WPHC_PLUGIN_FILE', __FILE__ );
 /**
  * Loads the autoloader.
  *
- * @since {VERSION}
+ * @since 1.4.1
  */
 if ( ! file_exists( WPHC_PLUGIN_DIR . '/vendor/autoload.php' ) ) {
 	return;
@@ -41,7 +41,7 @@ if ( ! function_exists( 'wphc' ) ) {
 	/**
 	 * Loads the service container.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string|null $service Service name to resolve.
 	 *
@@ -62,6 +62,6 @@ if ( ! function_exists( 'wphc' ) ) {
 /**
  * Initialize the plugin.
  *
- * @since {VERSION}
+ * @since 1.4.1
  */
 \THSCD\WPHC\Core\Bootstrap::init();

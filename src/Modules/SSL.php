@@ -12,13 +12,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  * The SSL class.
  *
  * @package wp-healthcheck
- * @since {VERSION}
+ * @since 1.4.1
  */
 class SSL implements Hookable {
 	/**
 	 * Transient to store the SSL data.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var string
 	 */
@@ -27,7 +27,7 @@ class SSL implements Hookable {
 	/**
 	 * Transient to store if SSL is available or not.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var string
 	 */
@@ -36,7 +36,7 @@ class SSL implements Hookable {
 	/**
 	 * Register the WordPress hooks.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function hooks() {
 
@@ -46,7 +46,7 @@ class SSL implements Hookable {
 	/**
 	 * Retrieves some information from SSL certificate associated with site url.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return array|false SSL data or false on error.
 	 */
@@ -103,7 +103,7 @@ class SSL implements Hookable {
 		/**
 		 * Filters the SSL data.
 		 *
-		 * @since {VERSION}
+		 * @since 1.4.1
 		 *
 		 * @param array $ssl_data An array with the SSL data.
 		 */
@@ -113,7 +113,7 @@ class SSL implements Hookable {
 	/**
 	 * Determine if a SSL certificate is available or not.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return bool True if SSL is available.
 	 */
@@ -142,7 +142,7 @@ class SSL implements Hookable {
 		/**
 		 * Filters if the SSL is available or not.
 		 *
-		 * @since {VERSION}
+		 * @since 1.4.1
 		 *
 		 * @param bool $is_available True if the SSL is available.
 		 */
@@ -152,7 +152,7 @@ class SSL implements Hookable {
 	/**
 	 * Determines if a SSL certificate will expire soon.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return int|false Number of days until certificate expiration, or false on error.
 	 */
@@ -161,7 +161,7 @@ class SSL implements Hookable {
 		/**
 		 * Filters the number of days prior to the SSL expiration date that the admin notice should be displayed.
 		 *
-		 * @since {VERSION}
+		 * @since 1.4.1
 		 *
 		 * @param int $days The number of days.
 		 */
@@ -181,7 +181,7 @@ class SSL implements Hookable {
 		/**
 		 * Filters if the SSL is about to expire or not.
 		 *
-		 * @since {VERSION}
+		 * @since 1.4.1
 		 *
 		 * @param int|false $is_expiring Number of days until certificate expiration, or false on error.
 		 */

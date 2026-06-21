@@ -5,7 +5,7 @@
  * Handles displaying system notices in the admin interface.
  *
  * @package wp-healthcheck
- * @since {VERSION}
+ * @since 1.4.1
  */
 
 namespace THSCD\WPHC\Admin;
@@ -21,14 +21,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Manages admin notices for health checks.
  *
- * @since {VERSION}
+ * @since 1.4.1
  */
 class Notices implements Hookable {
 
 	/**
 	 * Option to disable admin notices.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var string
 	 */
@@ -37,7 +37,7 @@ class Notices implements Hookable {
 	/**
 	 * Transient to store if an admin notice should be displayed or not.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var string
 	 */
@@ -46,7 +46,7 @@ class Notices implements Hookable {
 	/**
 	 * Register the WordPress hooks.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function hooks() {
 
@@ -56,7 +56,7 @@ class Notices implements Hookable {
 	/**
 	 * Display admin notices.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function display_notices() {
 

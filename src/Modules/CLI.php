@@ -5,7 +5,7 @@
  * The WP Healthcheck extension for WP-CLI.
  *
  * @package wp-healthcheck
- * @since {VERSION}
+ * @since 1.4.1
  */
 
 namespace THSCD\WPHC\Modules;
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * WP-CLI commands for WP Healthcheck.
  *
- * @since {VERSION}
+ * @since 1.4.1
  */
 class CLI extends WP_CLI_Command {
 
@@ -70,7 +70,7 @@ class CLI extends WP_CLI_Command {
 	 *
 	 * @subcommand autoload
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param array $args       Command arguments.
 	 * @param array $assoc_args Command associative arguments.
@@ -91,7 +91,7 @@ class CLI extends WP_CLI_Command {
 	/**
 	 * Handle autoload option deactivation.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $option_name The option name to deactivate.
 	 */
@@ -126,7 +126,7 @@ class CLI extends WP_CLI_Command {
 	/**
 	 * Display autoload history.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	private function display_history() {
 
@@ -168,7 +168,7 @@ class CLI extends WP_CLI_Command {
 	 *
 	 * @subcommand server
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function server() {
 
@@ -195,7 +195,7 @@ class CLI extends WP_CLI_Command {
 	/**
 	 * Format a server item for display.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $name         Server component name.
 	 * @param mixed  $version      Version information.
@@ -266,7 +266,7 @@ class CLI extends WP_CLI_Command {
 	 *
 	 * @subcommand ssl
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param array $args       Command arguments.
 	 * @param array $assoc_args Command associative arguments.
@@ -342,7 +342,7 @@ class CLI extends WP_CLI_Command {
 	 * @subcommand transient
 	 * @alias transients
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param array $args       Command arguments.
 	 * @param array $assoc_args Command associative arguments.
@@ -373,7 +373,7 @@ class CLI extends WP_CLI_Command {
 	/**
 	 * List the name and size of the options in WP-CLI table format.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param array $data An array with name and size of the options.
 	 */

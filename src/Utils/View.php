@@ -5,7 +5,7 @@
  * Handles loading and rendering of view files.
  *
  * @package wp-healthcheck
- * @since {VERSION}
+ * @since 1.4.1
  */
 
 namespace THSCD\WPHC\Utils;
@@ -19,14 +19,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Centralized view management.
  *
- * @since {VERSION}
+ * @since 1.4.1
  */
 class View {
 
 	/**
 	 * Base path for views.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var string
 	 */
@@ -35,7 +35,7 @@ class View {
 	/**
 	 * Constructor.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function __construct() {
 
@@ -45,7 +45,7 @@ class View {
 	/**
 	 * Render a view file.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $path Relative path to the view file (without .php extension).
 	 * @param array  $data Optional. Data to pass to the view.
@@ -69,7 +69,7 @@ class View {
 	/**
 	 * Get the full file path for a view.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $path Relative path to the view file (without .php extension).
 	 *

@@ -5,7 +5,7 @@
  * Handles plugin initialization and loading.
  *
  * @package wp-healthcheck
- * @since {VERSION}
+ * @since 1.4.1
  */
 
 namespace THSCD\WPHC\Core;
@@ -37,14 +37,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  * The composition root: registers every service in the container and boots the
  * ones that wire themselves into WordPress, in a deterministic order.
  *
- * @since {VERSION}
+ * @since 1.4.1
  */
 class Bootstrap {
 
 	/**
 	 * Service map: container id => concrete class.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var array
 	 */
@@ -73,7 +73,7 @@ class Bootstrap {
 	/**
 	 * Services whose hooks must register on every request (front, admin, cron, CLI).
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var array
 	 */
@@ -86,7 +86,7 @@ class Bootstrap {
 	/**
 	 * Services whose hooks only register on admin requests.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var array
 	 */
@@ -101,7 +101,7 @@ class Bootstrap {
 	/**
 	 * Initialize the plugin.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public static function init() {
 
@@ -119,7 +119,7 @@ class Bootstrap {
 	/**
 	 * Register every service in the container as a singleton.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	private static function register_services() {
 
@@ -136,7 +136,7 @@ class Bootstrap {
 	 * Resolving a service constructs it (constructors are side-effect free);
 	 * hook registration only happens here, through the Hookable contract.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param array $ids Container ids to boot.
 	 */
@@ -154,7 +154,7 @@ class Bootstrap {
 	/**
 	 * Load WP-CLI commands.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	private static function load_cli() {
 

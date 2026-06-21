@@ -10,13 +10,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  * The Server class.
  *
  * @package wp-healthcheck
- * @since {VERSION}
+ * @since 1.4.1
  */
 class Server {
 	/**
 	 * Transient to store the minimum requirements.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var string
 	 */
@@ -25,7 +25,7 @@ class Server {
 	/**
 	 * Transient to store the server data.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var string
 	 */
@@ -34,7 +34,7 @@ class Server {
 	/**
 	 * Retrieves the server data.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return array The server data.
 	 */
@@ -94,7 +94,7 @@ class Server {
 		/**
 		 * Filters the server data.
 		 *
-		 * @since {VERSION}
+		 * @since 1.4.1
 		 *
 		 * @param array $server The server data.
 		 */
@@ -104,7 +104,7 @@ class Server {
 	/**
 	 * Retrieves the server IP address.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return string|false The IP address, or false if IP was not found.
 	 */
@@ -125,7 +125,7 @@ class Server {
 		/**
 		 * Filters the server IP.
 		 *
-		 * @since {VERSION}
+		 * @since 1.4.1
 		 *
 		 * @param string|false $server The server IP.
 		 */
@@ -135,7 +135,7 @@ class Server {
 	/**
 	 * Retrieves the server requirements from our API.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @return array|false The server requirements, or false on error.
 	 */
@@ -161,7 +161,7 @@ class Server {
 		/**
 		 * Filters the server requirements.
 		 *
-		 * @since {VERSION}
+		 * @since 1.4.1
 		 *
 		 * @param array|false $requirements The server requirements.
 		 */
@@ -171,7 +171,7 @@ class Server {
 	/**
 	 * Determines if the server software is up-to-date or not.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $software The software name.
 	 *
@@ -241,7 +241,7 @@ class Server {
 		/**
 		 * Filters the status of the software update.
 		 *
-		 * @since {VERSION}
+		 * @since 1.4.1
 		 *
 		 * @param string $status   The software update status ('updated', 'outdated', or 'obsolete').
 		 * @param string $software The software name ('php', 'mysql', 'mariadb', 'wp', 'nginx', or 'apache').
@@ -252,7 +252,7 @@ class Server {
 	/**
 	 * Gets the latest minor version available.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param string $version           The version currently installed.
 	 * @param array  $upstream_versions The versions available on upstream.

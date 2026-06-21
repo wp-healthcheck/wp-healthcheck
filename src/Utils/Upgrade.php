@@ -11,14 +11,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  * The Upgrade class.
  *
  * @package wp-healthcheck
- * @since {VERSION}
+ * @since 1.4.1
  */
 final class Upgrade implements Hookable {
 
 	/**
 	 * Option to store the current plugin version.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @var string
 	 */
@@ -27,7 +27,7 @@ final class Upgrade implements Hookable {
 	/**
 	 * Register the WordPress hooks and run any pending DB upgrade.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function hooks() {
 
@@ -39,7 +39,7 @@ final class Upgrade implements Hookable {
 	/**
 	 * Cleans up the transients after WordPress updates.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 *
 	 * @param WP_Upgrader $upgrader The WP_Upgrader instance.
 	 * @param array       $options  The update data.
@@ -54,7 +54,7 @@ final class Upgrade implements Hookable {
 	/**
 	 * Cleans up the transients after plugin updates.
 	 *
-	 * @since {VERSION}
+	 * @since 1.4.1
 	 */
 	public function maybe_upgrade_db() {
 
