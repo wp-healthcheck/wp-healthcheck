@@ -161,11 +161,24 @@
   color: #c91616;
 }
 
+/* The button is a plain core .button, so its height always matches the sibling
+   buttons on every WP version (no hardcoded pixel value). Only the horizontal
+   padding is trimmed to keep it compact -- vertical padding is left to core so
+   the height is unaffected. The help icon is injected via ::before. */
 .wphc_help_btn {
-  font-size: 16px !important;
-  min-height: 28px !important;
-  padding: 0 !important;
-  width: 30px;
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+  text-align: center;
+}
+
+.wphc_help_btn::before {
+  content: "\f223";
+  font-family: dashicons;
+  font-size: 18px;
+  line-height: 1;
+  vertical-align: middle;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .wphc_support_btns [class^="wphc-icons-"]:before {

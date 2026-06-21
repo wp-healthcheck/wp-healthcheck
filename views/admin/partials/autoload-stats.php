@@ -29,7 +29,7 @@ $history  = wphc( 'module.autoload' )->get_history();
 		</button>
 	<?php endif; ?>
 
-	<button class="wphc_help_btn button dashicons dashicons-editor-help" id="wphc-btn-autoload-help"><span class="screen-reader-text"><?php _e( 'Help: Autoload Options', 'wp-healthcheck' ); ?></span></button>
+	<button class="wphc_help_btn button" id="wphc-btn-autoload-help"><span class="screen-reader-text"><?php esc_html_e( 'Help: Autoload Options', 'wp-healthcheck' ); ?></span></button>
 </div>
 
 <div id="wphc-autoload-list"></div>

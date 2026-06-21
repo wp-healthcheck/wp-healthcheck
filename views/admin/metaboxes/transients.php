@@ -28,6 +28,6 @@ if ( ! defined( 'WPHC' ) ) {
 			</button>
 		<?php endif; ?>
 
-		<button class="wphc_help_btn button dashicons dashicons-editor-help" id="wphc-btn-transients-help"><span class="screen-reader-text"><?php _e( 'Help: Transients', 'wp-healthcheck' ); ?></span></button>
+		<button class="wphc_help_btn button" id="wphc-btn-transients-help"><span class="screen-reader-text"><?php esc_html_e( 'Help: Transients', 'wp-healthcheck' ); ?></span></button>
 	<?php endif; ?>
 </div>
