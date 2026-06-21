@@ -47,7 +47,7 @@ class Server {
 			preg_match( '/^(\d+\.){2}\d+/', phpversion(), $phpversion );
 
 			// Determines if the database is MySQL or MariaDB.
-			$db_service = preg_match( '/MariaDB/', $wpdb->dbh->server_info ) ? 'MariaDB' : 'MySQL';
+			$db_service = preg_match( '/MariaDB/', $wpdb->db_server_info() ) ? 'MariaDB' : 'MySQL';
 
 			// Determines the database software version.
 			$db_version = $wpdb->db_version();

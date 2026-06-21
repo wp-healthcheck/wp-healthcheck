@@ -62,11 +62,15 @@ class Notices implements Hookable {
 
 		$screen = get_current_screen();
 
+		if ( ! $screen ) {
+			return;
+		}
+
 		// Get the admin page hookname.
 		$hookname = wphc( 'admin.dashboard' )->get_hookname();
 
 		// Only show on dashboard or plugin admin page.
-		if ( ! preg_match( '/^(' . $hookname . '|dashboard)$/', $screen->id ) ) {
+		if ( ! in_array( $screen->id, [ $hookname, 'dashboard' ], true ) ) {
 			return;
 		}
 

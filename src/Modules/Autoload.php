@@ -153,7 +153,7 @@ class Autoload {
 			$expiration = apply_filters( 'wphc_core_autoload_history_expiration_timestamp', strtotime( '-4 weeks' ) );
 
 			foreach ( $history as $name => $timestamp ) {
-				if ( ! get_option( $name ) || ( get_option( $name ) && $timestamp < $expiration ) ) {
+				if ( ! get_option( $name ) || $timestamp < $expiration ) {
 					unset( $history[ $name ] );
 
 					$updated = true;

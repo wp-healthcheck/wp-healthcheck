@@ -77,7 +77,6 @@ class Bootstrap {
 		'util.upgrade',
 		'util.install',
 		'module.wordpress',
-		'module.ssl',
 	];
 
 	/**
@@ -88,6 +87,7 @@ class Bootstrap {
 	 * @var array
 	 */
 	private static $boot_admin = [
+		'module.ssl', // SSL data is only consumed by admin notices/dashboard; no need to collect it on front-end requests.
 		'admin.dashboard',
 		'admin.ajax',
 		'admin.pointers',
