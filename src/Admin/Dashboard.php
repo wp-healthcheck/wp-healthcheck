@@ -10,12 +10,16 @@
 
 namespace THSCD\WPHC\Admin;
 
+use THSCD\WPHC\Core\Hookable;
+
 /**
  * Class Dashboard.
  *
  * Manages the dashboard page functionality.
+ *
+ * @since {VERSION}
  */
-class Dashboard {
+class Dashboard implements Hookable {
 
 	/**
 	 * Admin page hookname.
@@ -27,36 +31,11 @@ class Dashboard {
 	private $hookname = null;
 
 	/**
-	 * Whether hooks have been initialized.
-	 *
-	 * @since {VERSION}
-	 *
-	 * @var bool
-	 */
-	private $initiated = false;
-
-	/**
-	 * Constructor.
+	 * Register the WordPress hooks.
 	 *
 	 * @since {VERSION}
 	 */
-	public function __construct() {
-
-		$this->hooks();
-	}
-
-	/**
-	 * Initialize WordPress hooks.
-	 *
-	 * @since {VERSION}
-	 */
-	private function hooks() {
-
-		if ( $this->initiated ) {
-			return;
-		}
-
-		$this->initiated = true;
+	public function hooks() {
 
 		add_action( 'admin_menu', [ $this, 'register_menu' ], 5 );
 		add_action( 'admin_init', [ $this, 'load_resources' ] );

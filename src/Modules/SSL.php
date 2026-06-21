@@ -2,13 +2,15 @@
 
 namespace THSCD\WPHC\Modules;
 
+use THSCD\WPHC\Core\Hookable;
+
 /**
  * The SSL class.
  *
  * @package wp-healthcheck
  * @since {VERSION}
  */
-class SSL {
+class SSL implements Hookable {
 	/**
 	 * Transient to store the SSL data.
 	 *
@@ -28,17 +30,7 @@ class SSL {
 	const AVAILABLE_TRANSIENT = 'wphc_ssl_available';
 
 	/**
-	 * Constructor.
-	 *
-	 * @since {VERSION}
-	 */
-	public function __construct() {
-
-		$this->hooks();
-	}
-
-	/**
-	 * Initialize the WordPress hooks.
+	 * Register the WordPress hooks.
 	 *
 	 * @since {VERSION}
 	 */

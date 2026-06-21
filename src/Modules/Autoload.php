@@ -11,15 +11,6 @@ namespace THSCD\WPHC\Modules;
 class Autoload {
 
 	/**
-	 * Option to store the history of disabled autoload options.
-	 *
-	 * @since {VERSION}
-	 *
-	 * @var string
-	 */
-	const DISABLE_AUTOLOAD_OPTION = 'wphc_disable_autoload_history';
-
-	/**
 	 * Option to store the history of deactivated autoload options.
 	 *
 	 * @since {VERSION}
@@ -223,7 +214,7 @@ class Autoload {
 
 		$is_core_option = false;
 
-		$wp_opts_file = SUPV_PLUGIN_DIR . '/assets/wp_options.json';
+		$wp_opts_file = WPHC_PLUGIN_DIR . '/src/Data/wp_options.json';
 
 		if ( file_exists( $wp_opts_file ) ) {
 			$wp_opts = json_decode( file_get_contents( $wp_opts_file ) );

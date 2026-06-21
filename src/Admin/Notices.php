@@ -10,6 +10,8 @@
 
 namespace THSCD\WPHC\Admin;
 
+use THSCD\WPHC\Core\Hookable;
+
 /**
  * Class Notices.
  *
@@ -17,7 +19,7 @@ namespace THSCD\WPHC\Admin;
  *
  * @since {VERSION}
  */
-class Notices {
+class Notices implements Hookable {
 
 	/**
 	 * Option to disable admin notices.
@@ -38,36 +40,11 @@ class Notices {
 	const HIDE_NOTICES_TRANSIENT = 'wphc_hide_admin_notices';
 
 	/**
-	 * Whether hooks have been initialized.
-	 *
-	 * @since {VERSION}
-	 *
-	 * @var bool
-	 */
-	private $initiated = false;
-
-	/**
-	 * Constructor.
+	 * Register the WordPress hooks.
 	 *
 	 * @since {VERSION}
 	 */
-	public function __construct() {
-
-		$this->hooks();
-	}
-
-	/**
-	 * Initialize WordPress hooks.
-	 *
-	 * @since {VERSION}
-	 */
-	private function hooks() {
-
-		if ( $this->initiated ) {
-			return;
-		}
-
-		$this->initiated = true;
+	public function hooks() {
 
 		add_action( 'admin_notices', [ $this, 'display_notices' ] );
 	}

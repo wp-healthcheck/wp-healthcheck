@@ -1,6 +1,7 @@
 <?php
 namespace THSCD\WPHC\Utils;
 
+use THSCD\WPHC\Core\Hookable;
 use THSCD\WPHC\Modules\Autoload;
 use THSCD\WPHC\Modules\Server;
 use THSCD\WPHC\Modules\SSL;
@@ -12,7 +13,7 @@ use THSCD\WPHC\Modules\WordPress;
  * @package wp-healthcheck
  * @since {VERSION}
  */
-final class Install {
+final class Install implements Hookable {
 
 	/**
 	 * All the plugin options.
@@ -42,13 +43,12 @@ final class Install {
 	];
 
 	/**
-	 * Constructor.
+	 * Register the plugin lifecycle hooks.
 	 *
 	 * @since {VERSION}
 	 */
-	public function __construct() {
+	public function hooks() {
 
-		// Registers the hooks.
 		register_activation_hook( WPHC_PLUGIN_FILE, [ self::class, 'plugin_activation' ] );
 		register_deactivation_hook( WPHC_PLUGIN_FILE, [ self::class, 'plugin_deactivation' ] );
 		register_uninstall_hook( WPHC_PLUGIN_FILE, [ self::class, 'plugin_uninstall' ] );

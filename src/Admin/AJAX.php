@@ -10,6 +10,8 @@
 
 namespace THSCD\WPHC\Admin;
 
+use THSCD\WPHC\Core\Hookable;
+
 /**
  * Class AJAX.
  *
@@ -17,7 +19,7 @@ namespace THSCD\WPHC\Admin;
  *
  * @since {VERSION}
  */
-class AJAX {
+class AJAX implements Hookable {
 
 	/**
 	 * Stores all the AJAX hooks.
@@ -27,25 +29,6 @@ class AJAX {
 	 * @var array
 	 */
 	private $ajax_actions = [];
-
-	/**
-	 * Whether hooks have been initialized.
-	 *
-	 * @since {VERSION}
-	 *
-	 * @var bool
-	 */
-	private $initiated = false;
-
-	/**
-	 * Constructor.
-	 *
-	 * @since {VERSION}
-	 */
-	public function __construct() {
-
-		$this->hooks();
-	}
 
 	/**
 	 * Determines if current request is WordPress AJAX request.
@@ -60,17 +43,11 @@ class AJAX {
 	}
 
 	/**
-	 * Initialize WordPress hooks.
+	 * Register the WordPress hooks.
 	 *
 	 * @since {VERSION}
 	 */
-	private function hooks() {
-
-		if ( $this->initiated ) {
-			return;
-		}
-
-		$this->initiated = true;
+	public function hooks() {
 
 		add_action( 'admin_footer', [ $this, 'add_wp_nonces' ] );
 
@@ -209,7 +186,7 @@ class AJAX {
 
 		$this->verify_ajax_request( 'hide_admin_notice' );
 
-		if ( isset( $_POST['software'] ) && preg_match( '/(?:php|database|wordpress|web|ssl|https|plugins)/', sanitize_key( $_POST['software'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( isset( $_POST['software'] ) && preg_match( '/(?:php|database|wordpress|web|ssl|https|plugins)/', sanitize_key( $_POST['software'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.WP.CapitalPDangit.MisspelledInText
 			$notices_transient = get_transient( Notices::HIDE_NOTICES_TRANSIENT );
 
 			if ( $notices_transient === false ) {
@@ -252,7 +229,7 @@ class AJAX {
 		$this->verify_ajax_request( 'wp_auto_update' );
 
 		if ( isset( $_POST['wp_auto_update'] ) && preg_match( '/^(?:minor|major|disabled|dev)$/', sanitize_key( $_POST['wp_auto_update'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-			wphc( 'module.wordpress' )->set_auto_update_policy( sanitize_key( $_POST['wp_auto_update'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			wphc( 'module.wordpress' )->set_auto_update_policy( sanitize_key( $_POST['wp_auto_update'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.WP.CapitalPDangit.MisspelledInText
 		}
 
 		wp_die();

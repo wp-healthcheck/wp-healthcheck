@@ -269,23 +269,4 @@ class Server {
 
 		return false;
 	}
-
-	/**
-	 * Determines if the minor version is updated to the latest version.
-	 *
-	 * @since {VERSION}
-	 *
-	 * @param string $version           The version currently installed.
-	 * @param array  $upstream_versions The versions available on upstream.
-	 *
-	 * @return bool True if it is up-to-date.
-	 */
-	private function is_minor_version_updated( $version, $upstream_versions ) {
-
-		if ( empty( $version ) || ! is_array( $upstream_versions ) ) {
-			return false;
-		}
-
-		return (bool) version_compare( $version, $this->get_latest_minor_version( $version, $upstream_versions ), '>=' );
-	}
 }

@@ -1,13 +1,15 @@
 <?php
 namespace THSCD\WPHC\Modules;
 
+use THSCD\WPHC\Core\Hookable;
+
 /**
  * The WordPress class.
  *
  * @package wp-healthcheck
  * @since {VERSION}
  */
-class WordPress {
+class WordPress implements Hookable {
 
 	/**
 	 * Option to store the auto update policy.
@@ -19,17 +21,7 @@ class WordPress {
 	const CORE_AUTO_UPDATE_OPTION = 'wphc_wordpress_auto_update_policy';
 
 	/**
-	 * Constructor.
-	 *
-	 * @since {VERSION}
-	 */
-	public function __construct() {
-
-		$this->hooks();
-	}
-
-	/**
-	 * WordPress actions and filters.
+	 * Register the WordPress hooks.
 	 *
 	 * @since {VERSION}
 	 */
@@ -43,7 +35,7 @@ class WordPress {
 	 *
 	 * @since {VERSION}
 	 */
-	public function apply_wp_auto_update_policy() { // phpcs:ignore WPForms.PHP.HooksMethod.InvalidPlaceForAddingHooks
+	public function apply_wp_auto_update_policy() {
 
 		$policy = $this->get_auto_update_policy();
 

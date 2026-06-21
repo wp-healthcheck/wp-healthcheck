@@ -8,27 +8,15 @@
 
 namespace THSCD\WPHC\Core;
 
-use THSCD\WPHC\Modules\Autoload;
-use THSCD\WPHC\Modules\Plugins;
-use THSCD\WPHC\Modules\Server;
-use THSCD\WPHC\Modules\SSL;
-use THSCD\WPHC\Modules\Transients;
-use THSCD\WPHC\Modules\WordPress;
-use THSCD\WPHC\Admin\Dashboard;
-use THSCD\WPHC\Admin\AJAX;
-use THSCD\WPHC\Admin\Metaboxes;
-use THSCD\WPHC\Admin\Pointers;
-use THSCD\WPHC\Admin\Notices;
-use THSCD\WPHC\Utils\Install;
-use THSCD\WPHC\Utils\Upgrade;
-use THSCD\WPHC\Utils\View;
 use Exception;
 
 /**
  * Class Container.
  *
- * PSR-11 compatible dependency injection container.
- * Implements get() and has() methods as per PSR-11 standard.
+ * Lightweight service container implementing the Service Locator pattern.
+ * Services are registered by the Bootstrap (the composition root) and resolved
+ * on demand; the container itself is intentionally agnostic about the
+ * application's concrete classes.
  *
  * @since {VERSION}
  */
@@ -60,37 +48,6 @@ class Container {
 	 * @var array
 	 */
 	protected $instances = [];
-
-	/**
-	 * Core services mapping.
-	 *
-	 * Maps service names to their class names.
-	 *
-	 * @since {VERSION}
-	 *
-	 * @var array
-	 */
-	protected $bindings = [
-		// Modules.
-		'module.autoload'   => Autoload::class,
-		'module.plugins'    => Plugins::class,
-		'module.server'     => Server::class,
-		'module.ssl'        => SSL::class,
-		'module.transients' => Transients::class,
-		'module.wordpress'  => WordPress::class,
-
-		// Admin.
-		'admin.dashboard'   => Dashboard::class,
-		'admin.ajax'        => AJAX::class,
-		'admin.metaboxes'   => Metaboxes::class,
-		'admin.pointers'    => Pointers::class,
-		'admin.notices'     => Notices::class,
-
-		// Utils.
-		'util.install'      => Install::class,
-		'util.upgrade'      => Upgrade::class,
-		'util.view'         => View::class,
-	];
 
 	/**
 	 * Get the globally available instance of the container.
@@ -141,8 +98,6 @@ class Container {
 	/**
 	 * Finds an entry of the container by its identifier and returns it.
 	 *
-	 * PSR-11 method signature.
-	 *
 	 * @since {VERSION}
 	 *
 	 * @param string $id Identifier of the entry to look for.
@@ -157,69 +112,19 @@ class Container {
 			return $this->instances[ $id ];
 		}
 
-		// Get the concrete implementation.
-		$concrete = $this->get_concrete( $id );
-
-		if ( is_null( $concrete ) ) {
-			throw new Exception( "Service [{$id}] not found in container." );
+		if ( ! isset( $this->services[ $id ] ) ) {
+			throw new Exception( esc_html( "Service [{$id}] not found in container." ) );
 		}
 
-		try {
-			// Build the instance.
-			$instance = $this->build( $concrete );
+		// Build the instance.
+		$instance = $this->build( $this->services[ $id ]['concrete'] );
 
-			// Store singleton instances.
-			if ( $this->is_shared( $id ) ) {
-				$this->instances[ $id ] = $instance;
-			}
-
-			return $instance;
-		} catch ( Exception $e ) {
-			throw new Exception( "Error resolving service [{$id}]: " . $e->getMessage(), 0, $e );
-		}
-	}
-
-	/**
-	 * Returns true if the container can return an entry for the given identifier.
-	 * Returns false otherwise.
-	 *
-	 * PSR-11 method signature.
-	 *
-	 * @since {VERSION}
-	 *
-	 * @param string $id Identifier of the entry to look for.
-	 *
-	 * @return bool
-	 */
-	public function has( $id ) {
-
-		return isset( $this->services[ $id ] ) ||
-			   isset( $this->instances[ $id ] ) ||
-			   isset( $this->bindings[ $id ] );
-	}
-
-	/**
-	 * Get the concrete type for a service.
-	 *
-	 * @since {VERSION}
-	 *
-	 * @param string $name Service name.
-	 *
-	 * @return string|callable|null
-	 */
-	protected function get_concrete( $name ) {
-
-		// Check custom services first.
-		if ( isset( $this->services[ $name ] ) ) {
-			return $this->services[ $name ]['concrete'];
+		// Store singleton instances.
+		if ( $this->services[ $id ]['shared'] ) {
+			$this->instances[ $id ] = $instance;
 		}
 
-		// Fall back to core bindings.
-		if ( isset( $this->bindings[ $name ] ) ) {
-			return $this->bindings[ $name ];
-		}
-
-		return null;
+		return $instance;
 	}
 
 	/**
@@ -240,38 +145,5 @@ class Container {
 
 		// Otherwise, instantiate the class.
 		return new $concrete();
-	}
-
-	/**
-	 * Determine if a service is shared (singleton).
-	 *
-	 * @since {VERSION}
-	 *
-	 * @param string $name Service name.
-	 *
-	 * @return bool
-	 */
-	protected function is_shared( $name ) {
-
-		// Custom services have explicit sharing flag.
-		if ( isset( $this->services[ $name ] ) ) {
-			return $this->services[ $name ]['shared'];
-		}
-
-		// Core bindings are always singletons.
-		return isset( $this->bindings[ $name ] );
-	}
-
-	/**
-	 * Clear all services and instances.
-	 *
-	 * Useful for testing.
-	 *
-	 * @since {VERSION}
-	 */
-	public function flush() {
-
-		$this->services  = [];
-		$this->instances = [];
 	}
 }

@@ -10,44 +10,23 @@
 
 namespace THSCD\WPHC\Admin;
 
+use THSCD\WPHC\Core\Hookable;
+
 /**
  * Class Pointers.
  *
  * Manages admin pointers functionality.
+ *
+ * @since {VERSION}
  */
-class Pointers {
+class Pointers implements Hookable {
 
 	/**
-	 * Whether hooks have been initialized.
-	 *
-	 * @since {VERSION}
-	 *
-	 * @var bool
-	 */
-	private $initiated = false;
-
-	/**
-	 * Constructor.
+	 * Register the WordPress hooks.
 	 *
 	 * @since {VERSION}
 	 */
-	public function __construct() {
-
-		$this->hooks();
-	}
-
-	/**
-	 * Initialize WordPress hooks.
-	 *
-	 * @since {VERSION}
-	 */
-	private function hooks() {
-
-		if ( $this->initiated ) {
-			return;
-		}
-
-		$this->initiated = true;
+	public function hooks() {
 
 		add_action( 'admin_menu', [ $this, 'setup_hooks' ], 20 );
 	}
@@ -90,7 +69,7 @@ class Pointers {
 
 		$screen = get_current_screen();
 
-		if ( ! $screen || 'toplevel_page_wp-healthcheck' !== $screen->id ) {
+		if ( ! $screen || $screen->id !== 'toplevel_page_wp-healthcheck' ) {
 			return;
 		}
 		include WPHC_PLUGIN_DIR . '/views/admin/help.php';
@@ -122,4 +101,3 @@ class Pointers {
 		echo '<script type="text/javascript">' . $js . '</script>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
-

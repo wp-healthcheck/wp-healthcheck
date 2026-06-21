@@ -63,20 +63,6 @@ class View {
 	}
 
 	/**
-	 * Check if a view file exists.
-	 *
-	 * @since {VERSION}
-	 *
-	 * @param string $path Relative path to the view file (without .php extension).
-	 *
-	 * @return bool True if the view exists.
-	 */
-	public function exists( $path ) {
-
-		return file_exists( $this->get_file_path( $path ) );
-	}
-
-	/**
 	 * Get the full file path for a view.
 	 *
 	 * @since {VERSION}
