@@ -77,6 +77,12 @@ If you are a developer and want to contribute writing new features, enhancements
 
 == Changelog ==
 
+= [1.4.1] 2026-06-21 =
+* Security: Hardened the admin AJAX actions.
+* Changed: Several code quality and performance improvements.
+* Changed: Bumped the minimum PHP version to 7.2.
+* Changed: Bumped the minimum WordPress version to 5.5.
+
 = [1.4.0] 2024-07-16 =
 * Changed: Bumped the minimum PHP version up to 7.0.
 * Changed: Bumped the minimum WordPress version up to 5.0.
