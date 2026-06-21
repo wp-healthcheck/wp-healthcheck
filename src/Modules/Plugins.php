@@ -12,6 +12,10 @@ namespace THSCD\WPHC\Modules;
 
 use DateTime;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class Plugins.
  *

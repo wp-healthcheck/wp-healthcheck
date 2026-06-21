@@ -2,6 +2,10 @@
 
 namespace THSCD\WPHC\Modules;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * The Transients class.
  *

@@ -37,24 +37,26 @@ if ( ! file_exists( WPHC_PLUGIN_DIR . '/vendor/autoload.php' ) ) {
 
 require_once WPHC_PLUGIN_DIR . '/vendor/autoload.php';
 
-/**
- * Loads the service container.
- *
- * @since {VERSION}
- *
- * @param string|null $service Service name to resolve.
- *
- * @return mixed|\THSCD\WPHC\Core\Container
- */
-function wphc( $service = null ) {
+if ( ! function_exists( 'wphc' ) ) {
+	/**
+	 * Loads the service container.
+	 *
+	 * @since {VERSION}
+	 *
+	 * @param string|null $service Service name to resolve.
+	 *
+	 * @return mixed|\THSCD\WPHC\Core\Container
+	 */
+	function wphc( $service = null ) {
 
-	$container = \THSCD\WPHC\Core\Container::get_instance();
+		$container = \THSCD\WPHC\Core\Container::get_instance();
 
-	if ( is_null( $service ) ) {
-		return $container;
+		if ( is_null( $service ) ) {
+			return $container;
+		}
+
+		return $container->get( $service );
 	}
-
-	return $container->get( $service );
 }
 
 /**

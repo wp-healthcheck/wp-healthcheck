@@ -7,6 +7,10 @@ use THSCD\WPHC\Modules\Server;
 use THSCD\WPHC\Modules\SSL;
 use THSCD\WPHC\Modules\WordPress;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * The Install class.
  *

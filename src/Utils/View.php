@@ -10,6 +10,10 @@
 
 namespace THSCD\WPHC\Utils;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class View.
  *

@@ -12,6 +12,10 @@ namespace THSCD\WPHC\Admin;
 
 use THSCD\WPHC\Core\Hookable;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class Dashboard.
  *

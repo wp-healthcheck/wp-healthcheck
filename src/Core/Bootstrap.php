@@ -27,6 +27,10 @@ use THSCD\WPHC\Utils\Upgrade;
 use THSCD\WPHC\Utils\View;
 use WP_CLI;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class Bootstrap.
  *

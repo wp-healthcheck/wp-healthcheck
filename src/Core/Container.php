@@ -10,6 +10,10 @@ namespace THSCD\WPHC\Core;
 
 use Exception;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class Container.
  *

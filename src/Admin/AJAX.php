@@ -12,6 +12,10 @@ namespace THSCD\WPHC\Admin;
 
 use THSCD\WPHC\Core\Hookable;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class AJAX.
  *
@@ -111,6 +115,11 @@ class AJAX implements Hookable {
 		foreach ( $_POST as $name => $value ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( preg_match( '/^wphc-opt-/', sanitize_text_field( $name ) ) ) {
 				$option_name = preg_replace( '/^wphc-opt-/', '', urldecode( $name ) );
+
+				// Never deactivate WordPress core options, even via a crafted request.
+				if ( wphc( 'module.autoload' )->is_core_option( $option_name ) ) {
+					continue;
+				}
 
 				$options[ $option_name ] = wphc( 'module.autoload' )->deactivate( $option_name );
 			}

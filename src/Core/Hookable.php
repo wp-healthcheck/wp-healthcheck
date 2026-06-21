@@ -12,6 +12,10 @@
 
 namespace THSCD\WPHC\Core;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Interface Hookable.
  *

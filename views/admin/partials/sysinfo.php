@@ -16,28 +16,28 @@ if ( ! empty( $server_data['web']['version'] ) && ! empty( $server_data['web']['
 
 <div class="wphc_system_info">
 	<ul>
-		<li><?php _e( 'WordPress', 'wp-healthcheck' ); ?></li>
-		<li class="<?php echo wphc( 'module.server' )->is_updated( 'wp' ); ?>"><?php echo $server_data['wp']; ?></li>
+		<li><?php esc_html_e( 'WordPress', 'wp-healthcheck' ); ?></li>
+		<li class="<?php echo esc_attr( wphc( 'module.server' )->is_updated( 'wp' ) ); ?>"><?php echo esc_html( $server_data['wp'] ); ?></li>
 	</ul>
 	<ul>
-		<li><?php _e( 'PHP', 'wp-healthcheck' ); ?></li>
-		<li class="<?php echo wphc( 'module.server' )->is_updated( 'php' ); ?>"><?php echo $server_data['php']; ?></li>
+		<li><?php esc_html_e( 'PHP', 'wp-healthcheck' ); ?></li>
+		<li class="<?php echo esc_attr( wphc( 'module.server' )->is_updated( 'php' ) ); ?>"><?php echo esc_html( $server_data['php'] ); ?></li>
 	</ul>
 	<ul>
-		<?php if ( 'MariaDB' == $server_data['database']['service'] ) : ?>
-			<li><?php _e( 'MariaDB', 'wp-healthcheck' ); ?></li>
+		<?php if ( $server_data['database']['service'] === 'MariaDB' ) : ?>
+			<li><?php esc_html_e( 'MariaDB', 'wp-healthcheck' ); ?></li>
 		<?php else : ?>
-			<li><?php _e( 'MySQL', 'wp-healthcheck' ); ?></li>
+			<li><?php esc_html_e( 'MySQL', 'wp-healthcheck' ); ?></li>
 		<?php endif; ?>
 
-		<li class="<?php echo wphc( 'module.server' )->is_updated( strtolower( $server_data['database']['service'] ) ); ?>"><?php echo $server_data['database']['version']; ?></li>
+		<li class="<?php echo esc_attr( wphc( 'module.server' )->is_updated( strtolower( $server_data['database']['service'] ) ) ); ?>"><?php echo esc_html( $server_data['database']['version'] ); ?></li>
 	</ul>
 
 	<?php if ( ! empty( $web_server ) ) : ?>
 		<ul>
-			<li><?php _e( 'Web Server', 'wp-healthcheck' ); ?></li>
+			<li><?php esc_html_e( 'Web Server', 'wp-healthcheck' ); ?></li>
 
-			<li class="<?php echo wphc( 'module.server' )->is_updated( $server_data['web']['service'] ); ?>"><?php echo $web_server; ?></li>
+			<li class="<?php echo esc_attr( wphc( 'module.server' )->is_updated( $server_data['web']['service'] ) ); ?>"><?php echo esc_html( $web_server ); ?></li>
 		</ul>
 	<?php endif; ?>
 </div>

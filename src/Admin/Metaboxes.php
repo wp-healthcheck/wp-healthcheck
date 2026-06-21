@@ -10,6 +10,10 @@
 
 namespace THSCD\WPHC\Admin;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class Metaboxes.
  *

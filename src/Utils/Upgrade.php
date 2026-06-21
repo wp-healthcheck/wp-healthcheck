@@ -3,6 +3,10 @@ namespace THSCD\WPHC\Utils;
 
 use THSCD\WPHC\Core\Hookable;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * The Upgrade class.
  *

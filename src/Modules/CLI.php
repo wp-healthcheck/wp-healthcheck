@@ -13,6 +13,10 @@ namespace THSCD\WPHC\Modules;
 use WP_CLI;
 use WP_CLI_Command;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class CLI.
  *

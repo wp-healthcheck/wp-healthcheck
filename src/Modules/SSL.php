@@ -4,6 +4,10 @@ namespace THSCD\WPHC\Modules;
 
 use THSCD\WPHC\Core\Hookable;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * The SSL class.
  *
