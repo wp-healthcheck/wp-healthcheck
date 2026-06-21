@@ -1,5 +1,5 @@
 === WP Healthcheck ===
-Contributors: tiagohillebrandt
+Contributors: tiagohillebrandt, marksabbath
 Donate link: https://www.paypal.com/donate/?hosted_button_id=45R6Q8J8JERVS
 Tags: performance, transients, autoload, cron, healthcheck, load time, ssl, https, check
 Requires at least: 5.5
