@@ -3,8 +3,8 @@ if ( ! defined( 'WPHC' ) ) {
 	exit;
 }
 
-$autoload = WP_Healthcheck::get_autoload_stats();
-$history  = WP_Healthcheck::get_autoload_history();
+$autoload = wphc( 'module.autoload' )->get_stats();
+$history  = wphc( 'module.autoload' )->get_history();
 ?>
 
 <div class="wphc_stats">
@@ -29,7 +29,7 @@ $history  = WP_Healthcheck::get_autoload_history();
 		</button>
 	<?php endif; ?>
 
-	<button class="wphc_help_btn button dashicons dashicons-editor-help" id="wphc-btn-autoload-help"><span class="screen-reader-text"><?php _e( 'Help: Autoload Options', 'wp-healthcheck' ); ?></span></button>
+	<button class="wphc_help_btn button" id="wphc-btn-autoload-help"><span class="screen-reader-text"><?php esc_html_e( 'Help: Autoload Options', 'wp-healthcheck' ); ?></span></button>
 </div>
 
 <div id="wphc-autoload-list"></div>

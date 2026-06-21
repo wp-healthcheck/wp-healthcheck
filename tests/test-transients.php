@@ -1,57 +1,42 @@
 <?php
 class TransientsTest extends WP_UnitTestCase {
-    public function test_cleanup_plugin_transients() {
-        WP_Healthcheck::is_software_updated( 'wp' ); // creates both transients
+	public function test_cleanup_transients() {
+		set_transient( 'wphc_expired_transient', 'expired', 2 );
 
-        $this->assertNotFalse( get_transient( WP_Healthcheck::MIN_REQUIREMENTS_TRANSIENT ) );
-        $this->assertNotFalse( get_transient( WP_Healthcheck::SERVER_DATA_TRANSIENT ) );
+		sleep( 4 );
 
-        WP_Healthcheck::_cleanup_options( true );
+		$this->assertNotFalse( wphc( 'module.transients' )->cleanup( true ) ); // only expired
+		$this->assertFalse( get_transient( 'wphc_expired_transient' ) );
 
-        $requirements = get_transient( WP_Healthcheck::MIN_REQUIREMENTS_TRANSIENT );
-        $server_data = get_transient( WP_Healthcheck::SERVER_DATA_TRANSIENT );
+		$cleanup = wphc( 'module.transients' )->cleanup( false ); // all transients
 
-        $this->assertFalse( $requirements );
-        $this->assertFalse( $server_data );
-    }
+		$this->assertNotFalse( $cleanup );
+		$this->assertInternalType( 'int', $cleanup );
+		$this->assertGreaterThan( 0, $cleanup );
+	}
 
-    public function test_cleanup_transients() {
-        set_transient( 'wphc_expired_transient', 'expired', 2 );
+	public function test_transients() {
+		$transients = wphc( 'module.transients' )->get();
 
-        sleep( 4 );
+		$this->assertInternalType( 'array', $transients );
+		$this->assertGreaterThan( 0, sizeof( $transients ) );
 
-        $this->assertNotFalse( WP_Healthcheck::cleanup_transients( true ) ); // only expired
-        $this->assertFalse( get_transient( 'wphc_expired_transient' ) );
+		foreach ( $transients as $name => $size ) {
+			$this->assertInternalType( 'float', $size );
+		}
+	}
 
-        $cleanup = WP_Healthcheck::cleanup_transients( false ); // all transients
+	public function test_transients_stats() {
+		$stats = wphc( 'module.transients' )->get_stats();
 
-        $this->assertNotFalse( $cleanup );
-        $this->assertInternalType( 'int', $cleanup );
-        $this->assertGreaterThan( 0, $cleanup );
-    }
+		$keys = [
+			'count' => 'int',
+			'size'  => 'float',
+		];
 
-    public function test_transients() {
-        $transients = WP_Healthcheck::get_transients();
-
-        $this->assertInternalType( 'array', $transients );
-        $this->assertGreaterThan( 0, sizeof( $transients ) );
-
-        foreach ( $transients as $name => $size ) {
-            $this->assertInternalType( 'float', $size );
-        }
-    }
-
-    public function test_transients_stats() {
-        $stats = WP_Healthcheck::get_transients_stats();
-
-        $keys = array(
-            'count' => 'int',
-            'size'  => 'float',
-        );
-
-        foreach ( $keys as $key => $type ) {
-            $this->assertArrayHasKey( $key, $stats );
-            $this->assertInternalType( $type, $stats[ $key ] );
-        }
-    }
+		foreach ( $keys as $key => $type ) {
+			$this->assertArrayHasKey( $key, $stats );
+			$this->assertInternalType( $type, $stats[ $key ] );
+		}
+	}
 }

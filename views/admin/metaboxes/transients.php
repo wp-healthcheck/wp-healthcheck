@@ -9,7 +9,7 @@ if ( ! defined( 'WPHC' ) ) {
 <p><?php esc_html_e( 'However, some badly coded plugins and themes can store too much information on these transients, or can even create an excessively high number of transients, resulting in performance degradation.', 'wp-healthcheck' ); ?></p>
 
 <div id="wphc-transients-stats">
-	<?php include 'transients-stats.php'; ?>
+	<?php wphc( 'util.view' )->render( 'admin/partials/transients-stats' ); ?>
 </div>
 
 <div>
@@ -28,6 +28,6 @@ if ( ! defined( 'WPHC' ) ) {
 			</button>
 		<?php endif; ?>
 
-		<button class="wphc_help_btn button dashicons dashicons-editor-help" id="wphc-btn-transients-help"><span class="screen-reader-text"><?php _e( 'Help: Transients', 'wp-healthcheck' ); ?></span></button>
+		<button class="wphc_help_btn button" id="wphc-btn-transients-help"><span class="screen-reader-text"><?php esc_html_e( 'Help: Transients', 'wp-healthcheck' ); ?></span></button>
 	<?php endif; ?>
 </div>

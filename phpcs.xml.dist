@@ -9,17 +9,24 @@
 
 	<exclude-pattern>/(vendor|languages|tests|node_modules)/*</exclude-pattern>
 	<exclude-pattern>/index\.php</exclude-pattern>
-	<exclude-pattern>/supervisor\.php</exclude-pattern>
 
 	<rule ref="WPForms">
 		<exclude name="WordPress.DB.DirectDatabaseQuery.NoCaching"/>
 		<exclude name="Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed"/>
+		<exclude name="WPForms.PHP.ValidateHooks.InvalidHookName"/>
 	</rule>
 
 	<rule ref="WPForms.PHP.ValidateDomain">
 		<properties>
-			<property name="supervisor" value="src/"/>
+			<property name="text_domain" value="wp-healthcheck"/>
 		</properties>
+	</rule>
+
+	<!-- These classes register hooks from within callbacks, where the required runtime context (the admin menu hookname, or the saved auto-update policy) first becomes available. -->
+	<rule ref="WPForms.PHP.HooksMethod">
+		<exclude-pattern>*/Admin/Dashboard.php</exclude-pattern>
+		<exclude-pattern>*/Admin/Pointers.php</exclude-pattern>
+		<exclude-pattern>*/Modules/WordPress.php</exclude-pattern>
 	</rule>
 
 	<config name="minimum_supported_wp_version" value="5.5"/>

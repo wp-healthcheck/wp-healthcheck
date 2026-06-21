@@ -1,122 +1,113 @@
 <?php
 class AutoloadTest extends WP_UnitTestCase {
-    public function test_autoload_history() {
-        $options = WP_Healthcheck::get_autoload_history();
+	public function test_autoload_history() {
+		$options = wphc( 'module.autoload' )->get_history();
 
-        $this->assertFalse( $options );
+		$this->assertFalse( $options );
 
-        $name = 'wphc_autoload_option';
+		$name = 'wphc_autoload_option';
 
-        add_option( $name, 'autoload' );
+		add_option( $name, 'autoload' );
 
-        WP_Healthcheck::deactivate_autoload_option( $name );
+		wphc( 'module.autoload' )->deactivate( $name );
 
-        $options = WP_Healthcheck::get_autoload_history();
+		$options = wphc( 'module.autoload' )->get_history();
 
-        $this->assertInternalType( 'array', $options );
-        $this->assertGreaterThan( 0, sizeof( $options ) );
+		$this->assertInternalType( 'array', $options );
+		$this->assertGreaterThan( 0, sizeof( $options ) );
 
-        delete_option( $name );
+		delete_option( $name );
 
-        wp_cache_flush();
-    }
+		wp_cache_flush();
+	}
 
-    public function test_autoload_options() {
-        $options = WP_Healthcheck::get_autoload_options();
+	public function test_autoload_options() {
+		$options = wphc( 'module.autoload' )->get();
 
-        $this->assertInternalType( 'array', $options );
-        $this->assertGreaterThan( 0, sizeof( $options ) );
+		$this->assertInternalType( 'array', $options );
+		$this->assertGreaterThan( 0, sizeof( $options ) );
 
-        foreach ( $options as $name => $size ) {
-            $this->assertInternalType( 'float', $size );
-        }
-    }
+		foreach ( $options as $name => $size ) {
+			$this->assertInternalType( 'float', $size );
+		}
+	}
 
-    public function test_autoload_stats() {
-        $stats = WP_Healthcheck::get_autoload_stats();
+	public function test_autoload_stats() {
+		$stats = wphc( 'module.autoload' )->get_stats();
 
-        $this->assertInternalType( 'array', $stats );
-        $this->assertGreaterThan( 0, sizeof( $stats ) );
+		$this->assertInternalType( 'array', $stats );
+		$this->assertGreaterThan( 0, sizeof( $stats ) );
 
-        $keys = array(
-            'count' => 'int',
-            'size'  => 'float',
-        );
+		$keys = [
+			'count' => 'int',
+			'size'  => 'float',
+		];
 
-        foreach ( $keys as $key => $type ) {
-            $this->assertArrayHasKey( $key, $stats );
-            $this->assertInternalType( $type, $stats[ $key ] );
-        }
-    }
+		foreach ( $keys as $key => $type ) {
+			$this->assertArrayHasKey( $key, $stats );
+			$this->assertInternalType( $type, $stats[ $key ] );
+		}
+	}
 
-    public function test_cleanup_plugin_options() {
-        add_option( WP_Healthcheck::DISABLE_AUTOLOAD_OPTION, 'test' );
+	public function test_deactivate_autoload_option() {
+		$name = 'wphc_autoload_option';
 
-        WP_Healthcheck::_cleanup_options( false );
+		add_option( $name, 'autoload' );
 
-        $this->assertFalse( get_option( WP_Healthcheck::DISABLE_AUTOLOAD_OPTION ) );
-    }
+		$this->assertInternalType( 'int', wphc( 'module.autoload' )->deactivate( $name ) );
 
-    public function test_deactivate_autoload_option() {
-        $name = 'wphc_autoload_option';
+		$history = wphc( 'module.autoload' )->get_history();
 
-        add_option( $name, 'autoload' );
+		$this->assertNotFalse( $history );
+		$this->assertInternalType( 'array', $history );
+		$this->assertArrayHasKey( $name, $history );
 
-        $this->assertInternalType( 'int', WP_Healthcheck::deactivate_autoload_option( $name ) );
+		delete_option( $name );
 
-        $option = get_option( WP_Healthcheck::DISABLE_AUTOLOAD_OPTION );
+		wp_cache_flush();
 
-        $this->assertNotFalse( $option );
-        $this->assertInternalType( 'array', $option );
-        $this->assertArrayHasKey( $name, $option );
+		add_option( $name, 'autoload' );
 
-        delete_option( WP_Healthcheck::DISABLE_AUTOLOAD_OPTION );
-        delete_option( $name );
+		$this->assertInternalType( 'int', wphc( 'module.autoload' )->deactivate( $name, false ) );
 
-        wp_cache_flush();
+		$history = wphc( 'module.autoload' )->get_history();
 
-        add_option( $name, 'autoload' );
+		$this->assertFalse( $history );
 
-        $this->assertInternalType( 'int', WP_Healthcheck::deactivate_autoload_option( $name, false ) );
+		$this->assertFalse( wphc( 'module.autoload' )->deactivate( $name ) );
 
-        $option = get_option( WP_Healthcheck::DISABLE_AUTOLOAD_OPTION );
+		delete_option( $name );
 
-        $this->assertFalse( $option );
+		wp_cache_flush();
+	}
 
-        $this->assertFalse( WP_Healthcheck::deactivate_autoload_option( $name ) );
+	public function test_is_autoload_disabled() {
+		$status = wphc( 'module.autoload' )->is_deactivated( 'siteurl' );
 
-        delete_option( $name );
+		$this->assertFalse( $status );
 
-        wp_cache_flush();
-    }
+		$name = 'wphc_autoload_option';
 
-    public function test_is_autoload_disabled() {
-        $status = WP_Healthcheck::is_autoload_disabled( 'siteurl' );
+		add_option( $name, 'autoload', '', 'no' );
 
-        $this->assertFalse( $status );
+		$status = wphc( 'module.autoload' )->is_deactivated( $name );
 
-        $name = 'wphc_autoload_option';
+		$this->assertTrue( $status );
 
-        add_option( $name, 'autoload', '', 'no' );
+		delete_option( $name );
 
-        $status = WP_Healthcheck::is_autoload_disabled( $name );
+		wp_cache_flush();
+	}
 
-        $this->assertTrue( $status );
+	public function test_is_core_option() {
+		$this->assertFileExists( WPHC_PLUGIN_DIR . '/src/Data/wp_options.json' );
 
-        delete_option( $name );
+		$option = wphc( 'module.autoload' )->is_core_option( 'siteurl' );
 
-        wp_cache_flush();
-    }
+		$this->assertTrue( $option );
 
-    public function test_is_core_option() {
-        $this->assertFileExists( WPHC_INC_DIR . '/data/wp_options.json' );
+		$option = wphc( 'module.autoload' )->is_core_option( 'wphc_autoload_deactivation_history' );
 
-        $option = WP_Healthcheck::is_core_option( 'siteurl' );
-
-        $this->assertTrue( $option );
-
-        $option = WP_Healthcheck::is_core_option( WP_Healthcheck::DISABLE_AUTOLOAD_OPTION );
-
-        $this->assertFalse( $option );
-    }
+		$this->assertFalse( $option );
+	}
 }

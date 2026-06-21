@@ -1,13 +1,31 @@
 <?php
 /**
- * The WP_Healthcheck_CLI class
+ * The CLI class
  *
  * The WP Healthcheck extension for WP-CLI.
  *
  * @package wp-healthcheck
- * @since 1.1
+ * @since {VERSION}
  */
-class WP_Healthcheck_CLI extends WP_CLI_Command {
+
+namespace THSCD\WPHC\Modules;
+
+use WP_CLI;
+use WP_CLI_Command;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Class CLI.
+ *
+ * WP-CLI commands for WP Healthcheck.
+ *
+ * @since {VERSION}
+ */
+class CLI extends WP_CLI_Command {
+
 	/**
 	 * List the top WordPress autoload options.
 	 *
@@ -51,60 +69,86 @@ class WP_Healthcheck_CLI extends WP_CLI_Command {
 	 *     +-----------------------------+---------+
 	 *
 	 * @subcommand autoload
+	 *
+	 * @since {VERSION}
+	 *
+	 * @param array $args       Command arguments.
+	 * @param array $assoc_args Command associative arguments.
 	 */
 	public function autoload( $args, $assoc_args ) {
+
 		if ( isset( $assoc_args['deactivate'] ) ) {
-			$option_name = $assoc_args['deactivate'];
-
-			if ( empty( $option_name ) || ! is_string( $option_name ) ) {
-				WP_CLI::error( 'You need to provide the name of the option to deactivate.' );
-			}
-
-			if ( ! get_option( $option_name ) ) {
-				WP_CLI::error( WP_CLI::colorize( 'We couldn\'t find the %r' . $option_name . '%n option in your WordPress options table.' ) );
-			}
-
-			if ( WP_Healthcheck::is_core_option( $option_name ) ) {
-				WP_CLI::error( 'You can\'t deactivate a WordPress core option.' );
-			}
-
-			if ( WP_Healthcheck::is_autoload_disabled( $option_name ) ) {
-				WP_CLI::warning( WP_CLI::colorize( 'The %y' . $option_name . '%n autoload option is already disabled.' ) );
-				WP_CLI::halt( 2 );
-			}
-
-			$deactivate = WP_Healthcheck::deactivate_autoload_option( $option_name );
-
-			if ( false !== $deactivate ) {
-				WP_CLI::success( WP_CLI::colorize( 'Yay, the %y' . $option_name . '%n option was deactivated successfully.' ) );
-			} else {
-				WP_CLI::error( WP_CLI::colorize( 'Oops, for some reason we couldn\'t deactivate the %y' . $option_name . '%n option.' ) );
-			}
+			$this->handle_deactivate( $assoc_args['deactivate'] );
 		} elseif ( isset( $assoc_args['history'] ) ) {
-			$opts = WP_Healthcheck::get_autoload_history();
-
-			if ( false === $opts || ! is_array( $opts ) || sizeof( $opts ) == 0 ) {
-				WP_CLI::warning( 'The history is empty.' );
-				WP_CLI::halt( 2 );
-			}
-
-			$list = array();
-
-			foreach ( $opts as $name => $timestamp ) {
-				$item = array(
-					'name'              => $name,
-					'deactivation_time' => date( 'Y-m-d H:i:s', $timestamp ),
-				);
-
-				$list[] = $item;
-			}
-
-			WP_CLI\Utils\format_items( 'table', $list, array( 'name', 'deactivation_time' ) );
+			$this->display_history();
 		} else {
-			$autoload = WP_Healthcheck::get_autoload_options();
+			$autoload = wphc( 'module.autoload' )->get();
 
-			$this->_list_options( $autoload );
+			$this->list_options( $autoload );
 		}
+	}
+
+	/**
+	 * Handle autoload option deactivation.
+	 *
+	 * @since {VERSION}
+	 *
+	 * @param string $option_name The option name to deactivate.
+	 */
+	private function handle_deactivate( $option_name ) {
+
+		if ( empty( $option_name ) || ! is_string( $option_name ) ) {
+			WP_CLI::error( 'You need to provide the name of the option to deactivate.' );
+		}
+
+		if ( ! get_option( $option_name ) ) {
+			WP_CLI::error( WP_CLI::colorize( 'We couldn\'t find the %r' . $option_name . '%n option in your WordPress options table.' ) );
+		}
+
+		if ( wphc( 'module.autoload' )->is_core_option( $option_name ) ) {
+			WP_CLI::error( 'You can\'t deactivate a WordPress core option.' );
+		}
+
+		if ( wphc( 'module.autoload' )->is_deactivated( $option_name ) ) {
+			WP_CLI::warning( WP_CLI::colorize( 'The %y' . $option_name . '%n autoload option is already disabled.' ) );
+			WP_CLI::halt( 2 );
+		}
+
+		$deactivate = wphc( 'module.autoload' )->deactivate( $option_name );
+
+		if ( $deactivate !== false ) {
+			WP_CLI::success( WP_CLI::colorize( 'Yay, the %y' . $option_name . '%n option was deactivated successfully.' ) );
+		} else {
+			WP_CLI::error( WP_CLI::colorize( 'Oops, for some reason we couldn\'t deactivate the %y' . $option_name . '%n option.' ) );
+		}
+	}
+
+	/**
+	 * Display autoload history.
+	 *
+	 * @since {VERSION}
+	 */
+	private function display_history() {
+
+		$opts = wphc( 'module.autoload' )->get_history();
+
+		if ( $opts === false || ! is_array( $opts ) || count( $opts ) === 0 ) {
+			WP_CLI::warning( 'The history is empty.' );
+			WP_CLI::halt( 2 );
+		}
+
+		$list = [];
+
+		foreach ( $opts as $name => $timestamp ) {
+			$item = [
+				'name'              => $name,
+				'deactivation_time' => gmdate( 'Y-m-d H:i:s', $timestamp ),
+			];
+
+			$list[] = $item;
+		}
+
+		WP_CLI\Utils\format_items( 'table', $list, [ 'name', 'deactivation_time' ] );
 	}
 
 	/**
@@ -123,62 +167,86 @@ class WP_Healthcheck_CLI extends WP_CLI_Command {
 	 *     +-------+--------------+--------+
 	 *
 	 * @subcommand server
+	 *
+	 * @since {VERSION}
 	 */
 	public function server() {
-		$info         = WP_Healthcheck::get_server_data();
-		$requirements = WP_Healthcheck::get_server_requirements();
 
-		$list = array();
+		$info         = wphc( 'module.server' )->get_data();
+		$requirements = wphc( 'module.server' )->get_requirements();
+
+		$list = [];
 
 		foreach ( $info as $name => $version ) {
 			if ( empty( $version ) ) {
 				continue;
 			}
 
-			if ( 'database' == $name ) {
-				$name    = strtolower( $version['service'] );
-				$version = $version['version'];
+			$item = $this->format_server_item( $name, $version, $info, $requirements );
+
+			if ( $item ) {
+				$list[] = $item;
 			}
-
-			$status = WP_Healthcheck::is_software_updated( $name );
-			$action = '-';
-
-			if ( 'wp' == $name && 'updated' != $status ) {
-				$action = WP_CLI::colorize( 'run %Ywp core update%n to update WordPress to latest version' );
-			}
-
-			if ( preg_match( '/(?:php|mysql|mariadb)/', $name ) ) {
-				if ( 'outdated' == $status ) {
-					$action = 'Your ' . strtoupper( $name ) . ' version is compatible with the current WordPress install. However, in order to get better performance and other improvements, you should consider to upgrade it to version ' . $requirements[ $name ]['recommended'] . ' or greater.';
-				} elseif ( 'obsolete' == $status ) {
-					$action = 'This ' . strtoupper( $name ) . ' version is not supported by WordPress anymore! Please upgrade it to version ' . $requirements[ $name ]['recommended'] . ' or greater.';
-				}
-			}
-
-			if ( 'web' == $name && isset( $info['web'] ) && is_array( $info['web'] ) ) {
-				if ( preg_match( '/(?:apache|nginx)/', $info['web']['service'] ) ) {
-					$version = $info['web']['service'] . '/' . $info['web']['version'];
-				} else {
-					$version = $info['web']['version'];
-				}
-			}
-
-			$item = array(
-				'name'    => $name,
-				'version' => $version,
-				'action'  => $action,
-			);
-
-			if ( preg_match( '/(?:obsolete|outdated)/', $status ) ) {
-				$color = ( 'obsolete' == $status ) ? 'r' : 'y';
-
-				$item['version'] = WP_CLI::colorize( '%' . $color . $version . '%n' );
-			}
-
-			$list[] = $item;
 		}
 
-		WP_CLI\Utils\format_items( 'table', $list, array( 'name', 'version', 'action' ) );
+		WP_CLI\Utils\format_items( 'table', $list, [ 'name', 'version', 'action' ] );
+	}
+
+	/**
+	 * Format a server item for display.
+	 *
+	 * @since {VERSION}
+	 *
+	 * @param string $name         Server component name.
+	 * @param mixed  $version      Version information.
+	 * @param array  $info         Server info array.
+	 * @param array  $requirements Requirements array.
+	 *
+	 * @return array|null Formatted item or null.
+	 */
+	private function format_server_item( $name, $version, $info, $requirements ) {
+
+		if ( $name === 'database' ) {
+			$name    = strtolower( $version['service'] );
+			$version = $version['version'];
+		}
+
+		$status = wphc( 'module.server' )->is_updated( $name );
+		$action = '-';
+
+		if ( $name === 'wp' && $status !== 'updated' ) {
+			$action = WP_CLI::colorize( 'run %Ywp core update%n to update WordPress to latest version' );
+		}
+
+		if ( preg_match( '/(?:php|mysql|mariadb)/', $name ) ) {
+			if ( $status === 'outdated' ) {
+				$action = 'Your ' . strtoupper( $name ) . ' version is compatible with the current WordPress install. However, in order to get better performance and other improvements, you should consider to upgrade it to version ' . $requirements[ $name ]['recommended'] . ' or greater.';
+			} elseif ( $status === 'obsolete' ) {
+				$action = 'This ' . strtoupper( $name ) . ' version is not supported by WordPress anymore! Please upgrade it to version ' . $requirements[ $name ]['recommended'] . ' or greater.';
+			}
+		}
+
+		if ( $name === 'web' && isset( $info['web'] ) && is_array( $info['web'] ) ) {
+			if ( preg_match( '/(?:apache|nginx)/', $info['web']['service'] ) ) {
+				$version = $info['web']['service'] . '/' . $info['web']['version'];
+			} else {
+				$version = $info['web']['version'];
+			}
+		}
+
+		$item = [
+			'name'    => $name,
+			'version' => $version,
+			'action'  => $action,
+		];
+
+		if ( preg_match( '/(?:obsolete|outdated)/', $status ) ) {
+			$color = ( $status === 'obsolete' ) ? 'r' : 'y';
+
+			$item['version'] = WP_CLI::colorize( '%' . $color . $version . '%n' );
+		}
+
+		return $item;
 	}
 
 	/**
@@ -197,31 +265,37 @@ class WP_Healthcheck_CLI extends WP_CLI_Command {
 	 *     +-------------+----------------------------+
 	 *
 	 * @subcommand ssl
+	 *
+	 * @since {VERSION}
+	 *
+	 * @param array $args       Command arguments.
+	 * @param array $assoc_args Command associative arguments.
 	 */
 	public function ssl( $args, $assoc_args ) {
-		$ssl_data = WP_Healthcheck::get_ssl_data();
 
-		if ( false === $ssl_data || empty( $ssl_data ) ) {
+		$ssl_data = wphc( 'module.ssl' )->get_data();
+
+		if ( $ssl_data === false || empty( $ssl_data ) ) {
 			WP_CLI::error( 'We couldn\'t find any SSL certificates associated with your site. Is HTTPS enabled?' );
 		}
 
-		$ssl_data = array(
+		$ssl_data = [
 			'common_name' => $ssl_data['common_name'],
 			'issued_by'   => $ssl_data['issuer'],
 			'issued_on'   => $ssl_data['validity']['from'],
 			'expires_on'  => $ssl_data['validity']['to'],
-		);
+		];
 
-		$data = array();
+		$data = [];
 
 		foreach ( $ssl_data as $key => $value ) {
-			$data[] = array(
+			$data[] = [
 				'field' => $key,
 				'value' => $value,
-			);
+			];
 		}
 
-		WP_CLI\Utils\format_items( 'table', $data, array( 'field', 'value' ) );
+		WP_CLI\Utils\format_items( 'table', $data, [ 'field', 'value' ] );
 	}
 
 	/**
@@ -267,14 +341,20 @@ class WP_Healthcheck_CLI extends WP_CLI_Command {
 	 *
 	 * @subcommand transient
 	 * @alias transients
+	 *
+	 * @since {VERSION}
+	 *
+	 * @param array $args       Command arguments.
+	 * @param array $assoc_args Command associative arguments.
 	 */
 	public function transient( $args, $assoc_args ) {
+
 		if ( isset( $assoc_args['delete-all'] ) || isset( $assoc_args['delete-expired'] ) ) {
 			$only_expired = ( isset( $assoc_args['delete-expired'] ) ) ? true : false;
 
 			$message = ( wp_using_ext_object_cache() ) ? 'object cache items' : 'transients';
 
-			if ( false !== WP_Healthcheck::cleanup_transients( $only_expired ) ) {
+			if ( wphc( 'module.transients' )->cleanup( $only_expired ) !== false ) {
 				WP_CLI::success( 'Yay! The ' . $message . ' were cleaned up successfully.' );
 			} else {
 				WP_CLI::error( 'Oops, for some reason we couldn\'t clean up your ' . $message . '.' );
@@ -284,31 +364,32 @@ class WP_Healthcheck_CLI extends WP_CLI_Command {
 				WP_CLI::error( 'Unfortunately we cannot list the transients when an external object cache is being used.' );
 			}
 
-			$transients = WP_Healthcheck::get_transients();
+			$transients = wphc( 'module.transients' )->get();
 
-			$this->_list_options( $transients );
+			$this->list_options( $transients );
 		}
 	}
 
 	/**
 	 * List the name and size of the options in WP-CLI table format.
 	 *
+	 * @since {VERSION}
+	 *
 	 * @param array $data An array with name and size of the options.
 	 */
-	private function _list_options( $data ) {
-		$list = array();
+	private function list_options( $data ) {
+
+		$list = [];
 
 		foreach ( $data as $name => $size ) {
-			$item = array(
+			$item = [
 				'name' => preg_replace( '/^(_site)?_transient_/', '', $name ),
 				'size' => number_format( $size, 2 ) . ' MB',
-			);
+			];
 
 			$list[] = $item;
 		}
 
-		WP_CLI\Utils\format_items( 'table', $list, array( 'name', 'size' ) );
+		WP_CLI\Utils\format_items( 'table', $list, [ 'name', 'size' ] );
 	}
 }
-
-WP_CLI::add_command( 'healthcheck', 'WP_Healthcheck_CLI' );
